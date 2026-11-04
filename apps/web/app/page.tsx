@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { headers } from "next/headers";
 import { getLocaleFromHost, type Locale, locales, domainMap, localeNames } from "@/lib/i18n/config";
 import { getContent } from "@/lib/i18n/content";
@@ -129,9 +128,8 @@ export default async function Home() {
       <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-[#0a0a0a]/80 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-8">
-            <a href="/" className="flex items-center gap-2.5">
-              <Image src="/logo.png" alt="Imagent" width={28} height={28} className="rounded-md" />
-              <span className="text-xl font-bold tracking-tight">imagent</span>
+            <a href="/" className="text-xl font-bold tracking-tight">
+              imagent
             </a>
             <div className="hidden md:flex items-center gap-6 text-sm text-gray-400">
               <a href="/explore" className="hover:text-white transition">{t.nav.explore}</a>
