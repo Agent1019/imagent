@@ -1,6 +1,146 @@
-export default function Home() {
+import { headers } from "next/headers";
+import { getLocaleFromHost, type Locale, locales, domainMap } from "@/lib/i18n/config";
+import { getContent } from "@/lib/i18n/content";
+import type { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const host = headersList.get("x-host") || headersList.get("host") || "imagent.ai";
+  const locale = getLocaleFromHost(host);
+  const t = getContent(locale);
+
+  const baseUrl = `https://${domainMap[locale]}`;
+
+  return {
+    title: t.seo.title,
+    description: t.seo.description,
+    keywords: [
+      "MCP server",
+      "AI agent",
+      "Model Context Protocol",
+      "agent marketplace",
+      "MCP registry",
+      "agent authentication",
+      "agent payment",
+      "tool discovery",
+      "A2A protocol",
+      "MCP Server 发现",
+      "AI Agent 平台",
+    ],
+    authors: [{ name: "Imagent", url: baseUrl }],
+    creator: "Imagent",
+    publisher: "Imagent",
+    metadataBase: new URL(baseUrl),
+    alternates: {
+      canonical: baseUrl,
+      languages: Object.fromEntries(
+        locales.map((l) => [l, `https://${domainMap[l]}`])
+      ),
+    },
+    openGraph: {
+      title: t.seo.title,
+      description: t.seo.description,
+      url: baseUrl,
+      siteName: "Imagent",
+      locale: locale === "zh" ? "zh_CN" : "en_US",
+      type: "website",
+      images: [
+        {
+          url: `${baseUrl}/og-image.png`,
+          width: 1200,
+          height: 630,
+          alt: t.seo.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t.seo.title,
+      description: t.seo.description,
+      images: [`${baseUrl}/og-image.png`],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+  };
+}
+
+export default async function Home() {
+  const headersList = await headers();
+  const host = headersList.get("x-host") || headersList.get("host") || "imagent.ai";
+  const locale: Locale = getLocaleFromHost(host);
+  const t = getContent(locale);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://imagent.ai/#organization",
+        name: "Imagent",
+        url: "https://imagent.ai",
+        description: t.seo.description,
+        sameAs: [
+          "https://github.com/sunyuqing1019/imagent",
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://imagent.ai/#website",
+        url: `https://${domainMap[locale]}`,
+        name: "Imagent",
+        description: t.seo.description,
+        publisher: { "@id": "https://imagent.ai/#organization" },
+        inLanguage: locale === "zh" ? "zh-CN" : "en-US",
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": `https://${domainMap[locale]}/#application`,
+        name: "Imagent",
+        applicationCategory: "DeveloperApplication",
+        operatingSystem: "Web",
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+        },
+        description: t.seo.description,
+      },
+    ],
+  };
+
   return (
-    <main className="min-h-screen bg-[#0a0a0a] text-white">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      {/* Language Switcher */}
+      <div className="fixed top-16 right-6 z-40 flex gap-2">
+        {locales.map((l) => (
+          <a
+            key={l}
+            href={`https://${domainMap[l]}`}
+            className={`text-xs px-2 py-1 rounded border transition ${
+              locale === l
+                ? "border-white/30 text-white bg-white/10"
+                : "border-white/10 text-gray-500 hover:text-white hover:border-white/20"
+            }`}
+          >
+            {l.toUpperCase()}
+          </a>
+        ))}
+      </div>
+
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-[#0a0a0a]/80 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -9,20 +149,20 @@ export default function Home() {
               imagent
             </a>
             <div className="hidden md:flex items-center gap-6 text-sm text-gray-400">
-              <a href="/explore" className="hover:text-white transition">Explore</a>
-              <a href="/docs" className="hover:text-white transition">Docs</a>
-              <a href="/pricing" className="hover:text-white transition">Pricing</a>
+              <a href="/explore" className="hover:text-white transition">{t.nav.explore}</a>
+              <a href="/docs" className="hover:text-white transition">{t.nav.docs}</a>
+              <a href="/pricing" className="hover:text-white transition">{t.nav.pricing}</a>
             </div>
           </div>
           <div className="flex items-center gap-3">
             <a href="/login" className="text-sm text-gray-400 hover:text-white transition px-3 py-1.5">
-              Sign in
+              {t.nav.signIn}
             </a>
             <a
               href="/signup"
               className="text-sm bg-white text-black px-4 py-1.5 rounded-lg font-medium hover:bg-gray-200 transition"
             >
-              Get Started
+              {t.nav.getStarted}
             </a>
           </div>
         </div>
@@ -33,21 +173,21 @@ export default function Home() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-gray-400 mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-            Now supporting MCP, A2A, and Function Calling protocols
+            {t.hero.badge}
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1]">
-            The infrastructure layer
+            {t.hero.headline1}
             <br />
             <span className="bg-gradient-to-r from-orange-400 via-rose-400 to-purple-400 bg-clip-text text-transparent">
-              for AI agents
+              {t.hero.headline2}
             </span>
           </h1>
 
           <p className="mt-6 text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            Discover MCP servers. Authenticate tool calls. Monetize usage.
+            {t.hero.subtitle1}
             <br className="hidden md:block" />
-            One platform for the entire agent tool ecosystem.
+            {t.hero.subtitle2}
           </p>
 
           {/* Search Bar */}
@@ -60,7 +200,7 @@ export default function Home() {
                 </svg>
                 <input
                   type="text"
-                  placeholder="Search 10,000+ MCP servers..."
+                  placeholder={t.hero.searchPlaceholder}
                   className="w-full px-4 py-4 bg-transparent text-white placeholder-gray-500 outline-none text-sm"
                 />
                 <kbd className="hidden md:flex items-center gap-1 mr-4 px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] text-gray-500">
@@ -75,13 +215,13 @@ export default function Home() {
               href="/explore"
               className="px-6 py-3 bg-white text-black rounded-lg font-medium hover:bg-gray-200 transition text-sm"
             >
-              Explore MCP Servers
+              {t.hero.exploreBtn}
             </a>
             <a
               href="/publish"
               className="px-6 py-3 border border-white/15 rounded-lg font-medium hover:border-white/30 hover:bg-white/5 transition text-sm"
             >
-              Publish Your Server
+              {t.hero.publishBtn}
             </a>
           </div>
         </div>
@@ -91,10 +231,10 @@ export default function Home() {
       <section className="py-12 px-6 border-y border-white/5">
         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
           {[
-            { value: "10,000+", label: "MCP Servers" },
-            { value: "50M+", label: "API Calls / Month" },
-            { value: "2,400+", label: "Tool Publishers" },
-            { value: "99.9%", label: "Uptime SLA" },
+            { value: "10,000+", label: t.stats.servers },
+            { value: "50M+", label: t.stats.calls },
+            { value: "2,400+", label: t.stats.publishers },
+            { value: "99.9%", label: t.stats.uptime },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="text-2xl md:text-3xl font-bold">{stat.value}</div>
@@ -108,74 +248,57 @@ export default function Home() {
       <section className="py-24 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold">
-              Everything agents need, in one place
-            </h2>
-            <p className="mt-4 text-gray-400 max-w-xl mx-auto">
-              From discovery to payment — a complete infrastructure for the agent-native economy.
-            </p>
+            <h2 className="text-3xl md:text-4xl font-bold">{t.features.title}</h2>
+            <p className="mt-4 text-gray-400 max-w-xl mx-auto">{t.features.subtitle}</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {/* Discovery */}
-            <div className="group relative rounded-2xl border border-white/5 bg-white/[0.02] p-8 hover:border-white/10 hover:bg-white/[0.04] transition">
-              <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center mb-5">
-                <svg className="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                </svg>
+            {[
+              {
+                icon: (
+                  <svg className="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                  </svg>
+                ),
+                title: t.features.discover.title,
+                desc: t.features.discover.desc,
+                code: <><span className="text-purple-400">GET</span> /api/v1/search<br /><span className="text-gray-500">?q=pdf+generation&protocol=mcp</span></>,
+                bg: "bg-orange-500/10",
+              },
+              {
+                icon: (
+                  <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                  </svg>
+                ),
+                title: t.features.auth.title,
+                desc: t.features.auth.desc,
+                code: <><span className="text-emerald-400">Authorization</span>: Bearer<br /><span className="text-gray-500">imt_a1b2c3d4...x9y0z</span></>,
+                bg: "bg-emerald-500/10",
+              },
+              {
+                icon: (
+                  <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
+                  </svg>
+                ),
+                title: t.features.monetize.title,
+                desc: t.features.monetize.desc,
+                code: <><span className="text-amber-400">POST</span> /api/v1/billing/meter<br /><span className="text-gray-500">{"{ \"calls\": 1, \"cost\": \"$0.001\" }"}</span></>,
+                bg: "bg-purple-500/10",
+              },
+            ].map((card) => (
+              <div key={card.title} className="group relative rounded-2xl border border-white/5 bg-white/[0.02] p-8 hover:border-white/10 hover:bg-white/[0.04] transition">
+                <div className={`w-12 h-12 rounded-xl ${card.bg} flex items-center justify-center mb-5`}>
+                  {card.icon}
+                </div>
+                <h3 className="text-lg font-semibold mb-2">{card.title}</h3>
+                <p className="text-sm text-gray-400 leading-relaxed">{card.desc}</p>
+                <div className="mt-6 p-4 rounded-lg bg-black/40 border border-white/5">
+                  <code className="text-xs text-gray-300">{card.code}</code>
+                </div>
               </div>
-              <h3 className="text-lg font-semibold mb-2">Discover</h3>
-              <p className="text-sm text-gray-400 leading-relaxed">
-                Semantic search across thousands of MCP servers. Agents find the right tools by capability, not by name. Filter by protocol, trust score, and latency.
-              </p>
-              <div className="mt-6 p-4 rounded-lg bg-black/40 border border-white/5">
-                <code className="text-xs text-gray-300">
-                  <span className="text-purple-400">GET</span> /api/v1/search
-                  <br />
-                  <span className="text-gray-500">?q=pdf+generation&protocol=mcp</span>
-                </code>
-              </div>
-            </div>
-
-            {/* Auth */}
-            <div className="group relative rounded-2xl border border-white/5 bg-white/[0.02] p-8 hover:border-white/10 hover:bg-white/[0.04] transition">
-              <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-5">
-                <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Authenticate</h3>
-              <p className="text-sm text-gray-400 leading-relaxed">
-                OAuth 2.0 built for agent-to-tool interactions. Agents authenticate autonomously — no human in the loop. Scoped permissions, token rotation, and audit logs.
-              </p>
-              <div className="mt-6 p-4 rounded-lg bg-black/40 border border-white/5">
-                <code className="text-xs text-gray-300">
-                  <span className="text-emerald-400">Authorization</span>: Bearer
-                  <br />
-                  <span className="text-gray-500">imt_a1b2c3d4...x9y0z</span>
-                </code>
-              </div>
-            </div>
-
-            {/* Payment */}
-            <div className="group relative rounded-2xl border border-white/5 bg-white/[0.02] p-8 hover:border-white/10 hover:bg-white/[0.04] transition">
-              <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mb-5">
-                <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Monetize</h3>
-              <p className="text-sm text-gray-400 leading-relaxed">
-                Usage-based billing for every tool call. Publishers earn from their MCP servers. Agents pay per invocation with automatic metering and invoicing.
-              </p>
-              <div className="mt-6 p-4 rounded-lg bg-black/40 border border-white/5">
-                <code className="text-xs text-gray-300">
-                  <span className="text-amber-400">POST</span> /api/v1/billing/meter
-                  <br />
-                  <span className="text-gray-500">{"{ \"calls\": 1, \"cost\": \"$0.001\" }"}</span>
-                </code>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -184,38 +307,21 @@ export default function Home() {
       <section className="py-24 px-6 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold">How it works</h2>
-            <p className="mt-4 text-gray-400">Three steps from zero to production</p>
+            <h2 className="text-3xl md:text-4xl font-bold">{t.howItWorks.title}</h2>
+            <p className="mt-4 text-gray-400">{t.howItWorks.subtitle}</p>
           </div>
 
           <div className="space-y-12">
-            {[
-              {
-                step: "01",
-                title: "Register your MCP server",
-                desc: "Publish your server with a structured capability manifest. Imagent auto-generates documentation, validates your schema, and makes it discoverable.",
-                color: "text-orange-400",
-              },
-              {
-                step: "02",
-                title: "Agents discover and authenticate",
-                desc: "Agents search by capability, evaluate trust scores, and authenticate via OAuth — all without human intervention. You define the permission scopes.",
-                color: "text-emerald-400",
-              },
-              {
-                step: "03",
-                title: "Get paid for every call",
-                desc: "Set your pricing model — per-call, tiered, or freemium. Imagent meters usage, handles billing, and deposits earnings to your account.",
-                color: "text-purple-400",
-              },
-            ].map((item) => (
-              <div key={item.step} className="flex gap-6 md:gap-10 items-start">
-                <div className={`text-4xl md:text-5xl font-bold ${item.color} font-mono shrink-0`}>
-                  {item.step}
+            {t.howItWorks.steps.map((step, i) => (
+              <div key={i} className="flex gap-6 md:gap-10 items-start">
+                <div className={`text-4xl md:text-5xl font-bold font-mono shrink-0 ${
+                  i === 0 ? "text-orange-400" : i === 1 ? "text-emerald-400" : "text-purple-400"
+                }`}>
+                  0{i + 1}
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                  <p className="text-gray-400 leading-relaxed">{item.desc}</p>
+                  <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
+                  <p className="text-gray-400 leading-relaxed">{step.desc}</p>
                 </div>
               </div>
             ))}
@@ -223,26 +329,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Code Example */}
+      {/* API Section */}
       <section className="py-24 px-6 border-t border-white/5">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Agent-native APIs,
+                {t.apiSection.headline1}
                 <br />
-                <span className="text-gray-500">not human-native ones</span>
+                <span className="text-gray-500">{t.apiSection.headline2}</span>
               </h2>
-              <p className="text-gray-400 leading-relaxed mb-6">
-                Every endpoint is designed for machine consumption. Structured responses, semantic errors, and built-in rate limiting. Your agent reads the spec, not a README.
-              </p>
+              <p className="text-gray-400 leading-relaxed mb-6">{t.apiSection.desc}</p>
               <div className="space-y-3">
-                {[
-                  "Capability-based search with vector embeddings",
-                  "OAuth 2.0 + agent identity tokens (AIT)",
-                  "Automatic protocol adaptation (MCP ↔ A2A ↔ Function Calling)",
-                  "Real-time usage metering and webhooks",
-                ].map((feature) => (
+                {t.apiSection.features.map((feature) => (
                   <div key={feature} className="flex items-start gap-3 text-sm text-gray-300">
                     <svg className="w-4 h-4 mt-0.5 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -296,7 +395,7 @@ console.log(result.usage);
       {/* Protocol Support */}
       <section className="py-16 px-6 border-t border-white/5">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm text-gray-500 mb-6">Protocol-agnostic infrastructure</p>
+          <p className="text-sm text-gray-500 mb-6">{t.protocols}</p>
           <div className="flex flex-wrap justify-center gap-8 items-center opacity-40">
             {["MCP", "A2A", "OpenAI", "Anthropic", "LangChain", "CrewAI"].map((name) => (
               <span key={name} className="text-lg font-semibold text-gray-400 tracking-wide">
@@ -310,24 +409,20 @@ console.log(result.usage);
       {/* CTA */}
       <section className="py-24 px-6 border-t border-white/5">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Build the next agent economy
-          </h2>
-          <p className="text-gray-400 mb-8">
-            Join thousands of publishers and agents building on imagent.
-          </p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.cta.title}</h2>
+          <p className="text-gray-400 mb-8">{t.cta.subtitle}</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
               href="/signup"
               className="px-8 py-3.5 bg-white text-black rounded-lg font-medium hover:bg-gray-200 transition text-sm"
             >
-              Start Building — Free
+              {t.cta.primary}
             </a>
             <a
               href="/docs"
               className="px-8 py-3.5 border border-white/15 rounded-lg font-medium hover:border-white/30 hover:bg-white/5 transition text-sm"
             >
-              Read the Docs
+              {t.cta.secondary}
             </a>
           </div>
         </div>
@@ -339,12 +434,10 @@ console.log(result.usage);
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
             <div>
               <div className="text-lg font-bold mb-4">imagent</div>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                The infrastructure layer for AI agents. Discover, authenticate, and monetize.
-              </p>
+              <p className="text-xs text-gray-500 leading-relaxed">{t.footer.tagline}</p>
             </div>
             <div>
-              <div className="text-sm font-semibold mb-3 text-gray-300">Product</div>
+              <div className="text-sm font-semibold mb-3 text-gray-300">{t.footer.product}</div>
               <div className="space-y-2 text-sm text-gray-500">
                 <a href="/explore" className="block hover:text-white transition">Explore</a>
                 <a href="/pricing" className="block hover:text-white transition">Pricing</a>
@@ -352,7 +445,7 @@ console.log(result.usage);
               </div>
             </div>
             <div>
-              <div className="text-sm font-semibold mb-3 text-gray-300">Developers</div>
+              <div className="text-sm font-semibold mb-3 text-gray-300">{t.footer.developers}</div>
               <div className="space-y-2 text-sm text-gray-500">
                 <a href="/docs" className="block hover:text-white transition">Documentation</a>
                 <a href="/api" className="block hover:text-white transition">API Reference</a>
@@ -360,7 +453,7 @@ console.log(result.usage);
               </div>
             </div>
             <div>
-              <div className="text-sm font-semibold mb-3 text-gray-300">Company</div>
+              <div className="text-sm font-semibold mb-3 text-gray-300">{t.footer.company}</div>
               <div className="space-y-2 text-sm text-gray-500">
                 <a href="/about" className="block hover:text-white transition">About</a>
                 <a href="/blog" className="block hover:text-white transition">Blog</a>
@@ -369,7 +462,7 @@ console.log(result.usage);
             </div>
           </div>
           <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
-            <span>&copy; 2026 imagent. All rights reserved.</span>
+            <span>{t.footer.copyright}</span>
             <div className="flex gap-6 mt-4 md:mt-0">
               <a href="/privacy" className="hover:text-white transition">Privacy</a>
               <a href="/terms" className="hover:text-white transition">Terms</a>
@@ -377,6 +470,6 @@ console.log(result.usage);
           </div>
         </div>
       </footer>
-    </main>
+    </>
   );
 }
