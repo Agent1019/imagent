@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Imagent - The Package Registry for AI Agents",
+  title: "Imagent — Discover, Authenticate & Monetize MCP Servers",
   description:
-    "Discover, install, and publish tools autonomously. The agent-native code and tool registry.",
+    "The infrastructure layer for AI agents. Discover MCP servers, authenticate tool calls, and monetize usage — all in one platform.",
 };
 
 export default function RootLayout({
