@@ -1,5 +1,6 @@
+import Image from "next/image";
 import { headers } from "next/headers";
-import { getLocaleFromHost, type Locale, locales, domainMap } from "@/lib/i18n/config";
+import { getLocaleFromHost, type Locale, locales, domainMap, localeNames } from "@/lib/i18n/config";
 import { getContent } from "@/lib/i18n/content";
 import type { Metadata } from "next";
 
@@ -124,29 +125,13 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Language Switcher */}
-      <div className="fixed top-16 right-6 z-40 flex gap-2">
-        {locales.map((l) => (
-          <a
-            key={l}
-            href={`https://${domainMap[l]}`}
-            className={`text-xs px-2 py-1 rounded border transition ${
-              locale === l
-                ? "border-white/30 text-white bg-white/10"
-                : "border-white/10 text-gray-500 hover:text-white hover:border-white/20"
-            }`}
-          >
-            {l.toUpperCase()}
-          </a>
-        ))}
-      </div>
-
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-[#0a0a0a]/80 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-8">
-            <a href="/" className="text-xl font-bold tracking-tight">
-              imagent
+            <a href="/" className="flex items-center gap-2.5">
+              <Image src="/logo.png" alt="Imagent" width={28} height={28} className="rounded-md" />
+              <span className="text-xl font-bold tracking-tight">imagent</span>
             </a>
             <div className="hidden md:flex items-center gap-6 text-sm text-gray-400">
               <a href="/explore" className="hover:text-white transition">{t.nav.explore}</a>
@@ -155,6 +140,35 @@ export default async function Home() {
             </div>
           </div>
           <div className="flex items-center gap-3">
+            {/* Language Dropdown */}
+            <div className="relative group">
+              <button className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition px-3 py-1.5 rounded-lg hover:bg-white/5">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                </svg>
+                <span>{locale.toUpperCase()}</span>
+                <svg className="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div className="absolute right-0 top-full mt-1 w-36 bg-[#1a1a1a] border border-white/10 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150">
+                {locales.map((l) => (
+                  <a
+                    key={l}
+                    href={`https://${domainMap[l]}`}
+                    className={`flex items-center gap-2 px-3 py-2 text-sm first:rounded-t-lg last:rounded-b-lg transition ${
+                      locale === l
+                        ? "text-white bg-white/10"
+                        : "text-gray-400 hover:text-white hover:bg-white/5"
+                    }`}
+                  >
+                    <span className="text-xs">{l === "en" ? "🇺🇸" : "🇨🇳"}</span>
+                    {localeNames[l]}
+                  </a>
+                ))}
+              </div>
+            </div>
+
             <a href="/login" className="text-sm text-gray-400 hover:text-white transition px-3 py-1.5">
               {t.nav.signIn}
             </a>
