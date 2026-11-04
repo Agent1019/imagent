@@ -37,8 +37,8 @@ const en: Content = {
   nav: { explore: "Explore", docs: "Docs", pricing: "Pricing", signIn: "Sign in", getStarted: "Get Started" },
   hero: {
     badge: "Now supporting MCP, A2A, and Function Calling protocols",
-    headline1: "The infrastructure layer",
-    headline2: "for AI agents",
+    headline1: "Where AI agents discover,",
+    headline2: "authenticate & pay for tools",
     subtitle1: "Discover MCP servers. Authenticate tool calls. Monetize usage.",
     subtitle2: "One platform for the entire agent tool ecosystem.",
     searchPlaceholder: "Search 10,000+ MCP servers...",
@@ -100,8 +100,8 @@ const zh: Content = {
   nav: { explore: "探索", docs: "文档", pricing: "定价", signIn: "登录", getStarted: "免费开始" },
   hero: {
     badge: "现已支持 MCP、A2A 和 Function Calling 协议",
-    headline1: "AI Agent 的",
-    headline2: "基础设施层",
+    headline1: "AI Agent 发现工具、",
+    headline2: "认证调用、按量付费",
     subtitle1: "发现 MCP Server。认证工具调用。按用量计费。",
     subtitle2: "一个平台，覆盖 Agent 工具生态全链路。",
     searchPlaceholder: "搜索 10,000+ MCP Server...",
