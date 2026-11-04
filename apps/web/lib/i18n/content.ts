@@ -1,4 +1,4 @@
-import { type Locale } from "../config";
+import { type Locale } from "./config";
 
 type Content = {
   nav: { explore: string; docs: string; pricing: string; signIn: string; getStarted: string };
