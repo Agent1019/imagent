@@ -38,7 +38,7 @@ const en: Content = {
   hero: {
     badge: "Now supporting MCP, A2A, and Function Calling protocols",
     headline1: "The Agent Identity Platform",
-    headline2: "A2A & MCP discover, authenticate, trade",
+    headline2: "MCP discover, authenticate, A2A trade",
     subtitle1: "One platform to connect agents with the tools they need.",
     subtitle2: "Supports MCP, A2A, and Function Calling protocols.",
     searchPlaceholder: "Search 10,000+ MCP servers...",
@@ -101,7 +101,7 @@ const zh: Content = {
   hero: {
     badge: "现已支持 MCP、A2A 和 Function Calling 协议",
     headline1: "Agent 身份平台",
-    headline2: "A2A & MCP 发现、认证、交易",
+    headline2: "MCP 发现、认证、A2A 交易",
     subtitle1: "一个平台，连接 Agent 与海量工具生态",
     subtitle2: "支持 MCP、A2A、Function Calling 协议",
     searchPlaceholder: "搜索 10,000+ MCP Server...",
