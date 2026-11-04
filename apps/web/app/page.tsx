@@ -129,7 +129,7 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-8">
             <a href="/" className="text-xl font-bold tracking-tight">
-              imagent
+              Imagent
             </a>
             <div className="hidden md:flex items-center gap-6 text-sm text-gray-400">
               <a href="/explore" className="hover:text-white transition">{t.nav.explore}</a>
