@@ -250,7 +250,7 @@ export default async function Home() {
       </section>
 
       {/* MCP Ecosystem + Stats */}
-      <section className="py-16 md:py-24 px-4 md:px-6 border-y border-white/5 bg-[#111111]">
+      <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
         <div className="max-w-6xl mx-auto">
           {/* Module Title */}
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
@@ -380,7 +380,7 @@ export default async function Home() {
       </section>
 
       {/* API Section */}
-      <section className="py-16 md:py-24 px-4 md:px-6 border-t border-white/5 bg-[#111111]">
+      <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -437,19 +437,30 @@ console.log(result.usage);
         </div>
       </section>
 
-      {/* Community */}
-      <section className="py-16 md:py-24 px-4 md:px-6 border-t border-white/5 bg-[#111111]">
+      {/* Community + CTA */}
+      <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              {locale === "zh" ? "加入社区" : "Join the Community"}
-            </h2>
-            <p className="text-gray-400 max-w-xl mx-auto">
-              {locale === "zh"
-                ? "与全球开发者一起构建 Agent 生态，分享经验、共建工具。"
-                : "Build the agent ecosystem with developers worldwide. Share, learn, and create together."}
-            </p>
+          {/* CTA */}
+          <div className="text-center mb-14">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.cta.title}</h2>
+            <p className="text-gray-400 mb-8 max-w-xl mx-auto">{t.cta.subtitle}</p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <a
+                href="/signup"
+                className="px-8 py-3.5 bg-white text-black rounded-lg font-medium hover:bg-gray-200 transition text-sm"
+              >
+                {t.cta.primary}
+              </a>
+              <a
+                href="/docs"
+                className="px-8 py-3.5 border border-white/15 rounded-lg font-medium hover:border-white/30 hover:bg-white/5 transition text-sm"
+              >
+                {t.cta.secondary}
+              </a>
+            </div>
           </div>
+
+          {/* Community Channels */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               {
@@ -511,28 +522,6 @@ console.log(result.usage);
                 </div>
               </a>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-16 md:py-24 px-4 md:px-6 border-t border-white/5">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.cta.title}</h2>
-          <p className="text-gray-400 mb-8">{t.cta.subtitle}</p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a
-              href="/signup"
-              className="px-8 py-3.5 bg-white text-black rounded-lg font-medium hover:bg-gray-200 transition text-sm"
-            >
-              {t.cta.primary}
-            </a>
-            <a
-              href="/docs"
-              className="px-8 py-3.5 border border-white/15 rounded-lg font-medium hover:border-white/30 hover:bg-white/5 transition text-sm"
-            >
-              {t.cta.secondary}
-            </a>
           </div>
         </div>
       </section>
