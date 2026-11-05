@@ -74,7 +74,19 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function RankingsPage() {
+type TabKey = "most-used" | "growing" | "category";
+
+const TABS: { key: TabKey; en: string; zh: string }[] = [
+  { key: "most-used", en: "Most Used", zh: "最多使用" },
+  { key: "growing", en: "Fastest Growing", zh: "增长最快" },
+  { key: "category", en: "By Category", zh: "分类排行" },
+];
+
+export default async function RankingsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tab?: string; period?: string }>;
+}) {
   const headersList = await headers();
   const host =
     headersList.get("x-host") || headersList.get("host") || "imagent.ai";
@@ -83,6 +95,15 @@ export default async function RankingsPage() {
 
   const isZh = locale === "zh";
 
+  const { tab: rawTab = "most-used", period: rawPeriod = "7d" } =
+    await searchParams;
+
+  const activeTab: TabKey =
+    rawTab === "growing" || rawTab === "category" ? rawTab : "most-used";
+
+  const period = rawPeriod === "30d" ? "30d" : "7d";
+
+  // Data preparation
   const mostUsed = [...rankings].sort((a, b) => b.calls30d - a.calls30d);
   const fastestGrowing = [...rankings].sort(
     (a, b) => b.growth30d - a.growth30d
@@ -96,6 +117,14 @@ export default async function RankingsPage() {
     topByCategory[tool.category].push(tool);
   }
 
+  // Build href helper that preserves both params
+  function tabHref(key: TabKey) {
+    return `/rankings?tab=${key}&period=${period}`;
+  }
+  function periodHref(p: string) {
+    return `/rankings?tab=${activeTab}&period=${p}`;
+  }
+
   return (
     <Layout
       locale={locale}
@@ -104,7 +133,7 @@ export default async function RankingsPage() {
       searchPlaceholder={t.hero.searchPlaceholder}
     >
       {/* Hero */}
-      <section className="pt-32 pb-20 px-4 md:px-6 border-b border-white/5">
+      <section className="pt-32 pb-12 px-4 md:px-6">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
             {isZh ? "Agent 工具排行榜" : "Agent Rankings"}
@@ -114,84 +143,117 @@ export default async function RankingsPage() {
               ? "追踪最受欢迎的 MCP Server。按调用量、增长率和分类发现趋势。"
               : "Track the most popular MCP servers. Discover trends by call volume, growth rate, and category."}
           </p>
+        </div>
+      </section>
 
-          {/* Time Period Toggles */}
-          <div className="mt-8 inline-flex items-center gap-1 p-1 rounded-lg bg-white/5 border border-white/10">
-            <span className="px-4 py-2 rounded-md bg-white/10 text-white text-sm font-medium">
+      {/* Tab Switcher + Period Toggle Bar */}
+      <section className="sticky top-0 z-20 bg-[#0a0a0a]/90 backdrop-blur-md border-b border-white/5">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
+          {/* Tabs */}
+          <div className="flex items-center gap-1 p-1 rounded-full bg-white/5 border border-white/10">
+            {TABS.map((t) => {
+              const isActive = t.key === activeTab;
+              return (
+                <a
+                  key={t.key}
+                  href={tabHref(t.key)}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition whitespace-nowrap ${
+                    isActive
+                      ? "bg-white text-black shadow-sm"
+                      : "text-gray-400 hover:text-white"
+                  }`}
+                >
+                  {isZh ? t.zh : t.en}
+                </a>
+              );
+            })}
+          </div>
+
+          {/* Period Toggle */}
+          <div className="flex items-center gap-1 p-1 rounded-lg bg-white/5 border border-white/10">
+            <a
+              href={periodHref("7d")}
+              className={`px-4 py-1.5 rounded-md text-sm font-medium transition ${
+                period === "7d"
+                  ? "bg-white/10 text-white"
+                  : "text-gray-400 hover:text-white"
+              }`}
+            >
               7d
-            </span>
-            <span className="px-4 py-2 rounded-md text-gray-400 text-sm hover:text-white transition">
+            </a>
+            <a
+              href={periodHref("30d")}
+              className={`px-4 py-1.5 rounded-md text-sm font-medium transition ${
+                period === "30d"
+                  ? "bg-white/10 text-white"
+                  : "text-gray-400 hover:text-white"
+              }`}
+            >
               30d
-            </span>
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Rankings Content */}
-      <section className="py-24 px-4 md:px-6">
-        <div className="max-w-6xl mx-auto space-y-16">
-          {/* Most Used */}
-          <div>
-            <h2 className="text-2xl font-bold mb-2">
-              {isZh ? "最多使用" : "Most Used"}
-            </h2>
-            <p className="text-sm text-gray-500 mb-6">
-              {isZh
-                ? "按 30 天内 API 调用量排名"
-                : "Ranked by API calls in the last 30 days"}
-            </p>
-            <RankingsTable
-              tools={mostUsed}
-              locale={locale}
-              showCalls={true}
-            />
-          </div>
-
-          {/* Fastest Growing */}
-          <div>
-            <h2 className="text-2xl font-bold mb-2">
-              {isZh ? "增长最快" : "Fastest Growing"}
-            </h2>
-            <p className="text-sm text-gray-500 mb-6">
-              {isZh
-                ? "按 30 天增长率排名"
-                : "Ranked by 30-day growth rate"}
-            </p>
-            <RankingsTable
-              tools={fastestGrowing}
-              locale={locale}
-              showGrowth={true}
-            />
-          </div>
-
-          {/* Top by Category */}
-          <div>
-            <h2 className="text-2xl font-bold mb-2">
-              {isZh ? "分类排行" : "Top by Category"}
-            </h2>
-            <p className="text-sm text-gray-500 mb-6">
-              {isZh
-                ? "各分类下使用量最高的工具"
-                : "Top tool in each category by usage"}
-            </p>
-            <div className="space-y-8">
-              {Object.entries(topByCategory).map(
-                ([category, categoryTools]) => (
-                  <div key={category}>
-                    <h3 className="text-sm font-semibold text-gray-300 mb-3 uppercase tracking-wider">
-                      {category}
-                    </h3>
-                    <RankingsTable
-                      tools={categoryTools}
-                      locale={locale}
-                      showCalls={true}
-                      compact
-                    />
-                  </div>
-                )
-              )}
+      {/* Rankings Content — single active tab */}
+      <section className="py-12 px-4 md:px-6">
+        <div className="max-w-6xl mx-auto">
+          {activeTab === "most-used" && (
+            <div>
+              <p className="text-sm text-gray-500 mb-6">
+                {isZh
+                  ? "按 30 天内 API 调用量排名"
+                  : "Ranked by API calls in the last 30 days"}
+              </p>
+              <RankingsTable
+                tools={mostUsed}
+                locale={locale}
+                showCalls={true}
+              />
             </div>
-          </div>
+          )}
+
+          {activeTab === "growing" && (
+            <div>
+              <p className="text-sm text-gray-500 mb-6">
+                {isZh
+                  ? "按 30 天增长率排名"
+                  : "Ranked by 30-day growth rate"}
+              </p>
+              <RankingsTable
+                tools={fastestGrowing}
+                locale={locale}
+                showGrowth={true}
+              />
+            </div>
+          )}
+
+          {activeTab === "category" && (
+            <div>
+              <p className="text-sm text-gray-500 mb-6">
+                {isZh
+                  ? "各分类下使用量最高的工具"
+                  : "Top tool in each category by usage"}
+              </p>
+              <div className="space-y-8">
+                {Object.entries(topByCategory).map(
+                  ([category, categoryTools]) => (
+                    <div key={category}>
+                      <h3 className="text-sm font-semibold text-gray-300 mb-3 uppercase tracking-wider">
+                        {category}
+                      </h3>
+                      <RankingsTable
+                        tools={categoryTools}
+                        locale={locale}
+                        showCalls={true}
+                        compact
+                      />
+                    </div>
+                  )
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
