@@ -81,7 +81,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   return (
     <Layout locale={locale} nav={t.nav} footer={t.footer} searchPlaceholder={t.hero.searchPlaceholder}>
       <div className="pt-24">
-        <article className="px-6 pb-16">
+        <article className="px-4 md:px-6 pb-16">
           <div className="max-w-3xl mx-auto">
             {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-sm text-gray-500 mb-8">
@@ -282,7 +282,7 @@ console.log(result.output.url);
         </article>
 
         {/* Related Articles */}
-        <section className="px-6 pb-16 border-t border-white/5 pt-16">
+        <section className="px-4 md:px-6 pb-16 border-t border-white/5 pt-16">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-2xl font-bold text-white mb-8">Related Articles</h2>
 
