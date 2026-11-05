@@ -21,12 +21,12 @@ body {
 
 /* Nav scrolled state */
 #main-nav {
-  transition: background-color 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
 }
 .nav-scrolled {
-  background-color: rgba(10, 10, 10, 0.8) !important;
+  background-color: rgba(10, 10, 10, 0.85) !important;
   backdrop-filter: blur(16px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
 /* Scroll-triggered animations */
