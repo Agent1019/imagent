@@ -138,6 +138,23 @@ export default async function Home() {
             </div>
           </div>
           <div className="flex items-center gap-3">
+            {/* MCP Copy Box */}
+            <div className="hidden md:flex items-center gap-2 bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 hover:border-white/20 transition">
+              <svg className="w-4 h-4 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <code className="text-xs text-gray-400 select-all">{t.hero.mcpCopy}</code>
+              <button
+                onClick={() => navigator.clipboard.writeText(t.hero.mcpCopy)}
+                className="ml-1 text-gray-500 hover:text-white transition"
+                title="Copy"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+              </button>
+            </div>
+
             {/* Language Dropdown */}
             <div className="relative group">
               <button className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition px-3 py-1.5 rounded-lg hover:bg-white/5">
@@ -200,26 +217,6 @@ export default async function Home() {
             <br className="hidden md:block" />
             {t.hero.subtitle2}
           </p>
-
-          {/* Search Bar */}
-          <div className="mt-10 max-w-xl mx-auto">
-            <div className="relative group">
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-orange-500/20 via-rose-500/20 to-purple-500/20 blur-xl opacity-0 group-focus-within:opacity-100 transition" />
-              <div className="relative flex items-center bg-white/5 border border-white/10 rounded-xl overflow-hidden focus-within:border-white/25 transition">
-                <svg className="w-5 h-5 ml-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <input
-                  type="text"
-                  placeholder={t.hero.searchPlaceholder}
-                  className="w-full px-4 py-4 bg-transparent text-white placeholder-gray-500 outline-none text-sm"
-                />
-                <kbd className="hidden md:flex items-center gap-1 mr-4 px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] text-gray-500">
-                  ⌘K
-                </kbd>
-              </div>
-            </div>
-          </div>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <a
