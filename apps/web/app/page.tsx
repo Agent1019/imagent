@@ -152,7 +152,7 @@ export default async function Home() {
               {t.hero.exploreBtn}
             </a>
             <a
-              href="/docs"
+              href="/publish"
               className="px-6 py-3 border border-white/15 rounded-lg font-medium hover:border-white/30 hover:bg-white/5 transition text-sm"
             >
               {t.hero.publishBtn}
