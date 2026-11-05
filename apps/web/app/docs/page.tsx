@@ -114,6 +114,36 @@ export default async function DocsPage() {
 
           {/* Main Content */}
           <div className="flex-1 min-w-0 max-w-3xl">
+            {/* Mobile Table of Contents */}
+            <details className="lg:hidden mb-8 rounded-lg border border-white/10 bg-white/5">
+              <summary className="cursor-pointer select-none px-4 py-3 text-sm font-medium text-white flex items-center justify-between">
+                <span>{zh ? "目录" : "Table of Contents"}</span>
+                <svg className="w-4 h-4 text-gray-400 transition-transform [[open]>&]:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <div className="px-4 pb-4 space-y-4">
+                {sidebarSections.map((section) => (
+                  <div key={section.titleEn}>
+                    <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1.5">
+                      {zh ? section.titleZh : section.titleEn}
+                    </h4>
+                    <div className="space-y-0.5">
+                      {section.items.map((item) => (
+                        <a
+                          key={item.labelEn}
+                          href={item.href}
+                          className="block px-3 py-1.5 rounded-md text-sm text-gray-400 hover:text-white hover:bg-white/5 transition"
+                        >
+                          {zh ? item.labelZh : item.labelEn}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </details>
+
             {/* H1 */}
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-6">
               {zh ? "Imagent 快速上手" : "Getting Started with Imagent"}

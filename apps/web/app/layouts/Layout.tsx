@@ -1,5 +1,6 @@
 import { type Locale, locales, domainMap, localeNames } from "@/lib/i18n/config";
 import NavSearch from "../components/NavSearch";
+import MobileNav from "../components/MobileNav";
 
 type NavContent = {
   explore: string;
@@ -48,8 +49,8 @@ export default function Layout({ locale, nav, footer, searchPlaceholder, childre
           <div className="flex items-center gap-3">
             <NavSearch placeholder={searchPlaceholder} />
 
-            {/* Language Dropdown */}
-            <div className="relative group">
+            {/* Language Dropdown - hidden on mobile, MobileNav handles it */}
+            <div className="hidden md:block relative group">
               <button className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition px-3 py-1.5 rounded-lg hover:bg-white/5">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
@@ -77,7 +78,7 @@ export default function Layout({ locale, nav, footer, searchPlaceholder, childre
               </div>
             </div>
 
-            <a href="/login" className="text-sm text-gray-400 hover:text-white transition px-3 py-1.5">
+            <a href="/login" className="hidden md:inline text-sm text-gray-400 hover:text-white transition px-3 py-1.5">
               {nav.signIn}
             </a>
             <a
@@ -86,6 +87,15 @@ export default function Layout({ locale, nav, footer, searchPlaceholder, childre
             >
               {nav.getStarted}
             </a>
+
+            {/* Mobile Navigation - visible only below md */}
+            <MobileNav
+              nav={nav}
+              locale={locale}
+              locales={locales}
+              domainMap={domainMap}
+              localeNames={localeNames}
+            />
           </div>
         </div>
       </nav>
