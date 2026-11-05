@@ -47,32 +47,32 @@ const en: Content = {
     mcpGuide: "Send this to your Agent",
     searchPlaceholder: "Search 10,000+ MCP servers...",
     exploreBtn: "Explore MCP Servers",
-    publishBtn: "Publish Your Server",
+    publishBtn: "View Quick Start",
   },
-  stats: { servers: "MCP Servers", calls: "API Calls / Month", publishers: "Tool Publishers", uptime: "Uptime SLA" },
+  stats: { servers: "MCP Servers", calls: "API Calls / Month", publishers: "Integrations", uptime: "Uptime SLA" },
   features: {
     title: "Everything agents need, in one place",
     subtitle: "From discovery to payment — a complete infrastructure for the agent-native economy.",
     discover: {
       title: "Discover",
-      desc: "Semantic search across thousands of MCP servers. Agents find the right tools by capability, not by name. Filter by protocol, trust score, and latency.",
+      desc: "Semantic search across thousands of MCP servers. Your agent finds the right tools by capability, not by name. Filter by protocol, trust score, and latency.",
     },
     auth: {
       title: "Authenticate",
-      desc: "OAuth 2.0 built for agent-to-tool interactions. Agents authenticate autonomously — no human in the loop. Scoped permissions, token rotation, and audit logs.",
+      desc: "OAuth 2.0 built for agent-to-tool interactions. Your agent authenticates autonomously — no human in the loop. Scoped permissions, token rotation, and audit logs.",
     },
     monetize: {
-      title: "Monetize",
-      desc: "Usage-based billing for every tool call. Publishers earn from their MCP servers. Agents pay per invocation with automatic metering and invoicing.",
+      title: "Pay as you go",
+      desc: "Only pay for what your agent uses. Every tool call is metered automatically — no subscriptions, no commitments. Transparent pricing with detailed usage dashboards.",
     },
   },
   howItWorks: {
     title: "How it works",
-    subtitle: "Three steps from zero to production",
+    subtitle: "Three steps to connect your agent to any tool",
     steps: [
-      { title: "Register your MCP server", desc: "Publish your server with a structured capability manifest. Imagent auto-generates documentation, validates your schema, and makes it discoverable." },
-      { title: "Agents discover and authenticate", desc: "Agents search by capability, evaluate trust scores, and authenticate via OAuth — all without human intervention. You define the permission scopes." },
-      { title: "Get paid for every call", desc: "Set your pricing model — per-call, tiered, or freemium. Imagent meters usage, handles billing, and deposits earnings to your account." },
+      { title: "Find the tools you need", desc: "Search by capability — \"generate PDF\", \"scrape web\", \"send email\" — and Imagent surfaces the best MCP servers ranked by trust score, latency, and price." },
+      { title: "Connect in one line", desc: "Add any tool to your agent with a single CLI command. Imagent handles authentication, protocol negotiation, and permission scoping automatically." },
+      { title: "Call and pay per use", desc: "Your agent invokes tools through a unified API. Usage is metered in real time, billing is automatic, and you only pay for successful calls." },
     ],
   },
   apiSection: {
@@ -89,14 +89,14 @@ const en: Content = {
   protocols: "Protocol-agnostic infrastructure",
   cta: {
     title: "Build the next agent economy",
-    subtitle: "Join thousands of publishers and agents building on imagent.",
+    subtitle: "Join thousands of developers connecting their agents to imagent.",
     primary: "Start Building — Free",
     secondary: "Read the Docs",
   },
-  footer: { tagline: "The infrastructure layer for AI agents. Discover, authenticate, and monetize.", product: "Product", developers: "Developers", company: "Company", copyright: "© 2026 imagent. All rights reserved." },
+  footer: { tagline: "The infrastructure layer for AI agents. Discover, authenticate, and pay per use.", product: "Product", developers: "Developers", company: "Company", copyright: "© 2026 imagent. All rights reserved." },
   seo: {
-    title: "Imagent — Discover, Authenticate & Monetize MCP Servers",
-    description: "The infrastructure layer for AI agents. Discover MCP servers, authenticate tool calls, and monetize usage — all in one platform.",
+    title: "Imagent — Discover, Authenticate & Use MCP Servers",
+    description: "The infrastructure layer for AI agents. Discover MCP servers, authenticate tool calls, and pay per use — all in one platform.",
   },
 };
 
@@ -112,32 +112,32 @@ const zh: Content = {
     mcpGuide: "发送给你的 Agent",
     searchPlaceholder: "搜索 10,000+ MCP Server...",
     exploreBtn: "探索 MCP Server",
-    publishBtn: "发布你的 Server",
+    publishBtn: "查看快速开始",
   },
-  stats: { servers: "MCP Server", calls: "月 API 调用量", publishers: "工具发布者", uptime: "可用性 SLA" },
+  stats: { servers: "MCP Server", calls: "月 API 调用量", publishers: "可用集成", uptime: "可用性 SLA" },
   features: {
     title: "Agent 所需的一切，一站搞定",
     subtitle: "从发现到支付 — Agent 原生经济的完整基础设施。",
     discover: {
       title: "发现",
-      desc: "跨数千个 MCP Server 的语义搜索。Agent 按能力查找工具，而非按名称。支持按协议、信任分数和延迟筛选。",
+      desc: "跨数千个 MCP Server 的语义搜索。你的 Agent 按能力查找工具，而非按名称。支持按协议、信任分数和延迟筛选。",
     },
     auth: {
       title: "认证",
-      desc: "专为 Agent 间交互设计的 OAuth 2.0。Agent 自主认证 — 无需人工介入。支持作用域权限、令牌轮换和审计日志。",
+      desc: "专为 Agent 交互设计的 OAuth 2.0。Agent 自主认证 — 无需人工介入。支持作用域权限、令牌轮换和审计日志。",
     },
     monetize: {
-      title: "变现",
-      desc: "每次工具调用按用量计费。发布者通过 MCP Server 获得收益。Agent 按次付费，自动计量和出账。",
+      title: "按量付费",
+      desc: "只为 Agent 实际使用的工具调用付费。每次调用自动计量 — 无需订阅、无需预付。透明定价，详细用量看板。",
     },
   },
   howItWorks: {
     title: "工作原理",
-    subtitle: "从零到上线，只需三步",
+    subtitle: "三步接入任意工具，从零到上线",
     steps: [
-      { title: "注册你的 MCP Server", desc: "用结构化能力清单发布你的 Server。Imagent 自动生成文档、验证 Schema、使其可被发现。" },
-      { title: "Agent 发现并认证", desc: "Agent 按能力搜索、评估信任分数、通过 OAuth 认证 — 全程无需人工介入。你定义权限范围。" },
-      { title: "每次调用都有收益", desc: "设置定价模型 — 按次、阶梯或免费增值。Imagent 计量用量、处理账单、将收益存入你的账户。" },
+      { title: "找到你需要的工具", desc: "按能力搜索 — \"生成 PDF\"、\"抓取网页\"、\"发送邮件\" — Imagent 按信任分数、延迟和价格为你排序最佳 MCP Server。" },
+      { title: "一行命令接入", desc: "一条 CLI 命令即可将任意工具添加到你的 Agent。Imagent 自动处理认证、协议协商和权限配置。" },
+      { title: "调用并按次付费", desc: "你的 Agent 通过统一 API 调用工具。用量实时计量，账单自动处理，只为成功调用付费。" },
     ],
   },
   apiSection: {
@@ -154,14 +154,14 @@ const zh: Content = {
   protocols: "协议无关的基础设施",
   cta: {
     title: "构建下一代 Agent 经济",
-    subtitle: "加入数千个发布者和 Agent，一起构建 imagent 生态。",
+    subtitle: "加入数千名开发者，将 Agent 接入 imagent 生态。",
     primary: "免费开始构建",
     secondary: "阅读文档",
   },
-  footer: { tagline: "AI Agent 的基础设施层。发现、认证、变现。", product: "产品", developers: "开发者", company: "公司", copyright: "© 2026 imagent. All rights reserved." },
+  footer: { tagline: "AI Agent 的基础设施层。发现、认证、按量付费。", product: "产品", developers: "开发者", company: "公司", copyright: "© 2026 imagent. All rights reserved." },
   seo: {
-    title: "Imagent — MCP Server 发现、认证与变现平台",
-    description: "AI Agent 的基础设施层。发现 MCP Server、认证工具调用、按用量计费 — 一个平台全覆盖。",
+    title: "Imagent — MCP Server 发现、认证与按量付费平台",
+    description: "AI Agent 的基础设施层。发现 MCP Server、认证工具调用、按用量付费 — 一个平台全覆盖。",
   },
 };
 
