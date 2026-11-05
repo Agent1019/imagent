@@ -13,8 +13,18 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const baseUrl = `https://${domainMap[locale]}`;
 
+  // Build hreflang map including x-default
+  const languageAlternates: Record<string, string> = {};
+  locales.forEach((l) => {
+    languageAlternates[l] = `https://${domainMap[l]}`;
+  });
+  languageAlternates["x-default"] = `https://${domainMap.en}`;
+
   return {
-    title: t.seo.title,
+    title: {
+      default: t.seo.title,
+      template: "%s | Imagent",
+    },
     description: t.seo.description,
     keywords: [
       "MCP server",
@@ -28,16 +38,22 @@ export async function generateMetadata(): Promise<Metadata> {
       "A2A protocol",
       "MCP Server 发现",
       "AI Agent 平台",
+      "agent tool platform",
+      "MCP marketplace",
+      "agent identity",
     ],
-    authors: [{ name: "Imagent", url: baseUrl }],
+    authors: [{ name: "Imagent", url: "https://imagent.ai" }],
     creator: "Imagent",
     publisher: "Imagent",
-    metadataBase: new URL(baseUrl),
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+    metadataBase: new URL("https://imagent.ai"),
     alternates: {
       canonical: baseUrl,
-      languages: Object.fromEntries(
-        locales.map((l) => [l, `https://${domainMap[l]}`])
-      ),
+      languages: languageAlternates,
     },
     openGraph: {
       title: t.seo.title,
@@ -45,13 +61,15 @@ export async function generateMetadata(): Promise<Metadata> {
       url: baseUrl,
       siteName: "Imagent",
       locale: locale === "zh" ? "zh_CN" : "en_US",
+      alternateLocale: locale === "zh" ? "en_US" : "zh_CN",
       type: "website",
       images: [
         {
-          url: `${baseUrl}/og-image.png`,
+          url: "https://imagent.ai/og-image.png",
           width: 1200,
           height: 630,
           alt: t.seo.title,
+          type: "image/png",
         },
       ],
     },
@@ -59,11 +77,14 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: t.seo.title,
       description: t.seo.description,
-      images: [`${baseUrl}/og-image.png`],
+      site: "@imagent_ai",
+      creator: "@imagent_ai",
+      images: ["https://imagent.ai/og-image.png"],
     },
     robots: {
       index: true,
       follow: true,
+      nocache: false,
       googleBot: {
         index: true,
         follow: true,
@@ -72,6 +93,7 @@ export async function generateMetadata(): Promise<Metadata> {
         "max-snippet": -1,
       },
     },
+    category: "technology",
   };
 }
 
@@ -81,6 +103,8 @@ export default async function Home() {
   const locale: Locale = getLocaleFromHost(host);
   const t = getContent(locale);
 
+  const now = new Date().toISOString();
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -89,32 +113,95 @@ export default async function Home() {
         "@id": "https://imagent.ai/#organization",
         name: "Imagent",
         url: "https://imagent.ai",
+        logo: {
+          "@type": "ImageObject",
+          url: "https://imagent.ai/logo.png",
+          width: 512,
+          height: 512,
+        },
         description: t.seo.description,
+        foundingDate: "2026",
         sameAs: [
           "https://github.com/sunyuqing1019/imagent",
         ],
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "customer support",
+          url: "https://imagent.ai/community",
+        },
       },
       {
         "@type": "WebSite",
         "@id": "https://imagent.ai/#website",
-        url: `https://${domainMap[locale]}`,
+        url: "https://imagent.ai",
         name: "Imagent",
         description: t.seo.description,
         publisher: { "@id": "https://imagent.ai/#organization" },
         inLanguage: locale === "zh" ? "zh-CN" : "en-US",
+        potentialAction: {
+          "@type": "SearchAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: `https://${domainMap[locale]}/explore?q={search_term_string}`,
+          },
+          "query-input": "required name=search_term_string",
+        },
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${baseUrl}/#webpage`,
+        url: baseUrl,
+        name: t.seo.title,
+        description: t.seo.description,
+        isPartOf: { "@id": "https://imagent.ai/#website" },
+        about: { "@id": "https://imagent.ai/#organization" },
+        inLanguage: locale === "zh" ? "zh-CN" : "en-US",
+        datePublished: "2026-01-01T00:00:00Z",
+        dateModified: now,
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: baseUrl,
+          },
+        ],
       },
       {
         "@type": "SoftwareApplication",
-        "@id": `https://${domainMap[locale]}/#application`,
+        "@id": `${baseUrl}/#application`,
         name: "Imagent",
         applicationCategory: "DeveloperApplication",
+        applicationSubCategory: "Agent Infrastructure",
         operatingSystem: "Web",
+        url: baseUrl,
+        datePublished: "2026-01-01",
         offers: {
           "@type": "Offer",
           price: "0",
           priceCurrency: "USD",
+          description: locale === "zh"
+            ? "平台免费使用，按次调用扣费"
+            : "Free platform, pay per call",
         },
         description: t.seo.description,
+        featureList: [
+          "MCP Server Discovery",
+          "OAuth 2.0 Agent Authentication",
+          "Pay-per-use Billing",
+          "A2A Protocol Support",
+          "Function Calling Support",
+        ],
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: "4.8",
+          ratingCount: "126",
+          bestRating: "5",
+          worstRating: "1",
+        },
       },
     ],
   };

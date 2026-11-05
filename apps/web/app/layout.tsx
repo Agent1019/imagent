@@ -1,19 +1,18 @@
-import type { Metadata } from "next";
+import { headers } from "next/headers";
+import { getLocaleFromHost } from "@/lib/i18n/config";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "Imagent — Discover, Authenticate & Monetize MCP Servers",
-  description:
-    "The infrastructure layer for AI agents. Discover MCP servers, authenticate tool calls, and monetize usage — all in one platform.",
-};
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const headersList = await headers();
+  const host = headersList.get("x-host") || headersList.get("host") || "imagent.ai";
+  const locale = getLocaleFromHost(host);
+
   return (
-    <html lang="en">
+    <html lang={locale === "zh" ? "zh-CN" : "en"}>
       <body>{children}</body>
     </html>
   );
