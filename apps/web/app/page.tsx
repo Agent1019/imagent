@@ -141,12 +141,6 @@ export default async function Home() {
             {t.hero.headline2}
           </p>
 
-          <p className="mt-6 text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            {t.hero.subtitle1}
-            <br className="hidden md:block" />
-            {t.hero.subtitle2}
-          </p>
-
           {/* MCP Copy Box */}
           <McpCopyBox text={t.hero.mcpCopy} guide={t.hero.mcpGuide} />
 
