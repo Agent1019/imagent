@@ -8,6 +8,7 @@ type Content = {
     headline2: string;
     subtitle1: string;
     subtitle2: string;
+    mcpCopy: string;
     searchPlaceholder: string;
     exploreBtn: string;
     publishBtn: string;
@@ -37,10 +38,11 @@ const en: Content = {
   nav: { explore: "Explore", docs: "Docs", pricing: "Pricing", signIn: "Sign in", getStarted: "Get Started" },
   hero: {
     badge: "Now supporting MCP, A2A, and Function Calling protocols",
-    headline1: "The Agent Identity Platform",
-    headline2: "MCP discover, authenticate, A2A trade",
+    headline1: "Imagent — Connect your Agent to a vast ecosystem",
+    headline2: "Capability auth · Zero re-auth · Free or pay-per-use",
     subtitle1: "One platform to connect agents with the tools they need.",
     subtitle2: "Supports MCP, A2A, and Function Calling protocols.",
+    mcpCopy: "npx @imagent/cli add",
     searchPlaceholder: "Search 10,000+ MCP servers...",
     exploreBtn: "Explore MCP Servers",
     publishBtn: "Publish Your Server",
@@ -100,10 +102,11 @@ const zh: Content = {
   nav: { explore: "探索", docs: "文档", pricing: "定价", signIn: "登录", getStarted: "免费开始" },
   hero: {
     badge: "现已支持 MCP、A2A 和 Function Calling 协议",
-    headline1: "Agent 身份平台",
-    headline2: "MCP 发现、认证、A2A 交易",
+    headline1: "Imagent——为你的Agent，连接海量生态",
+    headline2: "能力认证 · 免重复认证 · 免费/按量计费",
     subtitle1: "一个平台，连接 Agent 与海量工具生态",
     subtitle2: "支持 MCP、A2A、Function Calling 协议",
+    mcpCopy: "npx @imagent/cli add",
     searchPlaceholder: "搜索 10,000+ MCP Server...",
     exploreBtn: "探索 MCP Server",
     publishBtn: "发布你的 Server",
