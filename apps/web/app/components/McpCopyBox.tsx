@@ -15,7 +15,7 @@ export default function McpCopyBox({ text, guide }: { text: string; guide: strin
     <div className="mt-10 max-w-xl mx-auto">
       <p className="text-sm text-gray-500 mb-3">{guide}</p>
       <div className="flex items-center rounded-xl border border-white/10 bg-[#0d0d0d] p-2 shadow-lg shadow-black/30">
-        <span className="text-emerald-400/80 text-sm font-mono pl-2 pr-1 select-none shrink-0">$</span>
+        <span className="text-emerald-400/80 text-sm font-mono px-2 select-none shrink-0">$</span>
         <code className="flex-1 text-sm md:text-base text-gray-300 font-mono select-all truncate min-w-0 text-left">
           {text}
         </code>
@@ -32,7 +32,7 @@ export default function McpCopyBox({ text, guide }: { text: string; guide: strin
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
               </svg>
-              Copied!
+              Copied
             </>
           ) : (
             <>
