@@ -235,13 +235,13 @@ export default async function Home() {
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <a
               href="/explore"
-              className="px-6 py-3 bg-white text-black rounded-lg font-medium hover:bg-gray-200 transition text-sm"
+              className="px-6 py-3 bg-white text-black rounded-lg font-medium hover:bg-gray-200 hover:-translate-y-0.5 transition-all text-sm"
             >
               {t.hero.exploreBtn}
             </a>
             <a
               href="/publish"
-              className="px-6 py-3 border border-white/15 rounded-lg font-medium hover:border-white/30 hover:bg-white/5 transition text-sm"
+              className="px-6 py-3 border border-white/15 rounded-lg font-medium hover:border-white/30 hover:bg-white/5 hover:-translate-y-0.5 transition-all text-sm"
             >
               {t.hero.publishBtn}
             </a>
@@ -249,11 +249,18 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* Wave transition */}
+      <div className="relative -mt-1">
+        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 md:h-12" preserveAspectRatio="none">
+          <path d="M0 60V20C240 0 480 0 720 20C960 40 1200 40 1440 20V60H0Z" fill="#111111"/>
+        </svg>
+      </div>
+
       {/* MCP Ecosystem + Stats */}
       <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
         <div className="max-w-6xl mx-auto">
           {/* Module Title */}
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
+          <h2 className="text-3xl md:text-5xl font-bold text-center mb-12 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent" data-animate>
             {locale === "zh" ? "丰富的 MCP 生态" : "A Thriving MCP Ecosystem"}
           </h2>
 
@@ -266,7 +273,7 @@ export default async function Home() {
               { value: "99.9%", label: t.stats.uptime },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
-                <div className="text-2xl md:text-3xl font-bold">{stat.value}</div>
+                <div className="text-3xl md:text-5xl font-bold">{stat.value}</div>
                 <div className="text-sm text-gray-500 mt-1">{stat.label}</div>
               </div>
             ))}
@@ -320,11 +327,18 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* Wave transition */}
+      <div className="relative -mt-1 bg-[#111111]">
+        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 md:h-12" preserveAspectRatio="none">
+          <path d="M0 0V40C240 60 480 60 720 40C960 20 1200 20 1440 40V0H0Z" fill="#0a0a0a"/>
+        </svg>
+      </div>
+
       {/* Three Pillars */}
       <section className="py-16 md:py-24 px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold">{t.features.title}</h2>
+          <div className="text-center mb-16" data-animate>
+            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">{t.features.title}</h2>
             <p className="mt-4 text-gray-400 max-w-xl mx-auto">{t.features.subtitle}</p>
           </div>
 
@@ -379,10 +393,17 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* Wave transition */}
+      <div className="relative -mt-1">
+        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 md:h-12" preserveAspectRatio="none">
+          <path d="M0 60V20C360 0 720 40 1080 20C1260 10 1380 30 1440 20V60H0Z" fill="#111111"/>
+        </svg>
+      </div>
+
       {/* API Section */}
       <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-12 items-center" data-animate>
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 {t.apiSection.headline1}
@@ -437,9 +458,16 @@ console.log(result.usage);
         </div>
       </section>
 
+      {/* Wave transition */}
+      <div className="relative -mt-1 bg-[#111111]">
+        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 md:h-12" preserveAspectRatio="none">
+          <path d="M0 0V40C360 60 720 20 1080 40C1260 50 1380 30 1440 40V0H0Z" fill="#0a0a0a"/>
+        </svg>
+      </div>
+
       {/* Community + CTA */}
-      <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
-        <div className="max-w-5xl mx-auto">
+      <section className="py-16 md:py-24 px-4 md:px-6">
+        <div className="max-w-5xl mx-auto" data-animate>
           {/* CTA */}
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.cta.title}</h2>
@@ -447,13 +475,13 @@ console.log(result.usage);
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
                 href="/signup"
-                className="px-8 py-3.5 bg-white text-black rounded-lg font-medium hover:bg-gray-200 transition text-sm"
+                className="px-8 py-3.5 bg-white text-black rounded-lg font-medium hover:bg-gray-200 hover:-translate-y-0.5 transition-all text-sm"
               >
                 {t.cta.primary}
               </a>
               <a
                 href="/docs"
-                className="px-8 py-3.5 border border-white/15 rounded-lg font-medium hover:border-white/30 hover:bg-white/5 transition text-sm"
+                className="px-8 py-3.5 border border-white/15 rounded-lg font-medium hover:border-white/30 hover:bg-white/5 hover:-translate-y-0.5 transition-all text-sm"
               >
                 {t.cta.secondary}
               </a>

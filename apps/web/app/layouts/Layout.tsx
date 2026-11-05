@@ -1,5 +1,6 @@
 import { type Locale, locales, domainMap, localeNames } from "@/lib/i18n/config";
 import NavSearch from "../components/NavSearch";
+import ScrollEffects from "../components/ScrollEffects";
 import MobileNav from "../components/MobileNav";
 
 type NavContent = {
@@ -32,8 +33,10 @@ type LayoutProps = {
 export default function Layout({ locale, nav, footer, searchPlaceholder, children }: LayoutProps) {
   return (
     <>
+      <ScrollEffects />
+
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-[#0a0a0a]/80 backdrop-blur-xl">
+      <nav id="main-nav" className="fixed top-0 w-full z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-8">
             <a href="/" className="text-2xl font-bold tracking-tight">
