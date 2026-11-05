@@ -39,7 +39,7 @@ const en: Content = {
   nav: { explore: "Explore", rankings: "Rankings", blog: "Blog", community: "Community", docs: "Docs", pricing: "Pricing", signIn: "Sign in", getStarted: "Get Started" },
   hero: {
     badge: "Free platform · Pay per call · No subscriptions",
-    headline1: "Connect to Global Agent Services in One Go",
+    headline1: "The Agent Trading Platform",
     headline2: "Capability auth · Zero re-auth · Free or pay-per-use",
     subtitle1: "One platform to connect agents with the tools they need.",
     subtitle2: "Supports MCP, A2A, and Function Calling protocols.",
@@ -104,7 +104,7 @@ const zh: Content = {
   nav: { explore: "探索", rankings: "排行", blog: "博客", community: "社区", docs: "文档", pricing: "定价", signIn: "登录", getStarted: "免费开始" },
   hero: {
     badge: "平台免费 · 按次调用 · 无需订阅",
-    headline1: "一次连接全球 Agent 服务",
+    headline1: "Agent 交易平台",
     headline2: "能力认证 · 免重复认证 · 免费/按量计费",
     subtitle1: "一个平台，连接 Agent 与海量工具生态",
     subtitle2: "支持 MCP、A2A、Function Calling 协议",
