@@ -249,6 +249,8 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* Gradient transition */}
+      <div className="h-24 md:h-32 bg-gradient-to-b from-[#0a0a0a] to-[#111111]" />
 
       {/* MCP Ecosystem + Stats */}
       <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
