@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { getLocaleFromHost, type Locale, locales, domainMap, localeNames } from "@/lib/i18n/config";
 import { getContent } from "@/lib/i18n/content";
 import type { Metadata } from "next";
+import McpCopyBox from "./components/McpCopyBox";
 
 export async function generateMetadata(): Promise<Metadata> {
   const headersList = await headers();
@@ -139,21 +140,7 @@ export default async function Home() {
           </div>
           <div className="flex items-center gap-3">
             {/* MCP Copy Box */}
-            <div className="hidden md:flex items-center gap-2 bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 hover:border-white/20 transition">
-              <svg className="w-4 h-4 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <code className="text-xs text-gray-400 select-all">{t.hero.mcpCopy}</code>
-              <button
-                onClick={() => navigator.clipboard.writeText(t.hero.mcpCopy)}
-                className="ml-1 text-gray-500 hover:text-white transition"
-                title="Copy"
-              >
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-              </button>
-            </div>
+            <McpCopyBox text={t.hero.mcpCopy} />
 
             {/* Language Dropdown */}
             <div className="relative group">
