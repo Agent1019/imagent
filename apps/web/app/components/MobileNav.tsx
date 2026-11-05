@@ -6,6 +6,7 @@ type NavContent = {
   explore: string;
   rankings: string;
   blog: string;
+  community: string;
   docs: string;
   pricing: string;
   signIn: string;
@@ -54,6 +55,7 @@ export default function MobileNav({ nav, locale, locales, domainMap, localeNames
     { href: "/explore", label: nav.explore },
     { href: "/rankings", label: nav.rankings },
     { href: "/blog", label: nav.blog },
+    { href: "/community", label: nav.community },
     { href: "/docs", label: nav.docs },
     { href: "/pricing", label: nav.pricing },
   ];

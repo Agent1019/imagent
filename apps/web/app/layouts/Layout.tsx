@@ -6,6 +6,7 @@ type NavContent = {
   explore: string;
   rankings: string;
   blog: string;
+  community: string;
   docs: string;
   pricing: string;
   signIn: string;
@@ -42,6 +43,7 @@ export default function Layout({ locale, nav, footer, searchPlaceholder, childre
               <a href="/explore" className="hover:text-white transition">{nav.explore}</a>
               <a href="/rankings" className="hover:text-white transition">{nav.rankings}</a>
               <a href="/blog" className="hover:text-white transition">{nav.blog}</a>
+              <a href="/community" className="hover:text-white transition">{nav.community}</a>
               <a href="/docs" className="hover:text-white transition">{nav.docs}</a>
               <a href="/pricing" className="hover:text-white transition">{nav.pricing}</a>
             </div>

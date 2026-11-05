@@ -1,7 +1,7 @@
 import { type Locale } from "./config";
 
 type Content = {
-  nav: { explore: string; rankings: string; blog: string; docs: string; pricing: string; signIn: string; getStarted: string };
+  nav: { explore: string; rankings: string; blog: string; community: string; docs: string; pricing: string; signIn: string; getStarted: string };
   hero: {
     badge: string;
     headline1: string;
@@ -36,7 +36,7 @@ type Content = {
 };
 
 const en: Content = {
-  nav: { explore: "Explore", rankings: "Rankings", blog: "Blog", docs: "Docs", pricing: "Pricing", signIn: "Sign in", getStarted: "Get Started" },
+  nav: { explore: "Explore", rankings: "Rankings", blog: "Blog", community: "Community", docs: "Docs", pricing: "Pricing", signIn: "Sign in", getStarted: "Get Started" },
   hero: {
     badge: "Now supporting MCP, A2A, and Function Calling protocols",
     headline1: "Connect to Global Agent Services in One Go",
@@ -101,7 +101,7 @@ const en: Content = {
 };
 
 const zh: Content = {
-  nav: { explore: "探索", rankings: "排行", blog: "博客", docs: "文档", pricing: "定价", signIn: "登录", getStarted: "免费开始" },
+  nav: { explore: "探索", rankings: "排行", blog: "博客", community: "社区", docs: "文档", pricing: "定价", signIn: "登录", getStarted: "免费开始" },
   hero: {
     badge: "现已支持 MCP、A2A 和 Function Calling 协议",
     headline1: "一次连接全球 Agent 服务",
