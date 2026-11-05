@@ -249,11 +249,16 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Stats + Supported MCP Servers */}
+      {/* MCP Ecosystem + Stats */}
       <section className="py-16 md:py-24 px-4 md:px-6 border-y border-white/5">
         <div className="max-w-6xl mx-auto">
+          {/* Module Title */}
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
+            {locale === "zh" ? "丰富的 MCP 生态" : "A Thriving MCP Ecosystem"}
+          </h2>
+
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-14">
             {[
               { value: "10,000+", label: t.stats.servers },
               { value: "50M+", label: t.stats.calls },
@@ -267,53 +272,50 @@ export default async function Home() {
             ))}
           </div>
 
-          {/* Supported MCP Servers */}
-          <p className="text-center text-xs text-gray-600 uppercase tracking-widest mb-6">
-            {locale === "zh" ? "支持的 MCP Servers" : "Supported MCP Servers"}
-          </p>
-          {/* Row 1 */}
-          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-            {[
-              { name: "Firecrawl", color: "bg-orange-500" },
-              { name: "Brave Search", color: "bg-orange-600" },
-              { name: "Tavily", color: "bg-blue-500" },
-              { name: "Slack", color: "bg-purple-600" },
-              { name: "GitHub", color: "bg-gray-600" },
-              { name: "Notion", color: "bg-neutral-700" },
-              { name: "Stripe", color: "bg-indigo-500" },
-              { name: "Resend", color: "bg-black" },
-              { name: "Postgres", color: "bg-blue-600" },
-              { name: "Puppeteer", color: "bg-green-600" },
-            ].map((s) => (
-              <div key={s.name} className="shrink-0 flex items-center gap-2.5 px-4 py-2.5 rounded-lg border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04] transition">
-                <div className={`w-6 h-6 rounded-md ${s.color} flex items-center justify-center text-white text-xs font-bold`}>
-                  {s.name[0]}
-                </div>
-                <span className="text-sm text-gray-400 font-medium whitespace-nowrap">{s.name}</span>
+          {/* Server logos — single scroll container, two rows */}
+          <div className="overflow-x-auto scrollbar-hide">
+            <div className="min-w-max space-y-3">
+              {/* Row 1 */}
+              <div className="flex gap-3">
+                {[
+                  { name: "Firecrawl", domain: "firecrawl.dev" },
+                  { name: "Brave", domain: "brave.com" },
+                  { name: "Tavily", domain: "tavily.com" },
+                  { name: "Slack", domain: "slack.com" },
+                  { name: "GitHub", domain: "github.com" },
+                  { name: "Notion", domain: "notion.so" },
+                  { name: "Stripe", domain: "stripe.com" },
+                  { name: "Resend", domain: "resend.com" },
+                  { name: "Postgres", domain: "postgresql.org" },
+                  { name: "Puppeteer", domain: "pptr.dev" },
+                ].map((s) => (
+                  <div key={s.name} className="shrink-0 flex items-center gap-2.5 px-3.5 py-2 rounded-lg border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04] transition">
+                    <img src={`https://logo.clearbit.com/${s.domain}`} alt={s.name} className="w-5 h-5 rounded" loading="lazy" />
+                    <span className="text-sm text-gray-400 font-medium">{s.name}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          {/* Row 2 */}
-          <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
-            {[
-              { name: "Google Maps", color: "bg-red-500" },
-              { name: "E2B", color: "bg-yellow-500" },
-              { name: "Composio", color: "bg-violet-500" },
-              { name: "Browserbase", color: "bg-cyan-600" },
-              { name: "Apollo", color: "bg-blue-400" },
-              { name: "Linear", color: "bg-indigo-600" },
-              { name: "Supabase", color: "bg-emerald-600" },
-              { name: "Redis", color: "bg-red-600" },
-              { name: "MongoDB", color: "bg-green-500" },
-              { name: "Twilio", color: "bg-red-500" },
-            ].map((s) => (
-              <div key={s.name} className="shrink-0 flex items-center gap-2.5 px-4 py-2.5 rounded-lg border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04] transition">
-                <div className={`w-6 h-6 rounded-md ${s.color} flex items-center justify-center text-white text-xs font-bold`}>
-                  {s.name[0]}
-                </div>
-                <span className="text-sm text-gray-400 font-medium whitespace-nowrap">{s.name}</span>
+              {/* Row 2 */}
+              <div className="flex gap-3">
+                {[
+                  { name: "Google Maps", domain: "google.com" },
+                  { name: "E2B", domain: "e2b.dev" },
+                  { name: "Composio", domain: "composio.dev" },
+                  { name: "Browserbase", domain: "browserbase.com" },
+                  { name: "Apollo", domain: "apollo.io" },
+                  { name: "Linear", domain: "linear.app" },
+                  { name: "Supabase", domain: "supabase.com" },
+                  { name: "Redis", domain: "redis.io" },
+                  { name: "MongoDB", domain: "mongodb.com" },
+                  { name: "Twilio", domain: "twilio.com" },
+                ].map((s) => (
+                  <div key={s.name} className="shrink-0 flex items-center gap-2.5 px-3.5 py-2 rounded-lg border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04] transition">
+                    <img src={`https://logo.clearbit.com/${s.domain}`} alt={s.name} className="w-5 h-5 rounded" loading="lazy" />
+                    <span className="text-sm text-gray-400 font-medium">{s.name}</span>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
