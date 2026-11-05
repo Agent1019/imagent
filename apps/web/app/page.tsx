@@ -1,9 +1,9 @@
 import { headers } from "next/headers";
-import { getLocaleFromHost, type Locale, locales, domainMap, localeNames } from "@/lib/i18n/config";
+import { getLocaleFromHost, type Locale, locales, domainMap } from "@/lib/i18n/config";
 import { getContent } from "@/lib/i18n/content";
 import type { Metadata } from "next";
 import McpCopyBox from "./components/McpCopyBox";
-import NavSearch from "./components/NavSearch";
+import Layout from "./layouts/Layout";
 
 export async function generateMetadata(): Promise<Metadata> {
   const headersList = await headers();
@@ -120,70 +120,11 @@ export default async function Home() {
   };
 
   return (
-    <>
+    <Layout locale={locale} nav={t.nav} footer={t.footer} searchPlaceholder={t.hero.searchPlaceholder}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-[#0a0a0a]/80 backdrop-blur-xl">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-8">
-            <a href="/" className="text-xl font-bold tracking-tight">
-              Imagent
-            </a>
-            <div className="hidden md:flex items-center gap-6 text-sm text-gray-400">
-              <a href="/explore" className="hover:text-white transition">{t.nav.explore}</a>
-              <a href="/docs" className="hover:text-white transition">{t.nav.docs}</a>
-              <a href="/pricing" className="hover:text-white transition">{t.nav.pricing}</a>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            {/* Nav Search Icon */}
-            <NavSearch placeholder={t.hero.searchPlaceholder} />
-
-            {/* Language Dropdown */}
-            <div className="relative group">
-              <button className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition px-3 py-1.5 rounded-lg hover:bg-white/5">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
-                </svg>
-                <span>{locale.toUpperCase()}</span>
-                <svg className="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              <div className="absolute right-0 top-full mt-1 w-36 bg-[#1a1a1a] border border-white/10 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150">
-                {locales.map((l) => (
-                  <a
-                    key={l}
-                    href={`https://${domainMap[l]}`}
-                    className={`flex items-center gap-2 px-3 py-2 text-sm first:rounded-t-lg last:rounded-b-lg transition ${
-                      locale === l
-                        ? "text-white bg-white/10"
-                        : "text-gray-400 hover:text-white hover:bg-white/5"
-                    }`}
-                  >
-                    <span className="text-xs">{l === "en" ? "🇺🇸" : "🇨🇳"}</span>
-                    {localeNames[l]}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <a href="/login" className="text-sm text-gray-400 hover:text-white transition px-3 py-1.5">
-              {t.nav.signIn}
-            </a>
-            <a
-              href="/signup"
-              className="text-sm bg-white text-black px-4 py-1.5 rounded-lg font-medium hover:bg-gray-200 transition"
-            >
-              {t.nav.getStarted}
-            </a>
-          </div>
-        </div>
-      </nav>
 
       {/* Hero */}
       <section className="pt-32 pb-20 px-6">
@@ -426,49 +367,6 @@ console.log(result.usage);
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="py-12 px-6 border-t border-white/5">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-            <div>
-              <div className="text-lg font-bold mb-4">imagent</div>
-              <p className="text-xs text-gray-500 leading-relaxed">{t.footer.tagline}</p>
-            </div>
-            <div>
-              <div className="text-sm font-semibold mb-3 text-gray-300">{t.footer.product}</div>
-              <div className="space-y-2 text-sm text-gray-500">
-                <a href="/explore" className="block hover:text-white transition">Explore</a>
-                <a href="/pricing" className="block hover:text-white transition">Pricing</a>
-                <a href="/changelog" className="block hover:text-white transition">Changelog</a>
-              </div>
-            </div>
-            <div>
-              <div className="text-sm font-semibold mb-3 text-gray-300">{t.footer.developers}</div>
-              <div className="space-y-2 text-sm text-gray-500">
-                <a href="/docs" className="block hover:text-white transition">Documentation</a>
-                <a href="/api" className="block hover:text-white transition">API Reference</a>
-                <a href="/status" className="block hover:text-white transition">Status</a>
-              </div>
-            </div>
-            <div>
-              <div className="text-sm font-semibold mb-3 text-gray-300">{t.footer.company}</div>
-              <div className="space-y-2 text-sm text-gray-500">
-                <a href="/about" className="block hover:text-white transition">About</a>
-                <a href="/blog" className="block hover:text-white transition">Blog</a>
-                <a href="/careers" className="block hover:text-white transition">Careers</a>
-              </div>
-            </div>
-          </div>
-          <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
-            <span>{t.footer.copyright}</span>
-            <div className="flex gap-6 mt-4 md:mt-0">
-              <a href="/privacy" className="hover:text-white transition">Privacy</a>
-              <a href="/terms" className="hover:text-white transition">Terms</a>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </>
+    </Layout>
   );
 }
