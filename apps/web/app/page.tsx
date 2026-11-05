@@ -332,7 +332,7 @@ export default async function Home() {
             <p className="mt-4 text-gray-400 max-w-xl mx-auto">{t.features.subtitle}</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="flex md:grid md:grid-cols-3 gap-4 md:gap-6 overflow-x-auto scrollbar-hide md:overflow-visible pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0">
             {[
               {
                 icon: (
@@ -368,7 +368,7 @@ export default async function Home() {
                 bg: "bg-purple-500/10",
               },
             ].map((card) => (
-              <div key={card.title} className="group relative rounded-2xl border border-white/5 bg-white/[0.02] p-6 md:p-8 hover:border-white/10 hover:bg-white/[0.04] transition">
+              <div key={card.title} className="group relative rounded-2xl border border-white/5 bg-white/[0.02] p-6 md:p-8 hover:border-white/10 hover:bg-white/[0.04] transition min-w-[280px] md:min-w-0 shrink-0 md:shrink">
                 <div className={`w-12 h-12 rounded-xl ${card.bg} flex items-center justify-center mb-5`}>
                   {card.icon}
                 </div>
@@ -467,7 +467,7 @@ console.log(result.usage);
           </div>
 
           {/* Community Channels */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {[
               {
                 name: "GitHub",
@@ -517,7 +517,7 @@ console.log(result.usage);
               <a
                 key={item.name}
                 href={item.href}
-                className="group flex flex-col items-center gap-3 p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04] transition text-center"
+                className="group flex flex-col items-center gap-2 md:gap-3 p-4 md:p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04] transition text-center"
               >
                 <div className={`${item.color} opacity-70 group-hover:opacity-100 transition`}>
                   {item.icon}
