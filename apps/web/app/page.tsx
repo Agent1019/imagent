@@ -158,7 +158,7 @@ export default async function Home() {
               {t.hero.exploreBtn}
             </a>
             <a
-              href="/publish"
+              href="/docs"
               className="px-6 py-3 border border-white/15 rounded-lg font-medium hover:border-white/30 hover:bg-white/5 transition text-sm"
             >
               {t.hero.publishBtn}
@@ -224,7 +224,7 @@ export default async function Home() {
                 ),
                 title: t.features.monetize.title,
                 desc: t.features.monetize.desc,
-                code: <><span className="text-amber-400">POST</span> /api/v1/billing/meter<br /><span className="text-gray-500">{"{ \"calls\": 1, \"cost\": \"$0.001\" }"}</span></>,
+                code: <><span className="text-amber-400">GET</span> /api/v1/usage<br /><span className="text-gray-500">{"{ \"calls\": 142, \"cost\": \"$0.14\" }"}</span></>,
                 bg: "bg-purple-500/10",
               },
             ].map((card) => (
