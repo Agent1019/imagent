@@ -3,6 +3,8 @@ import NavSearch from "../components/NavSearch";
 
 type NavContent = {
   explore: string;
+  rankings: string;
+  blog: string;
   docs: string;
   pricing: string;
   signIn: string;
@@ -37,8 +39,8 @@ export default function Layout({ locale, nav, footer, searchPlaceholder, childre
             </a>
             <div className="hidden md:flex items-center gap-6 text-sm text-gray-400">
               <a href="/explore" className="hover:text-white transition">{nav.explore}</a>
-              <a href="/rankings" className="hover:text-white transition">Rankings</a>
-              <a href="/blog" className="hover:text-white transition">Blog</a>
+              <a href="/rankings" className="hover:text-white transition">{nav.rankings}</a>
+              <a href="/blog" className="hover:text-white transition">{nav.blog}</a>
               <a href="/docs" className="hover:text-white transition">{nav.docs}</a>
               <a href="/pricing" className="hover:text-white transition">{nav.pricing}</a>
             </div>

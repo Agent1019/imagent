@@ -104,7 +104,7 @@ export default async function RankingsPage() {
     >
       {/* Hero */}
       <section className="pt-32 pb-20 px-4 md:px-6 border-b border-white/5">
-        <div className="max-w-7xl mx-auto text-center">
+        <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
             {isZh ? "Agent 工具排行榜" : "Agent Rankings"}
           </h1>
@@ -128,7 +128,7 @@ export default async function RankingsPage() {
 
       {/* Rankings Content */}
       <section className="py-24 px-4 md:px-6">
-        <div className="max-w-7xl mx-auto space-y-16">
+        <div className="max-w-6xl mx-auto space-y-16">
           {/* Most Used */}
           <div>
             <h2 className="text-2xl font-bold mb-2">
