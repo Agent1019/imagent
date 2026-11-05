@@ -107,7 +107,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     <Layout locale={locale} nav={t.nav} footer={t.footer} searchPlaceholder={t.hero.searchPlaceholder}>
       <div className="pt-24">
         {/* Hero */}
-        <section className="px-6 pb-16">
+        <section className="px-4 md:px-6 pb-16">
           <div className="max-w-5xl mx-auto">
             <div className="flex flex-wrap items-center gap-3 mb-6">
               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">
@@ -151,7 +151,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         </section>
 
         {/* Endpoints */}
-        <section className="px-6 py-16 border-t border-white/5">
+        <section className="px-4 md:px-6 py-16 border-t border-white/5">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-2xl font-bold text-white mb-2">Endpoints</h2>
             <p className="text-gray-400 mb-8">Available API endpoints for this MCP server.</p>
@@ -182,7 +182,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         </section>
 
         {/* Pricing */}
-        <section className="px-6 py-16 border-t border-white/5">
+        <section className="px-4 md:px-6 py-16 border-t border-white/5">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-2xl font-bold text-white mb-2">Pricing</h2>
             <p className="text-gray-400 mb-10">Choose the plan that fits your usage. All plans include core functionality.</p>
@@ -234,7 +234,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         </section>
 
         {/* Related Tools */}
-        <section className="px-6 py-16 border-t border-white/5">
+        <section className="px-4 md:px-6 py-16 border-t border-white/5">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-2xl font-bold text-white mb-2">Related Tools</h2>
             <p className="text-gray-400 mb-8">Other MCP servers that complement {toolName}.</p>
