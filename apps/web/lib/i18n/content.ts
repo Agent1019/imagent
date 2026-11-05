@@ -47,7 +47,7 @@ const en: Content = {
     mcpGuide: "Send this to your Agent",
     searchPlaceholder: "Search 10,000+ MCP servers...",
     exploreBtn: "Explore MCP Servers",
-    publishBtn: "View Quick Start",
+    publishBtn: "Publish Server",
   },
   stats: { servers: "MCP Servers", calls: "API Calls / Month", publishers: "Integrations", uptime: "Uptime SLA" },
   features: {
@@ -112,7 +112,7 @@ const zh: Content = {
     mcpGuide: "发送给你的 Agent",
     searchPlaceholder: "搜索 10,000+ MCP Server...",
     exploreBtn: "探索 MCP Server",
-    publishBtn: "查看快速开始",
+    publishBtn: "发布 Server",
   },
   stats: { servers: "MCP Server", calls: "月 API 调用量", publishers: "可用集成", uptime: "可用性 SLA" },
   features: {
