@@ -299,8 +299,8 @@ function RankingsTable({
   const isZh = locale === "zh";
 
   return (
-    <div className="rounded-xl border border-white/5 overflow-hidden">
-      <table className="w-full text-sm">
+    <div className="rounded-xl border border-white/5 overflow-x-auto">
+      <table className="w-full min-w-[500px] text-sm">
         <thead>
           <tr className="border-b border-white/5 bg-white/[0.02]">
             <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider w-12">

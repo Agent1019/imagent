@@ -134,7 +134,7 @@ export default async function Home() {
             {t.hero.badge}
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1]">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[1.1]">
             {t.hero.headline1}
           </h1>
           <p className="mt-4 text-xl md:text-2xl font-medium bg-gradient-to-r from-orange-400 via-rose-400 to-purple-400 bg-clip-text text-transparent">
@@ -168,7 +168,7 @@ export default async function Home() {
       </section>
 
       {/* Stats */}
-      <section className="py-24 px-4 md:px-6 border-y border-white/5">
+      <section className="py-16 md:py-24 px-4 md:px-6 border-y border-white/5">
         <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
           {[
             { value: "10,000+", label: t.stats.servers },
@@ -185,7 +185,7 @@ export default async function Home() {
       </section>
 
       {/* Three Pillars */}
-      <section className="py-24 px-4 md:px-6">
+      <section className="py-16 md:py-24 px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold">{t.features.title}</h2>
@@ -228,7 +228,7 @@ export default async function Home() {
                 bg: "bg-purple-500/10",
               },
             ].map((card) => (
-              <div key={card.title} className="group relative rounded-2xl border border-white/5 bg-white/[0.02] p-8 hover:border-white/10 hover:bg-white/[0.04] transition">
+              <div key={card.title} className="group relative rounded-2xl border border-white/5 bg-white/[0.02] p-6 md:p-8 hover:border-white/10 hover:bg-white/[0.04] transition">
                 <div className={`w-12 h-12 rounded-xl ${card.bg} flex items-center justify-center mb-5`}>
                   {card.icon}
                 </div>
@@ -244,7 +244,7 @@ export default async function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="py-24 px-4 md:px-6 border-t border-white/5">
+      <section className="py-16 md:py-24 px-4 md:px-6 border-t border-white/5">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold">{t.howItWorks.title}</h2>
@@ -270,7 +270,7 @@ export default async function Home() {
       </section>
 
       {/* API Section */}
-      <section className="py-24 px-4 md:px-6 border-t border-white/5">
+      <section className="py-16 md:py-24 px-4 md:px-6 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -333,10 +333,10 @@ console.log(result.usage);
       </section>
 
       {/* Protocol Support */}
-      <section className="py-24 px-4 md:px-6 border-t border-white/5">
+      <section className="py-16 md:py-24 px-4 md:px-6 border-t border-white/5">
         <div className="max-w-5xl mx-auto text-center">
           <p className="text-sm text-gray-500 mb-6">{t.protocols}</p>
-          <div className="flex flex-wrap justify-center gap-8 items-center opacity-40">
+          <div className="flex flex-wrap justify-center gap-4 md:gap-8 items-center opacity-40">
             {["MCP", "A2A", "OpenAI", "Anthropic", "LangChain", "CrewAI"].map((name) => (
               <span key={name} className="text-lg font-semibold text-gray-400 tracking-wide">
                 {name}
@@ -347,7 +347,7 @@ console.log(result.usage);
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-4 md:px-6 border-t border-white/5">
+      <section className="py-16 md:py-24 px-4 md:px-6 border-t border-white/5">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.cta.title}</h2>
           <p className="text-gray-400 mb-8">{t.cta.subtitle}</p>
