@@ -3,6 +3,7 @@ import { getLocaleFromHost, type Locale, locales, domainMap, localeNames } from 
 import { getContent } from "@/lib/i18n/content";
 import type { Metadata } from "next";
 import McpCopyBox from "./components/McpCopyBox";
+import NavSearch from "./components/NavSearch";
 
 export async function generateMetadata(): Promise<Metadata> {
   const headersList = await headers();
@@ -139,8 +140,8 @@ export default async function Home() {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            {/* MCP Copy Box */}
-            <McpCopyBox text={t.hero.mcpCopy} />
+            {/* Nav Search Icon */}
+            <NavSearch placeholder={t.hero.searchPlaceholder} />
 
             {/* Language Dropdown */}
             <div className="relative group">
@@ -204,6 +205,9 @@ export default async function Home() {
             <br className="hidden md:block" />
             {t.hero.subtitle2}
           </p>
+
+          {/* MCP Copy Box */}
+          <McpCopyBox text={t.hero.mcpCopy} guide={t.hero.mcpGuide} />
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <a
