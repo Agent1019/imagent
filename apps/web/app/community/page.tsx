@@ -4,489 +4,846 @@ import { getContent } from "@/lib/i18n/content";
 import Layout from "@/app/layouts/Layout";
 import type { Metadata } from "next";
 
+/* ================================================================== */
+/*  METADATA                                                          */
+/* ================================================================== */
+
 export async function generateMetadata(): Promise<Metadata> {
   const headersList = await headers();
-  const host = headersList.get("x-host") || headersList.get("host") || "imagent.ai";
+  const host =
+    headersList.get("x-host") || headersList.get("host") || "imagent.ai";
   const locale = getLocaleFromHost(host);
 
   return {
     title: locale === "zh" ? "社区 - Imagent" : "Community - Imagent",
-    robots: { index: false, follow: false },
     description:
       locale === "zh"
-        ? "加入 Imagent 社区 — 与全球开发者一起构建 Agent 生态。"
-        : "Join the Imagent community — build the agent ecosystem with developers worldwide.",
+        ? "加入 Imagent 社区论坛 — 与全球开发者交流 MCP 开发、Agent 框架与工具分享。"
+        : "Join the Imagent community forum — discuss MCP development, agent frameworks, and tool sharing with developers worldwide.",
+    robots: { index: false, follow: false },
   };
 }
 
-/* ------------------------------------------------------------------ */
-/*  GitHub Icon                                                       */
-/* ------------------------------------------------------------------ */
-function GitHubIcon() {
+/* ================================================================== */
+/*  TYPES & DATA                                                      */
+/* ================================================================== */
+
+type Category = {
+  key: string;
+  en: string;
+  zh: string;
+};
+
+const categories: Category[] = [
+  { key: "all", en: "All", zh: "全部" },
+  { key: "mcp", en: "MCP Development", zh: "MCP 开发" },
+  { key: "agent", en: "Agent Framework", zh: "Agent 框架" },
+  { key: "tools", en: "Tool Sharing", zh: "工具分享" },
+  { key: "qa", en: "Q&A", zh: "问答" },
+  { key: "announcements", en: "Announcements", zh: "公告" },
+];
+
+type Post = {
+  id: number;
+  category: string;
+  categoryColor: string;
+  titleEn: string;
+  titleZh: string;
+  excerptEn: string;
+  excerptZh: string;
+  authorName: string;
+  authorInitials: string;
+  authorColor: string;
+  timeEn: string;
+  timeZh: string;
+  replies: number;
+  views: number;
+  pinned: boolean;
+};
+
+const posts: Post[] = [
+  {
+    id: 1,
+    category: "announcements",
+    categoryColor: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+    titleEn: "Imagent v2.0 Released — New Plugin Architecture & MCP 2025 Support",
+    titleZh: "Imagent v2.0 发布 — 全新插件架构与 MCP 2025 支持",
+    excerptEn:
+      "We are excited to announce the release of Imagent v2.0, featuring a completely redesigned plugin system, native MCP 2025 protocol support, and significant performance improvements across the board.",
+    excerptZh:
+      "我们很高兴宣布 Imagent v2.0 正式发布，带来全新设计的插件系统、原生 MCP 2025 协议支持，以及全面的性能提升。",
+    authorName: "Alex Kim",
+    authorInitials: "AK",
+    authorColor: "bg-violet-500",
+    timeEn: "2h ago",
+    timeZh: "2 小时前",
+    replies: 47,
+    views: 1823,
+    pinned: true,
+  },
+  {
+    id: 2,
+    category: "announcements",
+    categoryColor: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+    titleEn: "Community Guidelines Update — Please Read Before Posting",
+    titleZh: "社区准则更新 — 发帖前请阅读",
+    excerptEn:
+      "We have updated our community guidelines to better reflect our growing community. Please take a moment to review the new rules around code sharing, respectful discussion, and content attribution.",
+    excerptZh:
+      "我们更新了社区准则，以更好地适应不断壮大的社区。请花一点时间阅读关于代码分享、尊重讨论和内容署名的新规则。",
+    authorName: "Sara Ramirez",
+    authorInitials: "SR",
+    authorColor: "bg-blue-500",
+    timeEn: "3d ago",
+    timeZh: "3 天前",
+    replies: 12,
+    views: 4210,
+    pinned: true,
+  },
+  {
+    id: 3,
+    category: "mcp",
+    categoryColor: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    titleEn: "Best Practices for MCP Server Versioning and Backwards Compatibility",
+    titleZh: "MCP Server 版本管理与向后兼容的最佳实践",
+    excerptEn:
+      "How do you handle breaking changes in your MCP server schemas without disrupting downstream agents? Sharing my approach using semantic versioning and capability negotiation patterns.",
+    excerptZh:
+      "如何在不影响下游 Agent 的前提下处理 MCP Server Schema 的破坏性变更？分享我使用语义化版本和能力协商模式的方法。",
+    authorName: "Jun Li",
+    authorInitials: "JL",
+    authorColor: "bg-emerald-500",
+    timeEn: "4h ago",
+    timeZh: "4 小时前",
+    replies: 34,
+    views: 892,
+    pinned: false,
+  },
+  {
+    id: 4,
+    category: "agent",
+    categoryColor: "bg-violet-500/10 text-violet-400 border-violet-500/20",
+    titleEn: "Multi-Agent Orchestration Patterns with A2A Protocol",
+    titleZh: "基于 A2A 协议的多 Agent 编排模式",
+    excerptEn:
+      "Sharing my experience building a pipeline of 5 agents that collaborate on document analysis tasks. Covers fan-out, fan-in, and consensus patterns with real benchmarks.",
+    excerptZh:
+      "分享我构建 5 个 Agent 协作完成文档分析流水线的经验。涵盖扇出、扇入和共识模式，附真实基准测试数据。",
+    authorName: "Maya Patel",
+    authorInitials: "MP",
+    authorColor: "bg-amber-500",
+    timeEn: "6h ago",
+    timeZh: "6 小时前",
+    replies: 28,
+    views: 654,
+    pinned: false,
+  },
+  {
+    id: 5,
+    category: "tools",
+    categoryColor: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    titleEn: "Building a Custom MCP Server for Internal APIs — Lessons Learned",
+    titleZh: "为内部 API 构建自定义 MCP Server — 经验总结",
+    excerptEn:
+      "A walkthrough of wrapping 12 REST endpoints into a single MCP server with auth and rate limiting. Includes code samples and the pitfalls I encountered along the way.",
+    excerptZh:
+      "将 12 个 REST 端点封装为带认证和限流的单个 MCP Server 的完整实践。包含代码示例和踩坑记录。",
+    authorName: "Tomás Navarro",
+    authorInitials: "TN",
+    authorColor: "bg-rose-500",
+    timeEn: "8h ago",
+    timeZh: "8 小时前",
+    replies: 19,
+    views: 437,
+    pinned: false,
+  },
+  {
+    id: 6,
+    category: "qa",
+    categoryColor: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
+    titleEn: "Agent Identity Tokens vs API Keys — Which Should You Use?",
+    titleZh: "Agent 身份令牌 vs API Key — 你该选哪个？",
+    excerptEn:
+      "Comparing security models for agent-to-tool authentication in production environments. Looking for real-world experience reports from teams running agents at scale.",
+    excerptZh:
+      "对比生产环境中 Agent 到工具认证的安全模型。希望收集在大规模运行 Agent 的团队的实际经验。",
+    authorName: "Yuki Watanabe",
+    authorInitials: "YW",
+    authorColor: "bg-cyan-500",
+    timeEn: "12h ago",
+    timeZh: "12 小时前",
+    replies: 42,
+    views: 1105,
+    pinned: false,
+  },
+  {
+    id: 7,
+    category: "mcp",
+    categoryColor: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    titleEn: "RFC: Standardized Capability Manifest Format for Tool Discovery",
+    titleZh: "RFC: 用于工具发现的标准化能力清单格式",
+    excerptEn:
+      "Proposing a unified manifest spec that works across MCP, A2A, and Function Calling protocols. Would love feedback from server authors and registry maintainers.",
+    excerptZh:
+      "提议一种跨 MCP、A2A 和 Function Calling 协议的统一清单规范。期待 Server 作者和注册表维护者的反馈。",
+    authorName: "Omar Benali",
+    authorInitials: "OB",
+    authorColor: "bg-orange-500",
+    timeEn: "1d ago",
+    timeZh: "1 天前",
+    replies: 56,
+    views: 1342,
+    pinned: false,
+  },
+  {
+    id: 8,
+    category: "tools",
+    categoryColor: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    titleEn: "I Built a Slack MCP Server — Here Is the Source Code",
+    titleZh: "我做了一个 Slack MCP Server — 附源码",
+    excerptEn:
+      "Open-source MCP server that lets agents read channels, send messages, and manage threads via Slack API. Fully tested with Imagent and ready for production use.",
+    excerptZh:
+      "开源 MCP Server，让 Agent 通过 Slack API 读取频道、发送消息和管理会话线程。已通过 Imagent 完整测试，可用于生产环境。",
+    authorName: "Lena Chen",
+    authorInitials: "LC",
+    authorColor: "bg-pink-500",
+    timeEn: "1d ago",
+    timeZh: "1 天前",
+    replies: 71,
+    views: 2890,
+    pinned: false,
+  },
+  {
+    id: 9,
+    category: "agent",
+    categoryColor: "bg-violet-500/10 text-violet-400 border-violet-500/20",
+    titleEn: "How to Handle Long-Running Agent Tasks Without Timeout Failures",
+    titleZh: "如何处理长时间运行的 Agent 任务而不超时失败",
+    excerptEn:
+      "Deep dive into checkpoint-based execution, heartbeat mechanisms, and graceful degradation strategies for agents that need to run tasks lasting more than 30 minutes.",
+    excerptZh:
+      "深入探讨检查点执行、心跳机制和优雅降级策略，适用于需要运行超过 30 分钟任务的 Agent。",
+    authorName: "Alex Kim",
+    authorInitials: "AK",
+    authorColor: "bg-violet-500",
+    timeEn: "2d ago",
+    timeZh: "2 天前",
+    replies: 23,
+    views: 567,
+    pinned: false,
+  },
+  {
+    id: 10,
+    category: "qa",
+    categoryColor: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
+    titleEn: "Why Is My MCP Server Returning Stale Cached Responses?",
+    titleZh: "为什么我的 MCP Server 返回过期的缓存响应？",
+    excerptEn:
+      "Running into an issue where my MCP server seems to cache tool call results even when the underlying data has changed. Has anyone dealt with cache invalidation in MCP?",
+    excerptZh:
+      "遇到一个问题，即使底层数据已更改，我的 MCP Server 似乎仍然缓存工具调用的结果。有人处理过 MCP 中的缓存失效问题吗？",
+    authorName: "Priya Sharma",
+    authorInitials: "PS",
+    authorColor: "bg-teal-500",
+    timeEn: "2d ago",
+    timeZh: "2 天前",
+    replies: 15,
+    views: 324,
+    pinned: false,
+  },
+  {
+    id: 11,
+    category: "mcp",
+    categoryColor: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    titleEn: "Streaming Responses in MCP Servers — Implementation Guide",
+    titleZh: "MCP Server 中的流式响应 — 实现指南",
+    excerptEn:
+      "A step-by-step guide to implementing server-sent events and streaming responses in your MCP server. Covers backpressure handling, chunking strategies, and client integration.",
+    excerptZh:
+      "在 MCP Server 中实现服务器推送事件和流式响应的分步指南。涵盖背压处理、分块策略和客户端集成。",
+    authorName: "Marcus Johnson",
+    authorInitials: "MJ",
+    authorColor: "bg-indigo-500",
+    timeEn: "3d ago",
+    timeZh: "3 天前",
+    replies: 38,
+    views: 1456,
+    pinned: false,
+  },
+  {
+    id: 12,
+    category: "agent",
+    categoryColor: "bg-violet-500/10 text-violet-400 border-violet-500/20",
+    titleEn: "Comparing Agent Frameworks: Imagent vs LangGraph vs CrewAI in Production",
+    titleZh: "Agent 框架对比：Imagent vs LangGraph vs CrewAI 生产环境实测",
+    excerptEn:
+      "Ran all three frameworks through the same 10-task benchmark over 2 weeks. Sharing latency numbers, error rates, token costs, and my honest take on where each shines.",
+    excerptZh:
+      "在 2 周内用相同的 10 项任务基准测试了三个框架。分享延迟数据、错误率、Token 成本，以及我对各自优势的客观评价。",
+    authorName: "Sara Ramirez",
+    authorInitials: "SR",
+    authorColor: "bg-blue-500",
+    timeEn: "4d ago",
+    timeZh: "4 天前",
+    replies: 89,
+    views: 3567,
+    pinned: false,
+  },
+];
+
+const topContributors = [
+  {
+    name: "Alex Kim",
+    initials: "AK",
+    color: "bg-violet-500",
+    posts: 142,
+  },
+  {
+    name: "Sara Ramirez",
+    initials: "SR",
+    color: "bg-blue-500",
+    posts: 118,
+  },
+  {
+    name: "Jun Li",
+    initials: "JL",
+    color: "bg-emerald-500",
+    posts: 95,
+  },
+  {
+    name: "Maya Patel",
+    initials: "MP",
+    color: "bg-amber-500",
+    posts: 83,
+  },
+  {
+    name: "Lena Chen",
+    initials: "LC",
+    color: "bg-pink-500",
+    posts: 71,
+  },
+];
+
+/* ================================================================== */
+/*  SVG ICONS                                                         */
+/* ================================================================== */
+
+function ChatIcon({ className }: { className?: string }) {
   return (
-    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+    <svg
+      className={className ?? "w-4 h-4"}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+        d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"
+      />
     </svg>
   );
 }
 
-/* ------------------------------------------------------------------ */
-/*  Discord Icon                                                      */
-/* ------------------------------------------------------------------ */
-function DiscordIcon() {
+function EyeIcon({ className }: { className?: string }) {
   return (
-    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+    <svg
+      className={className ?? "w-4 h-4"}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+        d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+      />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+      />
     </svg>
   );
 }
 
-/* ------------------------------------------------------------------ */
-/*  X / Twitter Icon                                                  */
-/* ------------------------------------------------------------------ */
-function XIcon() {
+function PinIcon({ className }: { className?: string }) {
   return (
-    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    <svg
+      className={className ?? "w-3.5 h-3.5"}
+      fill="currentColor"
+      viewBox="0 0 20 20"
+    >
+      <path d="M10 2a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 2zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 15zm-8-5a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5A.75.75 0 012 10zm13 0a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5A.75.75 0 0115 10zm-2.05-4.95a.75.75 0 010 1.06l-1.06 1.06a.75.75 0 01-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-7.78 7.78a.75.75 0 010 1.06l-1.06 1.06a.75.75 0 01-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zM5.05 5.05a.75.75 0 011.06 0l1.06 1.06a.75.75 0 11-1.06 1.06L5.05 6.11a.75.75 0 010-1.06zm7.78 7.78a.75.75 0 011.06 0l1.06 1.06a.75.75 0 11-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06z" />
     </svg>
   );
 }
 
-/* ------------------------------------------------------------------ */
-/*  Forum / Message Icon                                              */
-/* ------------------------------------------------------------------ */
-function ForumIcon() {
+function ChevronLeftIcon({ className }: { className?: string }) {
   return (
-    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+    <svg
+      className={className ?? "w-4 h-4"}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M15 19l-7-7 7-7"
+      />
     </svg>
   );
 }
 
-/* ------------------------------------------------------------------ */
-/*  Arrow Icon (reusable)                                             */
-/* ------------------------------------------------------------------ */
-function ArrowRightIcon({ className }: { className?: string }) {
+function ChevronRightIcon({ className }: { className?: string }) {
   return (
-    <svg className={className ?? "w-4 h-4"} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+    <svg
+      className={className ?? "w-4 h-4"}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M9 5l7 7-7 7"
+      />
     </svg>
   );
+}
+
+function PlusIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className ?? "w-4 h-4"}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M12 4.5v15m7.5-7.5h-15"
+      />
+    </svg>
+  );
+}
+
+function UsersIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className ?? "w-5 h-5"}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+        d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
+      />
+    </svg>
+  );
+}
+
+function DocumentIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className ?? "w-5 h-5"}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+        d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
+      />
+    </svg>
+  );
+}
+
+function SignalIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className ?? "w-5 h-5"}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+        d="M9.348 14.651a3.75 3.75 0 010-5.303m5.304 0a3.75 3.75 0 010 5.303m-7.425 2.122a6.75 6.75 0 010-9.546m9.546 0a6.75 6.75 0 010 9.546M5.106 18.894c-3.808-3.808-3.808-9.98 0-13.789m13.788 0c3.808 3.808 3.808 9.98 0 13.789M12 12h.008v.007H12V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+      />
+    </svg>
+  );
+}
+
+/* ================================================================== */
+/*  HELPERS                                                           */
+/* ================================================================== */
+
+function getCategoryLabel(
+  categoryKey: string,
+  locale: Locale
+): string {
+  const cat = categories.find((c) => c.key === categoryKey);
+  if (!cat) return categoryKey;
+  return locale === "zh" ? cat.zh : cat.en;
 }
 
 /* ================================================================== */
 /*  PAGE                                                              */
 /* ================================================================== */
 
-export default async function CommunityPage() {
+export default async function CommunityPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string }>;
+}) {
   const headersList = await headers();
-  const host = headersList.get("x-host") || headersList.get("host") || "imagent.ai";
+  const host =
+    headersList.get("x-host") || headersList.get("host") || "imagent.ai";
   const locale: Locale = getLocaleFromHost(host);
   const t = getContent(locale);
   const zh = locale === "zh";
 
-  /* ---------- data ---------- */
+  const { category: activeCategory = "all" } = await searchParams;
 
-  const channels = [
-    {
-      icon: <GitHubIcon />,
-      name: "GitHub",
-      descEn: "Open source contributions — browse code, file issues, and submit pull requests.",
-      descZh: "开源贡献 — 浏览代码、提交 Issue 和 Pull Request。",
-      countEn: "2.4k Stars",
-      countZh: "2.4k Stars",
-      href: "https://github.com/sunyuqing1019/imagent",
-      ctaEn: "Star & Contribute",
-      ctaZh: "Star & 贡献",
-    },
-    {
-      icon: <DiscordIcon />,
-      name: "Discord",
-      descEn: "Real-time chat with developers — get help, share ideas, and collaborate.",
-      descZh: "与开发者实时交流 — 获取帮助、分享想法、协同合作。",
-      countEn: "3,200+ Members",
-      countZh: "3,200+ 成员",
-      href: "https://discord.gg/imagent",
-      ctaEn: "Join Server",
-      ctaZh: "加入服务器",
-    },
-    {
-      icon: <XIcon />,
-      name: "Twitter / X",
-      descEn: "Latest news, product updates, and community highlights.",
-      descZh: "最新动态、产品更新与社区精选。",
-      countEn: "8.5k Followers",
-      countZh: "8.5k 关注者",
-      href: "https://x.com/imaboratAI",
-      ctaEn: "Follow",
-      ctaZh: "关注",
-    },
-    {
-      icon: <ForumIcon />,
-      name: "Forum",
-      descEn: "In-depth discussions, Q&A, and long-form knowledge sharing.",
-      descZh: "深度讨论、问答交流与长文知识分享。",
-      countEn: "1,800+ Topics",
-      countZh: "1,800+ 话题",
-      href: "https://forum.imagent.ai",
-      ctaEn: "Browse Topics",
-      ctaZh: "浏览话题",
-    },
-  ];
+  /* Filter posts */
+  const filteredPosts =
+    activeCategory === "all"
+      ? posts
+      : posts.filter((p) => p.category === activeCategory);
 
-  const discussions = [
-    {
-      tag: "MCP",
-      titleEn: "Best practices for MCP server versioning and backwards compatibility",
-      titleZh: "MCP Server 版本管理与向后兼容的最佳实践",
-      excerptEn: "How do you handle breaking changes in your MCP server schemas without disrupting downstream agents?",
-      excerptZh: "如何在不影响下游 Agent 的前提下处理 MCP Server Schema 的破坏性变更？",
-      replies: 34,
-      timeEn: "2h ago",
-      timeZh: "2 小时前",
-    },
-    {
-      tag: "Agents",
-      titleEn: "Multi-agent orchestration patterns with A2A protocol",
-      titleZh: "基于 A2A 协议的多 Agent 编排模式",
-      excerptEn: "Sharing my experience building a pipeline of 5 agents that collaborate on document analysis tasks.",
-      excerptZh: "分享我构建 5 个 Agent 协作完成文档分析任务流水线的经验。",
-      replies: 28,
-      timeEn: "5h ago",
-      timeZh: "5 小时前",
-    },
-    {
-      tag: "Tools",
-      titleEn: "Building a custom MCP server for internal APIs — lessons learned",
-      titleZh: "为内部 API 构建自定义 MCP Server — 经验总结",
-      excerptEn: "A walkthrough of wrapping 12 REST endpoints into a single MCP server with auth and rate limiting.",
-      excerptZh: "将 12 个 REST 端点封装为带认证和限流的单个 MCP Server 的完整实践。",
-      replies: 19,
-      timeEn: "8h ago",
-      timeZh: "8 小时前",
-    },
-    {
-      tag: "Security",
-      titleEn: "Agent identity tokens vs API keys — which should you use?",
-      titleZh: "Agent 身份令牌 vs API Key — 你该选哪个？",
-      excerptEn: "Comparing security models for agent-to-tool authentication in production environments.",
-      excerptZh: "对比生产环境中 Agent 到工具认证的安全模型。",
-      replies: 42,
-      timeEn: "1d ago",
-      timeZh: "1 天前",
-    },
-    {
-      tag: "Ecosystem",
-      titleEn: "RFC: Standardized capability manifest format for tool discovery",
-      titleZh: "RFC: 用于工具发现的标准化能力清单格式",
-      excerptEn: "Proposing a unified manifest spec that works across MCP, A2A, and Function Calling protocols.",
-      excerptZh: "提议一种跨 MCP、A2A 和 Function Calling 协议的统一清单规范。",
-      replies: 56,
-      timeEn: "1d ago",
-      timeZh: "1 天前",
-    },
-    {
-      tag: "Show & Tell",
-      titleEn: "I built a Slack MCP server — here is the source code",
-      titleZh: "我做了一个 Slack MCP Server — 附源码",
-      excerptEn: "Open-source MCP server that lets agents read channels, send messages, and manage threads via Slack API.",
-      excerptZh: "开源 MCP Server，让 Agent 通过 Slack API 读取频道、发送消息和管理会话线程。",
-      replies: 71,
-      timeEn: "2d ago",
-      timeZh: "2 天前",
-    },
-  ];
-
-  const contributors = [
-    { initials: "AK", name: "Alex Kim", contributions: 342, badge: "Core", color: "bg-violet-500" },
-    { initials: "SR", name: "Sara Ramirez", contributions: 287, badge: "Core", color: "bg-blue-500" },
-    { initials: "JL", name: "Jun Li", contributions: 213, badge: "Core", color: "bg-emerald-500" },
-    { initials: "MP", name: "Maya Patel", contributions: 198, badge: "Active", color: "bg-amber-500" },
-    { initials: "TN", name: "Tomás Navarro", contributions: 156, badge: "Active", color: "bg-rose-500" },
-    { initials: "YW", name: "Yuki Watanabe", contributions: 134, badge: "Active", color: "bg-cyan-500" },
-    { initials: "OB", name: "Omar Benali", contributions: 89, badge: "New", color: "bg-orange-500" },
-    { initials: "LC", name: "Lena Chen", contributions: 67, badge: "New", color: "bg-pink-500" },
-  ];
-
-  const events = [
-    {
-      month: zh ? "4月" : "APR",
-      day: "18",
-      titleEn: "MCP Server Building Webinar",
-      titleZh: "MCP Server 构建线上研讨会",
-      descEn: "Learn to build and publish your first MCP server in 60 minutes. Live Q&A with the core team.",
-      descZh: "60 分钟内学会构建并发布你的第一个 MCP Server。与核心团队在线问答。",
-      type: "Webinar",
-      typeZh: "线上研讨",
-    },
-    {
-      month: zh ? "5月" : "MAY",
-      day: "03",
-      titleEn: "Agent Hackathon 2026",
-      titleZh: "Agent Hackathon 2026",
-      descEn: "48-hour virtual hackathon. Build agent tools, win prizes, and get featured on the registry.",
-      descZh: "48 小时线上黑客松。构建 Agent 工具、赢取奖品，并获推荐至注册表。",
-      type: "Hackathon",
-      typeZh: "黑客松",
-    },
-    {
-      month: zh ? "5月" : "MAY",
-      day: "22",
-      titleEn: "SF Agent Dev Meetup",
-      titleZh: "旧金山 Agent 开发者聚会",
-      descEn: "In-person meetup in San Francisco. Lightning talks, demos, and networking with the community.",
-      descZh: "旧金山线下聚会。闪电演讲、Demo 展示与社区交流。",
-      type: "Meetup",
-      typeZh: "线下聚会",
-    },
-  ];
-
-  const badgeStyles: Record<string, string> = {
-    Core: "bg-violet-500/10 text-violet-400 border-violet-500/20",
-    Active: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-    New: "bg-amber-500/10 text-amber-400 border-amber-500/20",
-  };
-
-  const tagColors: Record<string, string> = {
-    MCP: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-    Agents: "bg-violet-500/10 text-violet-400 border-violet-500/20",
-    Tools: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-    Security: "bg-rose-500/10 text-rose-400 border-rose-500/20",
-    Ecosystem: "bg-amber-500/10 text-amber-400 border-amber-500/20",
-    "Show & Tell": "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
-  };
+  /* Sort: pinned first, then by id desc */
+  const sortedPosts = [...filteredPosts].sort((a, b) => {
+    if (a.pinned && !b.pinned) return -1;
+    if (!a.pinned && b.pinned) return 1;
+    return b.id - a.id;
+  });
 
   return (
-    <Layout locale={locale} nav={t.nav} footer={t.footer} searchPlaceholder={t.hero.searchPlaceholder}>
+    <Layout
+      locale={locale}
+      nav={t.nav}
+      footer={t.footer}
+      searchPlaceholder={t.hero.searchPlaceholder}
+    >
       <div className="bg-[#0a0a0a] min-h-screen">
         {/* ============================================================ */}
-        {/*  HERO                                                        */}
+        {/*  HEADER                                                      */}
         {/* ============================================================ */}
-        <section className="pt-32 pb-16 px-4 md:px-6">
-          <div className="max-w-5xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
-              {zh ? "社区" : "Community"}
-            </h1>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-10">
-              {zh
-                ? "与全球开发者一起，构建下一代 Agent 基础设施生态。分享知识、贡献代码、共同成长。"
-                : "Build the next-generation agent infrastructure ecosystem with developers worldwide. Share knowledge, contribute code, and grow together."}
-            </p>
-
-            {/* Stats */}
-            <div className="flex flex-wrap justify-center gap-8 md:gap-14">
+        <section className="pt-28 pb-8 px-4 md:px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
               <div>
-                <div className="text-3xl font-bold text-white">5,000+</div>
-                <div className="text-sm text-gray-500 mt-1">
-                  {zh ? "社区成员" : "Members"}
-                </div>
+                <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2">
+                  {zh ? "社区" : "Community"}
+                </h1>
+                <p className="text-gray-400 text-base max-w-xl">
+                  {zh
+                    ? "与全球开发者交流 MCP 开发经验、分享 Agent 工具、解答技术难题。"
+                    : "Discuss MCP development, share agent tools, and solve technical challenges with developers worldwide."}
+                </p>
               </div>
-              <div>
-                <div className="text-3xl font-bold text-white">200+</div>
-                <div className="text-sm text-gray-500 mt-1">
-                  {zh ? "贡献者" : "Contributors"}
-                </div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-white">50+</div>
-                <div className="text-sm text-gray-500 mt-1">
-                  {zh ? "国家和地区" : "Countries"}
-                </div>
-              </div>
+              <a
+                href="/community/new"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white text-black rounded-lg text-sm font-semibold hover:bg-gray-200 transition shrink-0"
+              >
+                <PlusIcon className="w-4 h-4" />
+                {zh ? "发帖" : "New Post"}
+              </a>
             </div>
           </div>
         </section>
 
         {/* ============================================================ */}
-        {/*  COMMUNITY CHANNELS                                          */}
+        {/*  CATEGORY TABS                                               */}
         {/* ============================================================ */}
-        <section className="py-16 px-4 md:px-6">
+        <section className="px-4 md:px-6 pb-6">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold text-white text-center mb-10">
-              {zh ? "加入社区" : "Community Channels"}
-            </h2>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {channels.map((ch) => (
-                <div
-                  key={ch.name}
-                  className="rounded-xl border border-white/5 bg-white/[0.02] p-6 flex flex-col hover:border-white/10 hover:bg-white/[0.04] transition group"
-                >
-                  <div className="text-gray-400 mb-4 group-hover:text-white transition">
-                    {ch.icon}
-                  </div>
-                  <h3 className="text-base font-semibold text-white mb-1">{ch.name}</h3>
-                  <p className="text-sm text-gray-500 leading-relaxed mb-4 flex-1">
-                    {zh ? ch.descZh : ch.descEn}
-                  </p>
-                  <div className="text-xs text-gray-600 mb-4">
-                    {zh ? ch.countZh : ch.countEn}
-                  </div>
+            <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide">
+              {categories.map((cat) => {
+                const isActive = activeCategory === cat.key;
+                const href =
+                  cat.key === "all"
+                    ? "/community"
+                    : `/community?category=${cat.key}`;
+                return (
                   <a
-                    href={ch.href}
-                    className="inline-flex items-center justify-center gap-1.5 w-full py-2.5 rounded-lg text-sm font-medium border border-white/10 text-white hover:border-white/25 hover:bg-white/5 transition"
+                    key={cat.key}
+                    href={href}
+                    className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap border transition ${
+                      isActive
+                        ? "bg-white/10 text-white border-white/20"
+                        : "text-gray-400 border-white/5 hover:text-white hover:border-white/10 hover:bg-white/5"
+                    }`}
                   >
-                    {zh ? ch.ctaZh : ch.ctaEn}
-                    <ArrowRightIcon className="w-3.5 h-3.5" />
+                    {zh ? cat.zh : cat.en}
                   </a>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
 
         {/* ============================================================ */}
-        {/*  FEATURED DISCUSSIONS                                        */}
+        {/*  MAIN CONTENT + SIDEBAR                                      */}
         {/* ============================================================ */}
-        <section className="py-16 px-4 md:px-6">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold text-white text-center mb-10">
-              {zh ? "热门话题" : "Hot Topics"}
-            </h2>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {discussions.map((d) => (
-                <a
-                  key={d.titleEn}
-                  href="https://forum.imagent.ai"
-                  className="rounded-xl border border-white/5 bg-white/[0.02] p-5 hover:border-white/10 hover:bg-white/[0.04] transition block"
-                >
-                  <span
-                    className={`inline-block text-xs font-medium px-2.5 py-0.5 rounded-full border mb-3 ${tagColors[d.tag] ?? "bg-white/5 text-gray-400 border-white/10"}`}
-                  >
-                    {d.tag}
-                  </span>
-                  <h3 className="text-sm font-semibold text-white mb-2 leading-snug">
-                    {zh ? d.titleZh : d.titleEn}
-                  </h3>
-                  <p className="text-xs text-gray-500 leading-relaxed mb-4">
-                    {zh ? d.excerptZh : d.excerptEn}
+        <section className="px-4 md:px-6 pb-16">
+          <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-8">
+            {/* -------------------------------------------------------- */}
+            {/*  POST LIST                                               */}
+            {/* -------------------------------------------------------- */}
+            <div className="flex-1 min-w-0">
+              {sortedPosts.length === 0 ? (
+                <div className="rounded-xl border border-white/5 bg-white/[0.02] p-12 text-center">
+                  <p className="text-gray-500">
+                    {zh
+                      ? "该分类下暂无帖子。"
+                      : "No posts in this category yet."}
                   </p>
-                  <div className="flex items-center gap-4 text-xs text-gray-600">
-                    <span className="flex items-center gap-1">
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
-                      </svg>
-                      {d.replies} {zh ? "回复" : "replies"}
-                    </span>
-                    <span>{zh ? d.timeZh : d.timeEn}</span>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ============================================================ */}
-        {/*  TOP CONTRIBUTORS                                            */}
-        {/* ============================================================ */}
-        <section className="py-16 px-4 md:px-6">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold text-white text-center mb-10">
-              {zh ? "贡献者" : "Top Contributors"}
-            </h2>
-
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-              {contributors.map((c) => (
-                <div
-                  key={c.name}
-                  className="rounded-xl border border-white/5 bg-white/[0.02] p-5 flex flex-col items-center text-center hover:border-white/10 hover:bg-white/[0.04] transition"
-                >
-                  {/* Avatar placeholder */}
-                  <div className={`w-12 h-12 rounded-full ${c.color} flex items-center justify-center text-white text-sm font-bold mb-3`}>
-                    {c.initials}
-                  </div>
-                  <h3 className="text-sm font-semibold text-white mb-0.5">{c.name}</h3>
-                  <p className="text-xs text-gray-500 mb-2">
-                    {c.contributions} {zh ? "次贡献" : "contributions"}
-                  </p>
-                  <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${badgeStyles[c.badge]}`}>
-                    {c.badge}
-                  </span>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
+              ) : (
+                <div className="space-y-3">
+                  {sortedPosts.map((post) => (
+                    <a
+                      key={post.id}
+                      href={`/community/${post.id}`}
+                      className="block rounded-xl border border-white/5 bg-white/[0.02] p-5 hover:border-white/10 hover:bg-white/[0.04] transition group"
+                    >
+                      {/* Top row: badge + pin */}
+                      <div className="flex items-center gap-2 mb-2.5">
+                        <span
+                          className={`inline-flex items-center text-xs font-medium px-2.5 py-0.5 rounded-full border ${post.categoryColor}`}
+                        >
+                          {getCategoryLabel(post.category, locale)}
+                        </span>
+                        {post.pinned && (
+                          <span className="inline-flex items-center gap-1 text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-full">
+                            <PinIcon className="w-3 h-3" />
+                            {zh ? "置顶" : "Pinned"}
+                          </span>
+                        )}
+                      </div>
 
-        {/* ============================================================ */}
-        {/*  EVENTS                                                      */}
-        {/* ============================================================ */}
-        <section className="py-16 px-4 md:px-6">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold text-white text-center mb-10">
-              {zh ? "近期活动" : "Upcoming Events"}
-            </h2>
-
-            <div className="grid md:grid-cols-3 gap-5">
-              {events.map((ev) => (
-                <div
-                  key={ev.titleEn}
-                  className="rounded-xl border border-white/5 bg-white/[0.02] p-6 hover:border-white/10 hover:bg-white/[0.04] transition flex flex-col"
-                >
-                  {/* Date badge */}
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="shrink-0 w-14 h-14 rounded-lg bg-white/5 border border-white/10 flex flex-col items-center justify-center">
-                      <span className="text-xs text-gray-500 font-medium leading-none">{ev.month}</span>
-                      <span className="text-xl font-bold text-white leading-tight">{ev.day}</span>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <span className="inline-block text-xs font-medium px-2 py-0.5 rounded-full bg-white/5 text-gray-400 border border-white/10 mb-2">
-                        {zh ? ev.typeZh : ev.type}
-                      </span>
-                      <h3 className="text-sm font-semibold text-white leading-snug">
-                        {zh ? ev.titleZh : ev.titleEn}
+                      {/* Title */}
+                      <h3 className="text-base font-semibold text-white mb-1.5 leading-snug group-hover:underline">
+                        {zh ? post.titleZh : post.titleEn}
                       </h3>
-                    </div>
-                  </div>
 
-                  <p className="text-xs text-gray-500 leading-relaxed mb-5 flex-1">
-                    {zh ? ev.descZh : ev.descEn}
-                  </p>
+                      {/* Excerpt */}
+                      <p className="text-sm text-gray-400 leading-relaxed mb-3 line-clamp-2">
+                        {zh ? post.excerptZh : post.excerptEn}
+                      </p>
 
-                  <a
-                    href="#"
-                    className="inline-flex items-center justify-center w-full py-2.5 rounded-lg text-sm font-medium border border-white/10 text-white hover:border-white/25 hover:bg-white/5 transition"
-                  >
-                    RSVP
-                  </a>
+                      {/* Bottom row */}
+                      <div className="flex items-center gap-3 text-xs text-gray-500">
+                        {/* Author */}
+                        <div className="flex items-center gap-2">
+                          <div
+                            className={`w-6 h-6 rounded-full ${post.authorColor} flex items-center justify-center text-white text-[10px] font-bold`}
+                          >
+                            {post.authorInitials}
+                          </div>
+                          <span className="text-gray-400">
+                            {post.authorName}
+                          </span>
+                        </div>
+
+                        <span className="text-gray-700">&middot;</span>
+
+                        {/* Time */}
+                        <span>{zh ? post.timeZh : post.timeEn}</span>
+
+                        <span className="text-gray-700">&middot;</span>
+
+                        {/* Replies */}
+                        <span className="flex items-center gap-1">
+                          <ChatIcon className="w-3.5 h-3.5" />
+                          {post.replies}
+                        </span>
+
+                        {/* Views */}
+                        <span className="flex items-center gap-1">
+                          <EyeIcon className="w-3.5 h-3.5" />
+                          {post.views.toLocaleString()}
+                        </span>
+                      </div>
+                    </a>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
+              )}
 
-        {/* ============================================================ */}
-        {/*  CTA                                                         */}
-        {/* ============================================================ */}
-        <section className="py-20 px-4 md:px-6">
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-10">
-              <h2 className="text-2xl font-bold text-white mb-3">
-                {zh ? "开始贡献" : "Start Contributing"}
-              </h2>
-              <p className="text-gray-400 mb-6">
-                {zh
-                  ? "Imagent 是开源项目。无论是修复 Bug、编写文档还是提交新功能，每一份贡献都让生态变得更好。"
-                  : "Imagent is open source. Whether it is fixing bugs, writing docs, or building new features — every contribution makes the ecosystem better."}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              {/* ------------------------------------------------------ */}
+              {/*  PAGINATION                                            */}
+              {/* ------------------------------------------------------ */}
+              <div className="flex items-center justify-center gap-2 mt-8">
+                <span className="inline-flex items-center gap-1 px-3 py-2 rounded-lg text-sm text-gray-600 border border-white/5 cursor-default">
+                  <ChevronLeftIcon className="w-4 h-4" />
+                  {zh ? "上一页" : "Previous"}
+                </span>
+                <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-medium bg-white/10 text-white border border-white/20">
+                  1
+                </span>
                 <a
-                  href="https://github.com/sunyuqing1019/imagent"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-black rounded-lg text-sm font-medium hover:bg-gray-200 transition"
+                  href={
+                    activeCategory === "all"
+                      ? "/community?page=2"
+                      : `/community?category=${activeCategory}&page=2`
+                  }
+                  className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm text-gray-400 border border-white/5 hover:border-white/10 hover:bg-white/5 transition"
                 >
-                  <GitHubIcon />
-                  GitHub
+                  2
                 </a>
                 <a
-                  href="/docs"
-                  className="inline-flex items-center justify-center gap-1.5 px-6 py-3 border border-white/15 rounded-lg text-sm font-medium text-white hover:border-white/30 hover:bg-white/5 transition"
+                  href={
+                    activeCategory === "all"
+                      ? "/community?page=3"
+                      : `/community?category=${activeCategory}&page=3`
+                  }
+                  className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm text-gray-400 border border-white/5 hover:border-white/10 hover:bg-white/5 transition"
                 >
-                  {zh ? "阅读文档" : "Read the Docs"}
-                  <ArrowRightIcon className="w-3.5 h-3.5" />
+                  3
+                </a>
+                <a
+                  href={
+                    activeCategory === "all"
+                      ? "/community?page=2"
+                      : `/community?category=${activeCategory}&page=2`
+                  }
+                  className="inline-flex items-center gap-1 px-3 py-2 rounded-lg text-sm text-gray-400 border border-white/5 hover:border-white/10 hover:bg-white/5 transition"
+                >
+                  {zh ? "下一页" : "Next"}
+                  <ChevronRightIcon className="w-4 h-4" />
                 </a>
               </div>
             </div>
+
+            {/* -------------------------------------------------------- */}
+            {/*  SIDEBAR                                                 */}
+            {/* -------------------------------------------------------- */}
+            <aside className="hidden lg:block lg:w-72 shrink-0 space-y-5">
+              {/* Community Stats */}
+              <div className="rounded-xl border border-white/5 bg-white/[0.02] p-5">
+                <h3 className="text-sm font-semibold text-white mb-4">
+                  {zh ? "社区统计" : "Community Stats"}
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2 text-sm text-gray-400">
+                      <UsersIcon className="w-4 h-4" />
+                      {zh ? "成员" : "Members"}
+                    </span>
+                    <span className="text-sm font-medium text-white">
+                      5,247
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2 text-sm text-gray-400">
+                      <DocumentIcon className="w-4 h-4" />
+                      {zh ? "帖子" : "Posts"}
+                    </span>
+                    <span className="text-sm font-medium text-white">
+                      1,834
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2 text-sm text-gray-400">
+                      <SignalIcon className="w-4 h-4" />
+                      {zh ? "在线" : "Online"}
+                    </span>
+                    <span className="text-sm font-medium text-emerald-400">
+                      127
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Top Contributors */}
+              <div className="rounded-xl border border-white/5 bg-white/[0.02] p-5">
+                <h3 className="text-sm font-semibold text-white mb-4">
+                  {zh ? "活跃贡献者" : "Top Contributors"}
+                </h3>
+                <div className="space-y-3">
+                  {topContributors.map((c, i) => (
+                    <div
+                      key={c.name}
+                      className="flex items-center gap-3"
+                    >
+                      <span className="text-xs text-gray-600 w-4 text-right">
+                        {i + 1}
+                      </span>
+                      <div
+                        className={`w-7 h-7 rounded-full ${c.color} flex items-center justify-center text-white text-[10px] font-bold`}
+                      >
+                        {c.initials}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm text-white truncate">
+                          {c.name}
+                        </div>
+                      </div>
+                      <span className="text-xs text-gray-500">
+                        {c.posts} {zh ? "帖" : "posts"}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Community Guidelines */}
+              <div className="rounded-xl border border-white/5 bg-white/[0.02] p-5">
+                <h3 className="text-sm font-semibold text-white mb-4">
+                  {zh ? "社区准则" : "Community Guidelines"}
+                </h3>
+                <ul className="space-y-2 text-xs text-gray-400 leading-relaxed">
+                  <li className="flex gap-2">
+                    <span className="text-gray-600 shrink-0">1.</span>
+                    {zh
+                      ? "尊重他人，保持友善和建设性的讨论氛围。"
+                      : "Be respectful and maintain a constructive discussion atmosphere."}
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-gray-600 shrink-0">2.</span>
+                    {zh
+                      ? "发帖前请搜索是否已有类似话题。"
+                      : "Search for similar topics before creating a new post."}
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-gray-600 shrink-0">3.</span>
+                    {zh
+                      ? "分享代码时请使用代码块格式化。"
+                      : "Use code blocks when sharing code snippets."}
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-gray-600 shrink-0">4.</span>
+                    {zh
+                      ? "禁止发布广告、垃圾信息和无关内容。"
+                      : "No spam, advertisements, or off-topic content."}
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-gray-600 shrink-0">5.</span>
+                    {zh
+                      ? "引用外部内容时请注明出处。"
+                      : "Attribute external sources properly."}
+                  </li>
+                </ul>
+              </div>
+            </aside>
           </div>
         </section>
       </div>
