@@ -237,26 +237,31 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="py-16 md:py-24 px-4 md:px-6 border-t border-white/5">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold">{t.howItWorks.title}</h2>
-            <p className="mt-4 text-gray-400">{t.howItWorks.subtitle}</p>
+      {/* Ecosystem Icons — scrollable */}
+      <section className="py-12 md:py-16 px-4 md:px-6">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-center text-xs text-gray-600 uppercase tracking-widest mb-6">
+            {locale === "zh" ? "支持的框架与平台" : "Supported Frameworks & Platforms"}
+          </p>
+          {/* Row 1 */}
+          <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
+            {[
+              "OpenAI", "Anthropic", "LangChain", "CrewAI", "AutoGen",
+              "LlamaIndex", "Haystack", "Dify", "Coze", "Flowise",
+            ].map((name) => (
+              <div key={name} className="shrink-0 flex items-center justify-center w-28 h-14 rounded-lg border border-white/5 bg-white/[0.02] text-sm text-gray-500 font-medium hover:border-white/15 hover:text-gray-300 transition">
+                {name}
+              </div>
+            ))}
           </div>
-
-          <div className="space-y-12">
-            {t.howItWorks.steps.map((step, i) => (
-              <div key={i} className="flex gap-6 md:gap-10 items-start">
-                <div className={`text-4xl md:text-5xl font-bold font-mono shrink-0 ${
-                  i === 0 ? "text-orange-400" : i === 1 ? "text-emerald-400" : "text-purple-400"
-                }`}>
-                  0{i + 1}
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                  <p className="text-gray-400 leading-relaxed">{step.desc}</p>
-                </div>
+          {/* Row 2 */}
+          <div className="flex gap-6 overflow-x-auto pb-2 scrollbar-hide">
+            {[
+              "MCP", "A2A", "Function Calling", "Stripe", "x402",
+              "Cloudflare", "Vercel", "Supabase", "AWS", "Docker",
+            ].map((name) => (
+              <div key={name} className="shrink-0 flex items-center justify-center w-28 h-14 rounded-lg border border-white/5 bg-white/[0.02] text-sm text-gray-500 font-medium hover:border-white/15 hover:text-gray-300 transition">
+                {name}
               </div>
             ))}
           </div>
