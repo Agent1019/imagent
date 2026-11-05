@@ -249,12 +249,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Wave transition */}
-      <div className="relative -mt-1">
-        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 md:h-12" preserveAspectRatio="none">
-          <path d="M0 60V20C240 0 480 0 720 20C960 40 1200 40 1440 20V60H0Z" fill="#111111"/>
-        </svg>
-      </div>
 
       {/* MCP Ecosystem + Stats */}
       <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
@@ -327,12 +321,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Wave transition */}
-      <div className="relative -mt-1 bg-[#111111]">
-        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 md:h-12" preserveAspectRatio="none">
-          <path d="M0 0V40C240 60 480 60 720 40C960 20 1200 20 1440 40V0H0Z" fill="#0a0a0a"/>
-        </svg>
-      </div>
 
       {/* Three Pillars */}
       <section className="py-16 md:py-24 px-4 md:px-6">
@@ -393,12 +381,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Wave transition */}
-      <div className="relative -mt-1">
-        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 md:h-12" preserveAspectRatio="none">
-          <path d="M0 60V20C360 0 720 40 1080 20C1260 10 1380 30 1440 20V60H0Z" fill="#111111"/>
-        </svg>
-      </div>
 
       {/* API Section */}
       <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
@@ -458,12 +440,6 @@ console.log(result.usage);
         </div>
       </section>
 
-      {/* Wave transition */}
-      <div className="relative -mt-1 bg-[#111111]">
-        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 md:h-12" preserveAspectRatio="none">
-          <path d="M0 0V40C360 60 720 20 1080 40C1260 50 1380 30 1440 40V0H0Z" fill="#0a0a0a"/>
-        </svg>
-      </div>
 
       {/* Community + CTA */}
       <section className="py-16 md:py-24 px-4 md:px-6">
