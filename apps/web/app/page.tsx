@@ -249,20 +249,72 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Stats */}
+      {/* Stats + Supported MCP Servers */}
       <section className="py-16 md:py-24 px-4 md:px-6 border-y border-white/5">
-        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
-          {[
-            { value: "10,000+", label: t.stats.servers },
-            { value: "50M+", label: t.stats.calls },
-            { value: "2,400+", label: t.stats.publishers },
-            { value: "99.9%", label: t.stats.uptime },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="text-2xl md:text-3xl font-bold">{stat.value}</div>
-              <div className="text-sm text-gray-500 mt-1">{stat.label}</div>
-            </div>
-          ))}
+        <div className="max-w-6xl mx-auto">
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+            {[
+              { value: "10,000+", label: t.stats.servers },
+              { value: "50M+", label: t.stats.calls },
+              { value: "2,400+", label: t.stats.publishers },
+              { value: "99.9%", label: t.stats.uptime },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center">
+                <div className="text-2xl md:text-3xl font-bold">{stat.value}</div>
+                <div className="text-sm text-gray-500 mt-1">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Supported MCP Servers */}
+          <p className="text-center text-xs text-gray-600 uppercase tracking-widest mb-6">
+            {locale === "zh" ? "支持的 MCP Servers" : "Supported MCP Servers"}
+          </p>
+          {/* Row 1 */}
+          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+            {[
+              { name: "Firecrawl", color: "bg-orange-500" },
+              { name: "Brave Search", color: "bg-orange-600" },
+              { name: "Tavily", color: "bg-blue-500" },
+              { name: "Slack", color: "bg-purple-600" },
+              { name: "GitHub", color: "bg-gray-600" },
+              { name: "Notion", color: "bg-neutral-700" },
+              { name: "Stripe", color: "bg-indigo-500" },
+              { name: "Resend", color: "bg-black" },
+              { name: "Postgres", color: "bg-blue-600" },
+              { name: "Puppeteer", color: "bg-green-600" },
+            ].map((s) => (
+              <div key={s.name} className="shrink-0 flex items-center gap-2.5 px-4 py-2.5 rounded-lg border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04] transition">
+                <div className={`w-6 h-6 rounded-md ${s.color} flex items-center justify-center text-white text-xs font-bold`}>
+                  {s.name[0]}
+                </div>
+                <span className="text-sm text-gray-400 font-medium whitespace-nowrap">{s.name}</span>
+              </div>
+            ))}
+          </div>
+          {/* Row 2 */}
+          <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+            {[
+              { name: "Google Maps", color: "bg-red-500" },
+              { name: "E2B", color: "bg-yellow-500" },
+              { name: "Composio", color: "bg-violet-500" },
+              { name: "Browserbase", color: "bg-cyan-600" },
+              { name: "Apollo", color: "bg-blue-400" },
+              { name: "Linear", color: "bg-indigo-600" },
+              { name: "Supabase", color: "bg-emerald-600" },
+              { name: "Redis", color: "bg-red-600" },
+              { name: "MongoDB", color: "bg-green-500" },
+              { name: "Twilio", color: "bg-red-500" },
+            ].map((s) => (
+              <div key={s.name} className="shrink-0 flex items-center gap-2.5 px-4 py-2.5 rounded-lg border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04] transition">
+                <div className={`w-6 h-6 rounded-md ${s.color} flex items-center justify-center text-white text-xs font-bold`}>
+                  {s.name[0]}
+                </div>
+                <span className="text-sm text-gray-400 font-medium whitespace-nowrap">{s.name}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -319,37 +371,6 @@ export default async function Home() {
                 <div className="mt-6 p-4 rounded-lg bg-black/40 border border-white/5">
                   <code className="text-xs text-gray-300">{card.code}</code>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Ecosystem Icons — scrollable */}
-      <section className="py-12 md:py-16 px-4 md:px-6">
-        <div className="max-w-6xl mx-auto">
-          <p className="text-center text-xs text-gray-600 uppercase tracking-widest mb-6">
-            {locale === "zh" ? "支持的框架与平台" : "Supported Frameworks & Platforms"}
-          </p>
-          {/* Row 1 */}
-          <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
-            {[
-              "OpenAI", "Anthropic", "LangChain", "CrewAI", "AutoGen",
-              "LlamaIndex", "Haystack", "Dify", "Coze", "Flowise",
-            ].map((name) => (
-              <div key={name} className="shrink-0 flex items-center justify-center w-28 h-14 rounded-lg border border-white/5 bg-white/[0.02] text-sm text-gray-500 font-medium hover:border-white/15 hover:text-gray-300 transition">
-                {name}
-              </div>
-            ))}
-          </div>
-          {/* Row 2 */}
-          <div className="flex gap-6 overflow-x-auto pb-2 scrollbar-hide">
-            {[
-              "MCP", "A2A", "Function Calling", "Stripe", "x402",
-              "Cloudflare", "Vercel", "Supabase", "AWS", "Docker",
-            ].map((name) => (
-              <div key={name} className="shrink-0 flex items-center justify-center w-28 h-14 rounded-lg border border-white/5 bg-white/[0.02] text-sm text-gray-500 font-medium hover:border-white/15 hover:text-gray-300 transition">
-                {name}
               </div>
             ))}
           </div>
