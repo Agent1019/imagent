@@ -38,8 +38,8 @@ export default function Layout({ locale, nav, footer, searchPlaceholder, childre
       {/* Navigation */}
       <nav id="main-nav" className="fixed top-0 w-full z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-8">
-            <a href="/" className="text-2xl font-bold tracking-tight">
+          <div className="flex items-center gap-4 md:gap-8">
+            <a href="/" className="text-2xl font-bold tracking-tight text-white shrink-0">
               Imagent
             </a>
             <div className="hidden md:flex items-center gap-6 text-sm text-gray-400">

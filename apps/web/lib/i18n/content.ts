@@ -76,8 +76,8 @@ const en: Content = {
     ],
   },
   apiSection: {
-    headline1: "Built for agents,",
-    headline2: "not humans",
+    headline1: "Agent-first,",
+    headline2: "human-friendly",
     desc: "Every endpoint is designed for machine consumption. Structured responses, semantic errors, and built-in rate limiting. Your agent reads the spec, not a README.",
     features: [
       "Capability-based search with vector embeddings",
@@ -141,8 +141,8 @@ const zh: Content = {
     ],
   },
   apiSection: {
-    headline1: "为 Agent 而生，",
-    headline2: "而非为人类",
+    headline1: "先为 Agent 而生，",
+    headline2: "再为人",
     desc: "每个端点都为机器消费而设计。结构化响应、语义化错误、内置限流。你的 Agent 读的是 Spec，不是 README。",
     features: [
       "基于向量嵌入的能力搜索",
