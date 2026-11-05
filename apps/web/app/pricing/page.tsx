@@ -154,9 +154,9 @@ export default async function PricingPage() {
 
   return (
     <Layout locale={locale} nav={t.nav} footer={t.footer} searchPlaceholder={t.hero.searchPlaceholder}>
-      <div className="pt-24 pb-20 px-6 bg-[#0a0a0a] min-h-screen">
+      <div className="pt-32 pb-20 px-4 md:px-6 bg-[#0a0a0a] min-h-screen">
         {/* Hero */}
-        <section className="max-w-4xl mx-auto text-center mb-16">
+        <section className="max-w-5xl mx-auto text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
             {zh ? "简单透明的定价" : "Simple, transparent pricing"}
           </h1>
@@ -180,7 +180,7 @@ export default async function PricingPage() {
         </div>
 
         {/* Pricing Cards */}
-        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-6 mb-24">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 mb-24">
           {plans.map((plan) => {
             const price = zh && plan.priceZh ? plan.priceZh : plan.price;
             const period = zh ? plan.periodZh : plan.periodEn;

@@ -127,8 +127,8 @@ export default async function Home() {
       />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="pt-32 pb-20 px-4 md:px-6">
+        <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-gray-400 mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             {t.hero.badge}
@@ -168,8 +168,8 @@ export default async function Home() {
       </section>
 
       {/* Stats */}
-      <section className="py-12 px-6 border-y border-white/5">
-        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+      <section className="py-24 px-4 md:px-6 border-y border-white/5">
+        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
           {[
             { value: "10,000+", label: t.stats.servers },
             { value: "50M+", label: t.stats.calls },
@@ -185,8 +185,8 @@ export default async function Home() {
       </section>
 
       {/* Three Pillars */}
-      <section className="py-24 px-6">
-        <div className="max-w-5xl mx-auto">
+      <section className="py-24 px-4 md:px-6">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold">{t.features.title}</h2>
             <p className="mt-4 text-gray-400 max-w-xl mx-auto">{t.features.subtitle}</p>
@@ -244,8 +244,8 @@ export default async function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="py-24 px-6 border-t border-white/5">
-        <div className="max-w-4xl mx-auto">
+      <section className="py-24 px-4 md:px-6 border-t border-white/5">
+        <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold">{t.howItWorks.title}</h2>
             <p className="mt-4 text-gray-400">{t.howItWorks.subtitle}</p>
@@ -270,8 +270,8 @@ export default async function Home() {
       </section>
 
       {/* API Section */}
-      <section className="py-24 px-6 border-t border-white/5">
-        <div className="max-w-5xl mx-auto">
+      <section className="py-24 px-4 md:px-6 border-t border-white/5">
+        <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -333,8 +333,8 @@ console.log(result.usage);
       </section>
 
       {/* Protocol Support */}
-      <section className="py-16 px-6 border-t border-white/5">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="py-24 px-4 md:px-6 border-t border-white/5">
+        <div className="max-w-5xl mx-auto text-center">
           <p className="text-sm text-gray-500 mb-6">{t.protocols}</p>
           <div className="flex flex-wrap justify-center gap-8 items-center opacity-40">
             {["MCP", "A2A", "OpenAI", "Anthropic", "LangChain", "CrewAI"].map((name) => (
@@ -347,7 +347,7 @@ console.log(result.usage);
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-6 border-t border-white/5">
+      <section className="py-24 px-4 md:px-6 border-t border-white/5">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.cta.title}</h2>
           <p className="text-gray-400 mb-8">{t.cta.subtitle}</p>

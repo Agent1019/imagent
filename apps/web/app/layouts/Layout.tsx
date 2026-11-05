@@ -30,9 +30,9 @@ export default function Layout({ locale, nav, footer, searchPlaceholder, childre
     <>
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-[#0a0a0a]/80 backdrop-blur-xl">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-8">
-            <a href="/" className="text-xl font-bold tracking-tight">
+            <a href="/" className="text-2xl font-bold tracking-tight">
               Imagent
             </a>
             <div className="hidden md:flex items-center gap-6 text-sm text-gray-400">
@@ -94,8 +94,8 @@ export default function Layout({ locale, nav, footer, searchPlaceholder, childre
       </main>
 
       {/* Footer */}
-      <footer className="py-12 px-6 border-t border-white/5">
-        <div className="max-w-5xl mx-auto">
+      <footer className="py-12 px-4 md:px-6 border-t border-white/5">
+        <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
             <div>
               <div className="text-lg font-bold mb-4">imagent</div>

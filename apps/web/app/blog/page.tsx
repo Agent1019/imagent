@@ -95,7 +95,7 @@ export default async function Page() {
       <div className="pt-24">
         {/* Header */}
         <section className="px-6 pb-12">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-3">
               Blog
             </h1>
@@ -107,7 +107,7 @@ export default async function Page() {
 
         {/* Category Filters */}
         <section className="px-6 pb-8">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <div className="flex flex-wrap gap-2">
               {categories.map((cat, i) => (
                 <a
@@ -133,7 +133,7 @@ export default async function Page() {
 
         {/* Blog Grid */}
         <section className="px-6 pb-16">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 gap-6">
               {mockPosts.map((post) => (
                 <a
@@ -179,7 +179,7 @@ export default async function Page() {
 
         {/* Pagination */}
         <section className="px-6 pb-16">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <div className="flex items-center justify-between border-t border-white/5 pt-8">
               <span className="text-sm text-gray-600 cursor-default">
                 Previous
