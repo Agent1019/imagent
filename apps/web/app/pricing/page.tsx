@@ -11,6 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: locale === "zh" ? "定价 - Imagent" : "Pricing - Imagent",
+    robots: { index: false, follow: false },
     description:
       locale === "zh"
         ? "简单透明的定价 — 按量付费，从免费到企业级方案。"

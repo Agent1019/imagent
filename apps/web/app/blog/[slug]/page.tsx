@@ -21,6 +21,7 @@ export async function generateMetadata({
 
   return {
     title: `${title} | Blog | Imagent`,
+    robots: { index: false, follow: false },
     description: `Read our latest insights on ${title.toLowerCase()}. Technical deep dives, product updates, and tutorials from the Imagent team.`,
     openGraph: {
       title: `${title} | Blog | Imagent`,

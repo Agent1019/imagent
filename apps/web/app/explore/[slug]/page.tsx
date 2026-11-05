@@ -18,6 +18,7 @@ export async function generateMetadata({
 
   return {
     title: `${toolName} - MCP Server | Imagent`,
+    robots: { index: false, follow: false },
     description: `Discover ${toolName} on Imagent. View endpoints, pricing, trust score, and integrate with your AI agent in one line.`,
     openGraph: {
       title: `${toolName} - MCP Server | Imagent`,
