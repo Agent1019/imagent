@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { getLocaleFromHost, type Locale } from "@/lib/i18n/config";
 import { getContent } from "@/lib/i18n/content";
 import Layout from "@/app/layouts/Layout";
+import { listCommunityPosts } from "@/lib/community";
 import type { Metadata } from "next";
 
 /* ================================================================== */
@@ -44,7 +45,7 @@ const categories: Category[] = [
 ];
 
 type Post = {
-  id: number;
+  id: number | string;
   category: string;
   categoryColor: string;
   titleEn: string;
@@ -528,12 +529,40 @@ export default async function CommunityPage({
       ? posts
       : posts.filter((p) => p.category === activeCategory);
 
-  /* Sort: pinned first, then by id desc */
+  /* Sort: pinned first, then by numeric id desc */
   const sortedPosts = [...filteredPosts].sort((a, b) => {
     if (a.pinned && !b.pinned) return -1;
     if (!a.pinned && b.pinned) return 1;
-    return b.id - a.id;
+    return Number(b.id) - Number(a.id);
   });
+
+  const categoryColors: Record<string, string> = {
+    announcements: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+    mcp: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    agent: "bg-violet-500/10 text-violet-400 border-violet-500/20",
+    tools: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    qa: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
+  };
+  const livePosts = (await listCommunityPosts())
+    .filter((post) => activeCategory === "all" || post.category === activeCategory)
+    .map((post): Post => ({
+      id: post.id,
+      category: post.category,
+      categoryColor: categoryColors[post.category] ?? categoryColors.qa,
+      titleEn: post.title,
+      titleZh: post.title,
+      excerptEn: post.body,
+      excerptZh: post.body,
+      authorName: post.authorName,
+      authorInitials: post.authorName.slice(0, 2).toUpperCase(),
+      authorColor: "bg-white/20",
+      timeEn: post.createdAt.slice(0, 10),
+      timeZh: post.createdAt.slice(0, 10),
+      replies: 0,
+      views: 0,
+      pinned: false,
+    }));
+  const visiblePosts = [...livePosts, ...sortedPosts];
 
   return (
     <Layout
@@ -652,7 +681,7 @@ export default async function CommunityPage({
             {/*  POST LIST                                               */}
             {/* -------------------------------------------------------- */}
             <div className="flex-1 min-w-0">
-              {sortedPosts.length === 0 ? (
+              {visiblePosts.length === 0 ? (
                 <div className="rounded-xl border border-white/5 bg-white/[0.02] p-12 text-center">
                   <p className="text-gray-500">
                     {zh
@@ -662,7 +691,7 @@ export default async function CommunityPage({
                 </div>
               ) : (
                 <div className="space-y-3">
-                  {sortedPosts.map((post) => (
+                  {visiblePosts.map((post) => (
                     <a
                       key={post.id}
                       href={`/community/${post.id}`}

@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { getLocaleFromHost, type Locale } from "@/lib/i18n/config";
 import { getContent } from "@/lib/i18n/content";
 import Layout from "@/app/layouts/Layout";
+import { getCommunityPost } from "@/lib/community";
 import type { Metadata } from "next";
 
 /* ================================================================== */
@@ -548,6 +549,32 @@ export default async function PostDetailPage({
   const zh = locale === "zh";
 
   const { id } = await params;
+  if (!getPostById(id, locale)) {
+    const live = await getCommunityPost(id);
+    return (
+      <Layout locale={locale} nav={t.nav} footer={t.footer} searchPlaceholder={t.hero.searchPlaceholder}>
+        <div className="bg-[#0a0a0a] min-h-screen">
+          <div className="max-w-3xl mx-auto px-4 md:px-6 pt-28 pb-16">
+            <a href="/community" className="text-sm text-gray-500 hover:text-white">
+              {zh ? "返回社区" : "Back to community"}
+            </a>
+            {live ? (
+              <article className="mt-6">
+                <p className="text-xs uppercase tracking-wider text-gray-500">{live.category}</p>
+                <h1 className="mt-2 text-3xl font-bold text-white">{live.title}</h1>
+                <p className="mt-2 text-sm text-gray-500">
+                  {live.authorName} · {live.createdAt.slice(0, 10)}
+                </p>
+                <div className="mt-6 whitespace-pre-wrap text-sm leading-relaxed text-gray-300">{live.body}</div>
+              </article>
+            ) : (
+              <h1 className="mt-6 text-3xl font-bold text-white">{zh ? "找不到这篇帖子" : "Post not found"}</h1>
+            )}
+          </div>
+        </div>
+      </Layout>
+    );
+  }
   const post = getFullPostData(id, locale);
   const comments = getComments(locale);
   const commentCount = comments.length + 1; /* +1 for the nested reply */

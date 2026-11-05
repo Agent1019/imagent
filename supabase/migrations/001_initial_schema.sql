@@ -44,3 +44,74 @@ CREATE INDEX idx_packages_capability ON packages USING GIN(capability_spec);
 CREATE INDEX idx_packages_status ON packages(status);
 CREATE INDEX idx_installs_package ON installs(package_id);
 CREATE INDEX idx_package_versions_package ON package_versions(package_id);
+
+-- Community posts. author_name is denormalized because auth.users is not readable by visitors.
+CREATE TABLE community_posts (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  author_id UUID REFERENCES auth.users(id),
+  author_name TEXT NOT NULL,
+  category TEXT NOT NULL DEFAULT 'qa' CHECK (category IN ('mcp', 'agent', 'tools', 'qa', 'announcements')),
+  title TEXT NOT NULL,
+  body TEXT NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE INDEX idx_community_posts_created ON community_posts(created_at DESC);
+
+ALTER TABLE packages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE package_versions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE installs ENABLE ROW LEVEL SECURITY;
+ALTER TABLE community_posts ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "public reads published packages"
+  ON packages FOR SELECT
+  USING (status = 'published' OR auth.uid() = author_id);
+
+CREATE POLICY "authors insert packages"
+  ON packages FOR INSERT
+  WITH CHECK (auth.uid() = author_id);
+
+CREATE POLICY "authors update own packages"
+  ON packages FOR UPDATE
+  USING (auth.uid() = author_id)
+  WITH CHECK (auth.uid() = author_id);
+
+CREATE POLICY "authors delete own packages"
+  ON packages FOR DELETE
+  USING (auth.uid() = author_id);
+
+CREATE POLICY "read versions of visible packages"
+  ON package_versions FOR SELECT
+  USING (
+    EXISTS (
+      SELECT 1 FROM packages p
+      WHERE p.id = package_id
+        AND (p.status = 'published' OR p.author_id = auth.uid())
+    )
+  );
+
+CREATE POLICY "authors insert versions"
+  ON package_versions FOR INSERT
+  WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM packages p
+      WHERE p.id = package_id AND p.author_id = auth.uid()
+    )
+  );
+
+CREATE POLICY "public reads community posts"
+  ON community_posts FOR SELECT
+  USING (true);
+
+CREATE POLICY "authors insert community posts"
+  ON community_posts FOR INSERT
+  WITH CHECK (auth.uid() = author_id);
+
+CREATE POLICY "authors update own community posts"
+  ON community_posts FOR UPDATE
+  USING (auth.uid() = author_id)
+  WITH CHECK (auth.uid() = author_id);
+
+CREATE POLICY "authors delete own community posts"
+  ON community_posts FOR DELETE
+  USING (auth.uid() = author_id);
