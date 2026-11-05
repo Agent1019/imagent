@@ -4,6 +4,7 @@ import { getContent } from "@/lib/i18n/content";
 import type { Metadata } from "next";
 import McpCopyBox from "./components/McpCopyBox";
 import Layout from "./layouts/Layout";
+import FeatureTabs from "./components/FeatureTabs";
 
 export async function generateMetadata(): Promise<Metadata> {
   const headersList = await headers();
@@ -332,7 +333,33 @@ export default async function Home() {
             <p className="mt-4 text-gray-400 max-w-xl mx-auto">{t.features.subtitle}</p>
           </div>
 
-          <div className="flex md:grid md:grid-cols-3 gap-4 md:gap-6 overflow-x-auto scrollbar-hide md:overflow-visible pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0">
+          {/* Mobile: tabbed card */}
+          <FeatureTabs features={[
+            {
+              title: t.features.discover.title,
+              desc: t.features.discover.desc,
+              code: <><span className="text-purple-400">GET</span> /api/v1/search<br /><span className="text-gray-500">?q=pdf+generation&protocol=mcp</span></>,
+              icon: <svg className="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>,
+              bg: "bg-orange-500/10",
+            },
+            {
+              title: t.features.auth.title,
+              desc: t.features.auth.desc,
+              code: <><span className="text-emerald-400">Authorization</span>: Bearer<br /><span className="text-gray-500">imt_a1b2c3d4...x9y0z</span></>,
+              icon: <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>,
+              bg: "bg-emerald-500/10",
+            },
+            {
+              title: t.features.monetize.title,
+              desc: t.features.monetize.desc,
+              code: <><span className="text-amber-400">GET</span> /api/v1/usage<br /><span className="text-gray-500">{"{ \"calls\": 142, \"cost\": \"$0.14\" }"}</span></>,
+              icon: <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" /></svg>,
+              bg: "bg-purple-500/10",
+            },
+          ]} />
+
+          {/* Desktop: 3-column grid */}
+          <div className="hidden md:grid md:grid-cols-3 gap-6">
             {[
               {
                 icon: (
@@ -368,7 +395,7 @@ export default async function Home() {
                 bg: "bg-purple-500/10",
               },
             ].map((card) => (
-              <div key={card.title} className="group relative rounded-2xl border border-white/5 bg-white/[0.02] p-6 md:p-8 hover:border-white/10 hover:bg-white/[0.04] transition min-w-[280px] md:min-w-0 shrink-0 md:shrink">
+              <div key={card.title} className="group relative rounded-2xl border border-white/5 bg-white/[0.02] p-8 hover:border-white/10 hover:bg-white/[0.04] transition">
                 <div className={`w-12 h-12 rounded-xl ${card.bg} flex items-center justify-center mb-5`}>
                   {card.icon}
                 </div>
@@ -467,7 +494,7 @@ console.log(result.usage);
           </div>
 
           {/* Community Channels */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+          <div className="flex justify-center gap-6 md:gap-10 flex-wrap">
             {[
               {
                 name: "GitHub",
@@ -517,7 +544,7 @@ console.log(result.usage);
               <a
                 key={item.name}
                 href={item.href}
-                className="group flex flex-col items-center gap-2 md:gap-3 p-4 md:p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04] transition text-center"
+                className="group flex flex-col items-center gap-2 hover:opacity-80 transition text-center"
               >
                 <div className={`${item.color} opacity-70 group-hover:opacity-100 transition`}>
                   {item.icon}
