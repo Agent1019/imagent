@@ -250,7 +250,7 @@ export default async function Home() {
       </section>
 
       {/* MCP Ecosystem + Stats */}
-      <section className="py-16 md:py-24 px-4 md:px-6 border-y border-white/5">
+      <section className="py-16 md:py-24 px-4 md:px-6 border-y border-white/5 bg-[#080808]">
         <div className="max-w-6xl mx-auto">
           {/* Module Title */}
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
@@ -380,7 +380,7 @@ export default async function Home() {
       </section>
 
       {/* API Section */}
-      <section className="py-16 md:py-24 px-4 md:px-6 border-t border-white/5">
+      <section className="py-16 md:py-24 px-4 md:px-6 border-t border-white/5 bg-[#080808]">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -457,7 +457,7 @@ console.log(result.usage);
       </section>
 
       {/* Community */}
-      <section className="py-16 md:py-24 px-4 md:px-6 border-t border-white/5">
+      <section className="py-16 md:py-24 px-4 md:px-6 border-t border-white/5 bg-[#080808]">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
