@@ -11,6 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: "Blog | Imagent",
+    robots: { index: false, follow: false },
     description: "Insights on MCP servers, AI agents, protocol design, and the future of agent-native infrastructure.",
     openGraph: {
       title: "Blog | Imagent",

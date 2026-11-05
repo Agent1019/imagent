@@ -17,41 +17,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
         },
       },
     },
-    {
-      url: `${baseUrl}/explore`,
-      lastModified: now,
-      changeFrequency: "daily",
-      priority: 0.9,
-      alternates: {
-        languages: {
-          en: `${baseUrl}/explore`,
-          zh: `https://zh.imagent.ai/explore`,
-        },
-      },
-    },
-    {
-      url: `${baseUrl}/pricing`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.8,
-      alternates: {
-        languages: {
-          en: `${baseUrl}/pricing`,
-          zh: `https://zh.imagent.ai/pricing`,
-        },
-      },
-    },
-    {
-      url: `${baseUrl}/docs`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.8,
-      alternates: {
-        languages: {
-          en: `${baseUrl}/docs`,
-          zh: `https://zh.imagent.ai/docs`,
-        },
-      },
-    },
   ];
 }

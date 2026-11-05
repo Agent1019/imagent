@@ -11,6 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: locale === "zh" ? "文档 - Imagent" : "Documentation - Imagent",
+    robots: { index: false, follow: false },
     description:
       locale === "zh"
         ? "Imagent 开发者文档 — 快速上手、CLI 参考、API 参考与集成指南。"
