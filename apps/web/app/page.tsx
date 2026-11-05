@@ -290,7 +290,7 @@ export default async function Home() {
                   { name: "Puppeteer", domain: "pptr.dev" },
                 ].map((s) => (
                   <div key={s.name} className="shrink-0 flex items-center gap-2.5 px-3.5 py-2 rounded-lg border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04] transition">
-                    <img src={`https://logo.clearbit.com/${s.domain}`} alt={s.name} className="w-5 h-5 rounded" loading="lazy" />
+                    <img src={`https://www.google.com/s2/favicons?domain=${s.domain}&sz=64`} alt={s.name} className="w-5 h-5 rounded" loading="lazy" />
                     <span className="text-sm text-gray-400 font-medium">{s.name}</span>
                   </div>
                 ))}
@@ -310,7 +310,7 @@ export default async function Home() {
                   { name: "Twilio", domain: "twilio.com" },
                 ].map((s) => (
                   <div key={s.name} className="shrink-0 flex items-center gap-2.5 px-3.5 py-2 rounded-lg border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04] transition">
-                    <img src={`https://logo.clearbit.com/${s.domain}`} alt={s.name} className="w-5 h-5 rounded" loading="lazy" />
+                    <img src={`https://www.google.com/s2/favicons?domain=${s.domain}&sz=64`} alt={s.name} className="w-5 h-5 rounded" loading="lazy" />
                     <span className="text-sm text-gray-400 font-medium">{s.name}</span>
                   </div>
                 ))}
