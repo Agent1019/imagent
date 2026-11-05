@@ -38,7 +38,7 @@ type Content = {
 const en: Content = {
   nav: { explore: "Explore", rankings: "Rankings", blog: "Blog", community: "Community", docs: "Docs", pricing: "Pricing", signIn: "Sign in", getStarted: "Get Started" },
   hero: {
-    badge: "Now supporting MCP, A2A, and Function Calling protocols",
+    badge: "Free platform · Pay per call · No subscriptions",
     headline1: "Connect to Global Agent Services in One Go",
     headline2: "Capability auth · Zero re-auth · Free or pay-per-use",
     subtitle1: "One platform to connect agents with the tools they need.",
@@ -76,8 +76,8 @@ const en: Content = {
     ],
   },
   apiSection: {
-    headline1: "Agent-native APIs,",
-    headline2: "not human-native ones",
+    headline1: "Built for agents,",
+    headline2: "not humans",
     desc: "Every endpoint is designed for machine consumption. Structured responses, semantic errors, and built-in rate limiting. Your agent reads the spec, not a README.",
     features: [
       "Capability-based search with vector embeddings",
@@ -88,7 +88,7 @@ const en: Content = {
   },
   protocols: "Protocol-agnostic infrastructure",
   cta: {
-    title: "Build the next agent economy",
+    title: "Start connecting agent services today",
     subtitle: "Join thousands of developers connecting their agents to imagent.",
     primary: "Start Building — Free",
     secondary: "Read the Docs",
@@ -103,7 +103,7 @@ const en: Content = {
 const zh: Content = {
   nav: { explore: "探索", rankings: "排行", blog: "博客", community: "社区", docs: "文档", pricing: "定价", signIn: "登录", getStarted: "免费开始" },
   hero: {
-    badge: "现已支持 MCP、A2A 和 Function Calling 协议",
+    badge: "平台免费 · 按次调用 · 无需订阅",
     headline1: "一次连接全球 Agent 服务",
     headline2: "能力认证 · 免重复认证 · 免费/按量计费",
     subtitle1: "一个平台，连接 Agent 与海量工具生态",
@@ -141,8 +141,8 @@ const zh: Content = {
     ],
   },
   apiSection: {
-    headline1: "Agent 原生 API，",
-    headline2: "而非人类原生",
+    headline1: "为 Agent 而生，",
+    headline2: "而非为人类",
     desc: "每个端点都为机器消费而设计。结构化响应、语义化错误、内置限流。你的 Agent 读的是 Spec，不是 README。",
     features: [
       "基于向量嵌入的能力搜索",
@@ -153,7 +153,7 @@ const zh: Content = {
   },
   protocols: "协议无关的基础设施",
   cta: {
-    title: "构建下一代 Agent 经济",
+    title: "立即开始连接 Agent 服务",
     subtitle: "加入数千名开发者，将 Agent 接入 imagent 生态。",
     primary: "免费开始构建",
     secondary: "阅读文档",

@@ -404,12 +404,7 @@ export default async function Home() {
 
             <div className="rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden">
               <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
-                <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
-                </div>
-                <span className="text-xs text-gray-500 ml-2">agent.ts</span>
+                <span className="text-xs text-gray-500">agent.ts</span>
               </div>
               <pre className="p-5 text-xs leading-relaxed overflow-x-auto">
                 <code className="text-gray-300">{`import { ImagentClient } from "@imagent/sdk";
@@ -438,20 +433,6 @@ console.log(result.usage);
 // { calls: 1, cost: "$0.002", latency: "142ms" }`}</code>
               </pre>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Protocol Support */}
-      <section className="py-16 md:py-24 px-4 md:px-6 border-t border-white/5">
-        <div className="max-w-5xl mx-auto text-center">
-          <p className="text-sm text-gray-500 mb-6">{t.protocols}</p>
-          <div className="flex flex-wrap justify-center gap-4 md:gap-8 items-center opacity-40">
-            {["MCP", "A2A", "OpenAI", "Anthropic", "LangChain", "CrewAI"].map((name) => (
-              <span key={name} className="text-lg font-semibold text-gray-400 tracking-wide">
-                {name}
-              </span>
-            ))}
           </div>
         </div>
       </section>
