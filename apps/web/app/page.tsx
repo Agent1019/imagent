@@ -102,6 +102,7 @@ export default async function Home() {
   const host = headersList.get("x-host") || headersList.get("host") || "imagent.ai";
   const locale: Locale = getLocaleFromHost(host);
   const t = getContent(locale);
+  const baseUrl = `https://${domainMap[locale]}`;
 
   const now = new Date().toISOString();
 
