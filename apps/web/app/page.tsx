@@ -250,7 +250,7 @@ export default async function Home() {
       </section>
 
       {/* Gradient transition */}
-      <div className="h-24 md:h-32 bg-gradient-to-b from-[#0a0a0a] to-[#111111]" />
+      <div className="h-12 md:h-16 bg-gradient-to-b from-[#0a0a0a] to-[#111111]" />
 
       {/* MCP Ecosystem + Stats */}
       <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
