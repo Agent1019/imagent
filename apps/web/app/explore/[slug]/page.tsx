@@ -19,16 +19,16 @@ export async function generateMetadata({
   return {
     title: `${toolName} - MCP Server | Imagent`,
     robots: { index: false, follow: false },
-    description: `Discover ${toolName} on Imagent. View endpoints, pricing, trust score, and integrate with your AI agent in one line.`,
+    description: `Discover ${toolName} on Imagent. View endpoints, trust score, and integrate with your AI agent in one line.`,
     openGraph: {
       title: `${toolName} - MCP Server | Imagent`,
-      description: `Discover ${toolName} on Imagent. View endpoints, pricing, trust score, and integrate with your AI agent in one line.`,
+      description: `Discover ${toolName} on Imagent. View endpoints, trust score, and integrate with your AI agent in one line.`,
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
       title: `${toolName} - MCP Server | Imagent`,
-      description: `Discover ${toolName} on Imagent. View endpoints, pricing, trust score, and integrate with your AI agent in one line.`,
+      description: `Discover ${toolName} on Imagent. View endpoints, trust score, and integrate with your AI agent in one line.`,
     },
   };
 }
@@ -53,30 +53,6 @@ const mockEndpoints = [
     method: "POST",
     path: "/api/v1/tools/{slug}/authenticate",
     description: "Exchange an agent identity token (AIT) for a scoped access token to invoke protected endpoints.",
-  },
-];
-
-const mockPricingTiers = [
-  {
-    name: "Free",
-    price: "$0",
-    period: "/month",
-    features: ["1,000 calls/month", "Community support", "Standard latency", "Basic auth scopes"],
-    highlighted: false,
-  },
-  {
-    name: "Pro",
-    price: "$29",
-    period: "/month",
-    features: ["100,000 calls/month", "Priority support", "Low latency routing", "All auth scopes", "Webhook events"],
-    highlighted: true,
-  },
-  {
-    name: "Enterprise",
-    price: "Custom",
-    period: "",
-    features: ["Unlimited calls", "Dedicated support", "SLA guarantee", "Custom scopes", "On-premise option", "Audit logs"],
-    highlighted: false,
   },
 ];
 
@@ -175,58 +151,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                   <p className="text-sm text-gray-500 leading-relaxed pl-0 sm:pl-[52px]">
                     {endpoint.description}
                   </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Pricing */}
-        <section className="px-4 md:px-6 py-16 border-t border-white/5">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold text-white mb-2">Pricing</h2>
-            <p className="text-gray-400 mb-10">Choose the plan that fits your usage. All plans include core functionality.</p>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              {mockPricingTiers.map((tier) => (
-                <div
-                  key={tier.name}
-                  className={`rounded-xl border p-6 flex flex-col ${
-                    tier.highlighted
-                      ? "border-white/20 bg-white/[0.04] ring-1 ring-white/10"
-                      : "border-white/5 bg-white/[0.02]"
-                  }`}
-                >
-                  {tier.highlighted && (
-                    <span className="inline-flex self-start items-center px-2 py-0.5 rounded-full text-xs font-medium bg-white/10 text-white mb-3">
-                      Most Popular
-                    </span>
-                  )}
-                  <h3 className="text-lg font-semibold text-white">{tier.name}</h3>
-                  <div className="mt-3 mb-5">
-                    <span className="text-3xl font-bold text-white">{tier.price}</span>
-                    <span className="text-sm text-gray-500">{tier.period}</span>
-                  </div>
-                  <ul className="space-y-2.5 flex-1">
-                    {tier.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-2 text-sm text-gray-400">
-                        <svg className="w-4 h-4 mt-0.5 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  <a
-                    href="/signup"
-                    className={`mt-6 block text-center py-2.5 rounded-lg text-sm font-medium transition ${
-                      tier.highlighted
-                        ? "bg-white text-black hover:bg-gray-200"
-                        : "border border-white/15 text-white hover:border-white/30 hover:bg-white/5"
-                    }`}
-                  >
-                    {tier.name === "Enterprise" ? "Contact Sales" : "Get Started"}
-                  </a>
                 </div>
               ))}
             </div>
