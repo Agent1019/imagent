@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import { getLocaleFromHost, type Locale } from "@/lib/i18n/config";
 import { getContent } from "@/lib/i18n/content";
+import { categoryLabels, localizedLabel, statusLabels } from "@/lib/i18n/labels";
 import Layout from "@/app/layouts/Layout";
 import type { Metadata } from "next";
 
@@ -240,7 +241,7 @@ export default async function RankingsPage({
                   ([category, categoryTools]) => (
                     <div key={category}>
                       <h3 className="text-sm font-semibold text-gray-300 mb-3 uppercase tracking-wider">
-                        {category}
+                        {localizedLabel(categoryLabels, category, isZh)}
                       </h3>
                       <RankingsTable
                         tools={categoryTools}
@@ -304,7 +305,7 @@ export default async function RankingsPage({
               <div className="flex flex-wrap gap-4 mt-3">
                 <div className="flex items-center gap-2">
                   <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/20">
-                    Hot
+                    {isZh ? statusLabels.hot.zh : statusLabels.hot.en}
                   </span>
                   <span className="text-gray-500">
                     {isZh
@@ -314,7 +315,7 @@ export default async function RankingsPage({
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/20">
-                    Rising
+                    {isZh ? statusLabels.rising.zh : statusLabels.rising.en}
                   </span>
                   <span className="text-gray-500">
                     {isZh
@@ -324,7 +325,7 @@ export default async function RankingsPage({
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-gray-500/20 text-gray-400 border border-gray-500/20">
-                    Stable
+                    {isZh ? statusLabels.stable.zh : statusLabels.stable.en}
                   </span>
                   <span className="text-gray-500">
                     {isZh
@@ -421,7 +422,7 @@ function RankingsTable({
                 </td>
                 <td className="px-4 py-3 text-gray-400 hidden sm:table-cell">
                   <span className="px-2 py-0.5 text-xs rounded-full bg-white/5 border border-white/5">
-                    {tool.category}
+                    {localizedLabel(categoryLabels, tool.category, isZh)}
                   </span>
                 </td>
                 <td className="px-4 py-3 text-right text-gray-300 font-mono hidden md:table-cell">
@@ -441,7 +442,7 @@ function RankingsTable({
                   </span>
                 </td>
                 <td className="px-4 py-3 text-center">
-                  <StatusBadge status={tool.status} />
+                  <StatusBadge status={tool.status} zh={isZh} />
                 </td>
               </tr>
             );
@@ -454,22 +455,24 @@ function RankingsTable({
 
 function StatusBadge({
   status,
+  zh,
 }: {
   status: "hot" | "rising" | "stable";
+  zh: boolean;
 }) {
   const config = {
     hot: {
-      label: "Hot",
+      label: zh ? statusLabels.hot.zh : statusLabels.hot.en,
       className:
         "bg-orange-500/15 text-orange-400 border-orange-500/20",
     },
     rising: {
-      label: "Rising",
+      label: zh ? statusLabels.rising.zh : statusLabels.rising.en,
       className:
         "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
     },
     stable: {
-      label: "Stable",
+      label: zh ? statusLabels.stable.zh : statusLabels.stable.en,
       className: "bg-white/5 text-gray-400 border-white/10",
     },
   };

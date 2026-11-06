@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { communityCategoryLabels, localizedLabel } from "@/lib/i18n/labels";
 
 const categories = ["mcp", "agent", "tools", "qa", "announcements"] as const;
 
@@ -59,7 +60,7 @@ export default function NewPostForm({ zh }: { zh: boolean }) {
         >
           {categories.map((item) => (
             <option key={item} value={item}>
-              {item}
+              {localizedLabel(communityCategoryLabels, item, zh)}
             </option>
           ))}
         </select>

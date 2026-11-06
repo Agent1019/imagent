@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import { getLocaleFromHost, type Locale } from "@/lib/i18n/config";
 import { getContent } from "@/lib/i18n/content";
+import { communityCategoryLabels, localizedLabel } from "@/lib/i18n/labels";
 import Layout from "@/app/layouts/Layout";
 import { getCommunityPost } from "@/lib/community";
 import type { Metadata } from "next";
@@ -560,7 +561,9 @@ export default async function PostDetailPage({
             </a>
             {live ? (
               <article className="mt-6">
-                <p className="text-xs uppercase tracking-wider text-gray-500">{live.category}</p>
+                <p className="text-xs uppercase tracking-wider text-gray-500">
+                  {localizedLabel(communityCategoryLabels, live.category, zh)}
+                </p>
                 <h1 className="mt-2 text-3xl font-bold text-white">{live.title}</h1>
                 <p className="mt-2 text-sm text-gray-500">
                   {live.authorName} · {live.createdAt.slice(0, 10)}

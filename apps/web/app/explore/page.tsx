@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import { getLocaleFromHost, type Locale } from "@/lib/i18n/config";
 import { getContent } from "@/lib/i18n/content";
+import { categoryLabels, localizedLabel } from "@/lib/i18n/labels";
 import Layout from "@/app/layouts/Layout";
 import type { Metadata } from "next";
 
@@ -151,19 +152,6 @@ const tools: Tool[] = [
   },
 ];
 
-const categoryLabelsZh: Record<string, string> = {
-  All: "全部",
-  Search: "搜索",
-  Data: "数据",
-  Finance: "金融",
-  Social: "社交",
-  Communication: "通讯",
-  DevTools: "开发工具",
-  "AI/ML": "AI/ML",
-  Productivity: "生产力",
-  Media: "媒体",
-};
-
 function formatInstalls(n: number): string {
   if (n >= 1000) {
     return `${(n / 1000).toFixed(1).replace(/\.0$/, "")}k`;
@@ -252,9 +240,7 @@ export default async function ExplorePage({ searchParams }: PageProps) {
                 <nav className="flex flex-row lg:flex-col gap-1 overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0">
                   {categories.map((cat) => {
                     const isActive = activeCategory === cat;
-                    const label = isZh
-                      ? categoryLabelsZh[cat] || cat
-                      : cat;
+                    const label = localizedLabel(categoryLabels, cat, isZh);
                     return (
                       <a
                         key={cat}

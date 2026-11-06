@@ -195,8 +195,8 @@ export default async function DocsPage() {
                     </h3>
                     <p className="text-sm text-gray-400 leading-relaxed mb-4">
                       {zh
-                        ? "使用语义搜索查找满足你需求的 MCP Server。查看能力、信任分数和定价后，一键添加到你的项目。"
-                        : "Search for MCP servers by capability using semantic search. Review their capabilities, trust scores, and pricing, then add them to your project with a single command."}
+                        ? "使用语义搜索查找满足你需求的 MCP Server。查看能力和信任分数后，一键添加到你的项目。"
+                        : "Search for MCP servers by capability using semantic search. Review their capabilities and trust scores, then add them to your project with a single command."}
                     </p>
                     <div className="rounded-lg bg-black/60 border border-white/5 p-4 font-mono text-sm">
                       <div className="text-gray-300">

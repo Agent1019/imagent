@@ -31,6 +31,7 @@ type LayoutProps = {
 };
 
 export default function Layout({ locale, nav, footer, searchPlaceholder, children }: LayoutProps) {
+  const zh = locale === "zh";
   return (
     <>
       <ScrollEffects />
@@ -121,33 +122,33 @@ export default function Layout({ locale, nav, footer, searchPlaceholder, childre
             <div>
               <div className="text-sm font-semibold mb-3 text-gray-300">{footer.product}</div>
               <div className="space-y-2 text-sm text-gray-500">
-                <a href="/explore" className="block hover:text-white transition">Explore</a>
-                <a href="/rankings" className="block hover:text-white transition">Rankings</a>
-                <a href="/pricing" className="block hover:text-white transition">Pricing</a>
+                <a href="/explore" className="block hover:text-white transition">{nav.explore}</a>
+                <a href="/rankings" className="block hover:text-white transition">{nav.rankings}</a>
+                <a href="/pricing" className="block hover:text-white transition">{nav.pricing}</a>
               </div>
             </div>
             <div>
               <div className="text-sm font-semibold mb-3 text-gray-300">{footer.developers}</div>
               <div className="space-y-2 text-sm text-gray-500">
-                <a href="/docs" className="block hover:text-white transition">Documentation</a>
-                <a href="/docs/api" className="block hover:text-white transition">API Reference</a>
-                <a href="/blog" className="block hover:text-white transition">Blog</a>
+                <a href="/docs" className="block hover:text-white transition">{zh ? "文档" : "Documentation"}</a>
+                <a href="/docs/api" className="block hover:text-white transition">{zh ? "API 参考" : "API Reference"}</a>
+                <a href="/blog" className="block hover:text-white transition">{nav.blog}</a>
               </div>
             </div>
             <div>
               <div className="text-sm font-semibold mb-3 text-gray-300">{footer.company}</div>
               <div className="space-y-2 text-sm text-gray-500">
-                <a href="/about" className="block hover:text-white transition">About</a>
-                <a href="/blog" className="block hover:text-white transition">Blog</a>
-                <a href="/careers" className="block hover:text-white transition">Careers</a>
+                <a href="/about" className="block hover:text-white transition">{zh ? "关于" : "About"}</a>
+                <a href="/blog" className="block hover:text-white transition">{nav.blog}</a>
+                <a href="/careers" className="block hover:text-white transition">{zh ? "招聘" : "Careers"}</a>
               </div>
             </div>
           </div>
           <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
             <span>{footer.copyright}</span>
             <div className="flex gap-6 mt-4 md:mt-0">
-              <a href="/privacy" className="hover:text-white transition">Privacy</a>
-              <a href="/terms" className="hover:text-white transition">Terms</a>
+              <a href="/privacy" className="hover:text-white transition">{zh ? "隐私" : "Privacy"}</a>
+              <a href="/terms" className="hover:text-white transition">{zh ? "条款" : "Terms"}</a>
             </div>
           </div>
         </div>
