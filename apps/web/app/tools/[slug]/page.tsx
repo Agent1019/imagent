@@ -33,49 +33,40 @@ export async function generateMetadata({
   };
 }
 
+const endpointKeys = ["epList", "epInvoke", "epHealth", "epAuth"] as const;
+
 const mockEndpoints = [
   {
     method: "GET",
     path: "/api/v1/tools/{slug}/capabilities",
-    description: "List all capabilities and tool functions available on this server, including input schemas and output formats.",
   },
   {
     method: "POST",
     path: "/api/v1/tools/{slug}/invoke",
-    description: "Invoke a specific tool function with structured parameters. Returns execution results and usage metadata.",
   },
   {
     method: "GET",
     path: "/api/v1/tools/{slug}/health",
-    description: "Check server health status, uptime, average latency, and current availability of all endpoints.",
   },
   {
     method: "POST",
     path: "/api/v1/tools/{slug}/authenticate",
-    description: "Exchange an agent identity token (AIT) for a scoped access token to invoke protected endpoints.",
   },
 ];
 
+const pricingTierKeys = ["free", "pro", "enterprise"] as const;
+
 const mockPricingTiers = [
   {
-    name: "Free",
     price: "$0",
-    period: "/month",
-    features: ["1,000 calls/month", "Community support", "Standard latency", "Basic auth scopes"],
     highlighted: false,
   },
   {
-    name: "Pro",
     price: "$29",
-    period: "/month",
-    features: ["100,000 calls/month", "Priority support", "Low latency routing", "All auth scopes", "Webhook events"],
     highlighted: true,
   },
   {
-    name: "Enterprise",
-    price: "Custom",
-    period: "",
-    features: ["Unlimited calls", "Dedicated support", "SLA guarantee", "Custom scopes", "On-premise option", "Audit logs"],
+    price: null,
     highlighted: false,
   },
 ];
@@ -93,6 +84,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const host = headersList.get("x-host") || headersList.get("host") || "imagent.ai";
   const locale: Locale = getLocaleFromHost(host);
   const t = getContent(locale);
+  const td = t.toolDetail;
 
   const toolName = slug.charAt(0).toUpperCase() + slug.slice(1);
 
@@ -102,6 +94,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     PUT: "bg-blue-500/10 text-blue-400 border-blue-500/20",
     DELETE: "bg-red-500/10 text-red-400 border-red-500/20",
   };
+
+  const tierNames = [td.free, td.pro, td.enterprise];
+  const tierFeatures = [td.freeFeatures, td.proFeatures, td.enterpriseFeatures];
 
   return (
     <Layout locale={locale} nav={t.nav} footer={t.footer} searchPlaceholder={t.hero.searchPlaceholder}>
@@ -117,7 +112,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                 <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
-                Trust Score: 96
+                {td.trustScore}: 96
               </span>
             </div>
 
@@ -138,9 +133,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                     <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
                     <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
                   </div>
-                  <span className="text-xs text-gray-500 ml-2">terminal</span>
+                  <span className="text-xs text-gray-500 ml-2">{td.terminal}</span>
                 </div>
-                <span className="text-xs text-gray-600">Copy command</span>
+                <span className="text-xs text-gray-600">{td.copyCmd}</span>
               </div>
               <div className="px-5 py-4 flex items-center gap-3">
                 <span className="text-emerald-400 font-mono text-sm">$</span>
@@ -153,11 +148,11 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         {/* Endpoints */}
         <section className="px-4 md:px-6 py-16 border-t border-white/5">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-2xl font-bold text-white mb-2">Endpoints</h2>
-            <p className="text-gray-400 mb-8">Available API endpoints for this MCP server.</p>
+            <h2 className="text-2xl font-bold text-white mb-2">{td.endpointsTitle}</h2>
+            <p className="text-gray-400 mb-8">{td.endpointsDesc}</p>
 
             <div className="space-y-4">
-              {mockEndpoints.map((endpoint) => (
+              {mockEndpoints.map((endpoint, idx) => (
                 <div
                   key={endpoint.path}
                   className="rounded-xl border border-white/5 bg-white/[0.02] p-5 hover:border-white/10 transition"
@@ -173,7 +168,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                     </code>
                   </div>
                   <p className="text-sm text-gray-500 leading-relaxed pl-0 sm:pl-[52px]">
-                    {endpoint.description}
+                    {td[endpointKeys[idx]]}
                   </p>
                 </div>
               ))}
@@ -184,13 +179,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         {/* Pricing */}
         <section className="px-4 md:px-6 py-16 border-t border-white/5">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold text-white mb-2">Pricing</h2>
-            <p className="text-gray-400 mb-10">Choose the plan that fits your usage. All plans include core functionality.</p>
+            <h2 className="text-2xl font-bold text-white mb-2">{td.pricingTitle}</h2>
+            <p className="text-gray-400 mb-10">{td.pricingDesc}</p>
 
             <div className="grid md:grid-cols-3 gap-6">
-              {mockPricingTiers.map((tier) => (
+              {mockPricingTiers.map((tier, idx) => (
                 <div
-                  key={tier.name}
+                  key={pricingTierKeys[idx]}
                   className={`rounded-xl border p-6 flex flex-col ${
                     tier.highlighted
                       ? "border-white/20 bg-white/[0.04] ring-1 ring-white/10"
@@ -199,16 +194,20 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                 >
                   {tier.highlighted && (
                     <span className="inline-flex self-start items-center px-2 py-0.5 rounded-full text-xs font-medium bg-white/10 text-white mb-3">
-                      Most Popular
+                      {td.mostPopular}
                     </span>
                   )}
-                  <h3 className="text-lg font-semibold text-white">{tier.name}</h3>
+                  <h3 className="text-lg font-semibold text-white">{tierNames[idx]}</h3>
                   <div className="mt-3 mb-5">
-                    <span className="text-3xl font-bold text-white">{tier.price}</span>
-                    <span className="text-sm text-gray-500">{tier.period}</span>
+                    <span className="text-3xl font-bold text-white">
+                      {tier.price ?? td.custom}
+                    </span>
+                    <span className="text-sm text-gray-500">
+                      {tier.price ? td.perMonth : ""}
+                    </span>
                   </div>
                   <ul className="space-y-2.5 flex-1">
-                    {tier.features.map((feature) => (
+                    {tierFeatures[idx].map((feature) => (
                       <li key={feature} className="flex items-start gap-2 text-sm text-gray-400">
                         <svg className="w-4 h-4 mt-0.5 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -225,7 +224,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                         : "border border-white/15 text-white hover:border-white/30 hover:bg-white/5"
                     }`}
                   >
-                    {tier.name === "Enterprise" ? "Contact Sales" : "Get Started"}
+                    {idx === 2 ? td.contactSales : td.getStarted}
                   </a>
                 </div>
               ))}
@@ -236,14 +235,14 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         {/* Related Tools */}
         <section className="px-4 md:px-6 py-16 border-t border-white/5">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold text-white mb-2">Related Tools</h2>
-            <p className="text-gray-400 mb-8">Other MCP servers that complement {toolName}.</p>
+            <h2 className="text-2xl font-bold text-white mb-2">{td.relatedTitle}</h2>
+            <p className="text-gray-400 mb-8">{td.relatedDesc} {toolName}.</p>
 
             <div className="grid md:grid-cols-3 gap-6">
               {mockRelatedTools.map((tool) => (
                 <a
                   key={tool.slug}
-                  href={`/explore/${tool.slug}`}
+                  href={`/tools/${tool.slug}`}
                   className="group rounded-xl border border-white/5 bg-white/[0.02] p-5 hover:border-white/10 hover:bg-white/[0.04] transition"
                 >
                   <div className="flex items-center justify-between mb-3">

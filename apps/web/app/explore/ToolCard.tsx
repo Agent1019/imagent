@@ -38,7 +38,7 @@ export function ToolCard({ tool, isZh }: ToolCardProps) {
 
   return (
     <div className="relative group rounded-xl border border-white/5 bg-white/[0.02] p-5 hover:border-white/10 hover:bg-white/[0.04] transition">
-      <a href={`/explore/${tool.slug}`} className="block">
+      <a href={`/tools/${tool.slug}`} className="block">
         {/* Icon + Name */}
         <div className="flex items-start gap-3 mb-3">
           <div
@@ -66,7 +66,7 @@ export function ToolCard({ tool, isZh }: ToolCardProps) {
           ))}
           {tool.endpoints > 0 && (
             <span className="px-2 py-0.5 text-[10px] font-medium rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              {tool.endpoints} endpoints
+              {tool.endpoints} {isZh ? "个端点" : " endpoints"}
             </span>
           )}
         </div>

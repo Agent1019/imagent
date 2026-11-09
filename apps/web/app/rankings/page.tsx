@@ -76,11 +76,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 type TabKey = "most-used" | "growing" | "category";
 
-const TABS: { key: TabKey; en: string; zh: string }[] = [
-  { key: "most-used", en: "Most Used", zh: "最多使用" },
-  { key: "growing", en: "Fastest Growing", zh: "增长最快" },
-  { key: "category", en: "By Category", zh: "分类排行" },
-];
+const TAB_KEYS: TabKey[] = ["most-used", "growing", "category"];
 
 export default async function RankingsPage({
   searchParams,
@@ -92,8 +88,6 @@ export default async function RankingsPage({
     headersList.get("x-host") || headersList.get("host") || "imagent.ai";
   const locale: Locale = getLocaleFromHost(host);
   const t = getContent(locale);
-
-  const isZh = locale === "zh";
 
   const { tab: rawTab = "most-used", period: rawPeriod = "7d" } =
     await searchParams;
@@ -136,12 +130,10 @@ export default async function RankingsPage({
       <section className="pt-32 pb-12 px-4 md:px-6">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-            {isZh ? "Agent 工具排行榜" : "Agent Rankings"}
+            {t.rankings.title}
           </h1>
           <p className="mt-4 text-lg text-gray-400 max-w-2xl mx-auto">
-            {isZh
-              ? "追踪最受欢迎的 MCP Server。按调用量、增长率和分类发现趋势。"
-              : "Track the most popular MCP servers. Discover trends by call volume, growth rate, and category."}
+            {t.rankings.subtitle}
           </p>
         </div>
       </section>
@@ -151,19 +143,25 @@ export default async function RankingsPage({
         <div className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
           {/* Tabs */}
           <div className="flex items-center gap-1 p-1 rounded-full bg-white/5 border border-white/10">
-            {TABS.map((t) => {
-              const isActive = t.key === activeTab;
+            {TAB_KEYS.map((key) => {
+              const isActive = key === activeTab;
+              const label =
+                key === "most-used"
+                  ? t.rankings.mostUsed
+                  : key === "growing"
+                  ? t.rankings.fastest
+                  : t.rankings.byCategory;
               return (
                 <a
-                  key={t.key}
-                  href={tabHref(t.key)}
+                  key={key}
+                  href={tabHref(key)}
                   className={`px-4 py-1.5 rounded-full text-sm font-medium transition whitespace-nowrap ${
                     isActive
                       ? "bg-white text-black shadow-sm"
                       : "text-gray-400 hover:text-white"
                   }`}
                 >
-                  {isZh ? t.zh : t.en}
+                  {label}
                 </a>
               );
             })}
@@ -201,13 +199,12 @@ export default async function RankingsPage({
           {activeTab === "most-used" && (
             <div>
               <p className="text-sm text-gray-500 mb-6">
-                {isZh
-                  ? "按 30 天内 API 调用量排名"
-                  : "Ranked by API calls in the last 30 days"}
+                {t.rankings.descMostUsed}
               </p>
               <RankingsTable
                 tools={mostUsed}
                 locale={locale}
+                rankingsI18n={t.rankings}
                 showCalls={true}
               />
             </div>
@@ -216,13 +213,12 @@ export default async function RankingsPage({
           {activeTab === "growing" && (
             <div>
               <p className="text-sm text-gray-500 mb-6">
-                {isZh
-                  ? "按 30 天增长率排名"
-                  : "Ranked by 30-day growth rate"}
+                {t.rankings.descFastest}
               </p>
               <RankingsTable
                 tools={fastestGrowing}
                 locale={locale}
+                rankingsI18n={t.rankings}
                 showGrowth={true}
               />
             </div>
@@ -231,20 +227,19 @@ export default async function RankingsPage({
           {activeTab === "category" && (
             <div>
               <p className="text-sm text-gray-500 mb-6">
-                {isZh
-                  ? "各分类下使用量最高的工具"
-                  : "Top tool in each category by usage"}
+                {t.rankings.descByCategory}
               </p>
               <div className="space-y-8">
                 {Object.entries(topByCategory).map(
                   ([category, categoryTools]) => (
                     <div key={category}>
                       <h3 className="text-sm font-semibold text-gray-300 mb-3 uppercase tracking-wider">
-                        {category}
+                        {t.explore.catLabels[category] ?? category}
                       </h3>
                       <RankingsTable
                         tools={categoryTools}
                         locale={locale}
+                        rankingsI18n={t.rankings}
                         showCalls={true}
                         compact
                       />
@@ -261,75 +256,63 @@ export default async function RankingsPage({
       <section className="py-24 px-4 md:px-6 border-t border-white/5">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-2xl font-bold mb-6">
-            {isZh ? "计数方法" : "How We Count"}
+            {t.rankings.howWeCount}
           </h2>
           <div className="space-y-6 text-sm text-gray-400 leading-relaxed">
             <div className="rounded-xl border border-white/5 bg-white/[0.02] p-6">
               <h3 className="text-white font-semibold mb-2">
-                {isZh ? "数据来源" : "Data Sources"}
+                {t.rankings.dataSources}
               </h3>
               <p>
-                {isZh
-                  ? "排名数据来自 Imagent 平台的实际 API 调用记录。我们统计所有通过 Imagent 网关路由的工具调用，包括 MCP、A2A 和 Function Calling 协议。"
-                  : "Rankings are derived from actual API call records on the Imagent platform. We count all tool invocations routed through the Imagent gateway, including MCP, A2A, and Function Calling protocols."}
+                {t.rankings.dataSourcesDesc}
               </p>
             </div>
 
             <div className="rounded-xl border border-white/5 bg-white/[0.02] p-6">
               <h3 className="text-white font-semibold mb-2">
-                {isZh ? "调用量统计" : "Call Volume"}
+                {t.rankings.callVolume}
               </h3>
               <p>
-                {isZh
-                  ? "每次成功调用计数为一次。失败的调用、超时和速率限制响应不计入排名。7 天和 30 天窗口均为滑动窗口，每日更新。"
-                  : "Each successful invocation counts as one call. Failed calls, timeouts, and rate-limited responses are excluded from rankings. Both 7-day and 30-day windows are rolling and updated daily."}
+                {t.rankings.callVolumeDesc}
               </p>
             </div>
 
             <div className="rounded-xl border border-white/5 bg-white/[0.02] p-6">
               <h3 className="text-white font-semibold mb-2">
-                {isZh ? "增长率计算" : "Growth Rate"}
+                {t.rankings.growthRate}
               </h3>
               <p>
-                {isZh
-                  ? "增长率为当前周期调用量相对上一个同等长度周期的百分比变化。例如，30 天增长率比较的是最近 30 天与之前 30 天的调用量。"
-                  : "Growth rate is the percentage change in call volume compared to the previous period of equal length. For example, 30-day growth compares the most recent 30 days to the 30 days before that."}
+                {t.rankings.growthRateDesc}
               </p>
             </div>
 
             <div className="rounded-xl border border-white/5 bg-white/[0.02] p-6">
               <h3 className="text-white font-semibold mb-2">
-                {isZh ? "状态标签" : "Status Badges"}
+                {t.rankings.statusBadges}
               </h3>
               <div className="flex flex-wrap gap-4 mt-3">
                 <div className="flex items-center gap-2">
                   <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-orange-500/20 text-orange-400 border border-orange-500/20">
-                    Hot
+                    {t.rankings.hot}
                   </span>
                   <span className="text-gray-500">
-                    {isZh
-                      ? "30 天增长率 > 50%"
-                      : "30-day growth rate exceeds 50%"}
+                    {t.rankings.hotDesc}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/20">
-                    Rising
+                    {t.rankings.rising}
                   </span>
                   <span className="text-gray-500">
-                    {isZh
-                      ? "30 天增长率 20%-50%"
-                      : "30-day growth rate between 20-50%"}
+                    {t.rankings.risingDesc}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-gray-500/20 text-gray-400 border border-gray-500/20">
-                    Stable
+                    {t.rankings.stable}
                   </span>
                   <span className="text-gray-500">
-                    {isZh
-                      ? "30 天增长率 < 20%"
-                      : "30-day growth rate below 20%"}
+                    {t.rankings.stableDesc}
                   </span>
                 </div>
               </div>
@@ -348,12 +331,17 @@ export default async function RankingsPage({
 function RankingsTable({
   tools,
   locale,
+  rankingsI18n,
   showCalls = false,
   showGrowth = false,
   compact = false,
 }: {
   tools: RankingTool[];
   locale: Locale;
+  rankingsI18n: {
+    tool: string; category: string; calls: string; growth: string; status: string;
+    hot: string; rising: string; stable: string;
+  };
   showCalls?: boolean;
   showGrowth?: boolean;
   compact?: boolean;
@@ -369,19 +357,19 @@ function RankingsTable({
               #
             </th>
             <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-              {isZh ? "工具" : "Tool"}
+              {rankingsI18n.tool}
             </th>
             <th className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
-              {isZh ? "分类" : "Category"}
+              {rankingsI18n.category}
             </th>
             <th className="text-right px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">
-              {isZh ? "调用量" : "Calls"}
+              {rankingsI18n.calls}
             </th>
             <th className="text-right px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-              {isZh ? "增长率" : "Growth"}
+              {rankingsI18n.growth}
             </th>
             <th className="text-center px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider w-20">
-              {isZh ? "状态" : "Status"}
+              {rankingsI18n.status}
             </th>
           </tr>
         </thead>
@@ -400,7 +388,7 @@ function RankingsTable({
                 </td>
                 <td className="px-4 py-3">
                   <a
-                    href={`/explore/${tool.slug}`}
+                    href={`/tools/${tool.slug}`}
                     className="flex items-center gap-3 group"
                   >
                     <div
@@ -441,7 +429,7 @@ function RankingsTable({
                   </span>
                 </td>
                 <td className="px-4 py-3 text-center">
-                  <StatusBadge status={tool.status} />
+                  <StatusBadge status={tool.status} isZh={isZh} hotLabel={rankingsI18n.hot} risingLabel={rankingsI18n.rising} stableLabel={rankingsI18n.stable} />
                 </td>
               </tr>
             );
@@ -454,22 +442,30 @@ function RankingsTable({
 
 function StatusBadge({
   status,
+  isZh,
+  hotLabel,
+  risingLabel,
+  stableLabel,
 }: {
   status: "hot" | "rising" | "stable";
+  isZh: boolean;
+  hotLabel: string;
+  risingLabel: string;
+  stableLabel: string;
 }) {
   const config = {
     hot: {
-      label: "Hot",
+      label: hotLabel,
       className:
         "bg-orange-500/15 text-orange-400 border-orange-500/20",
     },
     rising: {
-      label: "Rising",
+      label: risingLabel,
       className:
         "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
     },
     stable: {
-      label: "Stable",
+      label: stableLabel,
       className: "bg-white/5 text-gray-400 border-white/10",
     },
   };

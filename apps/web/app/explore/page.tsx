@@ -6,41 +6,14 @@ import type { Metadata } from "next";
 import { getPackages, type PackageListItem } from "@/lib/data/packages";
 import { ToolCard } from "./ToolCard";
 
-const categoryLabelsZh: Record<string, string> = {
-  All: "全部",
-  Search: "搜索",
-  Data: "数据",
-  Finance: "金融",
-  Social: "社交",
-  Communication: "通讯",
-  DevTools: "开发工具",
-  "AI/ML": "AI/ML",
-  Productivity: "生产力",
-  Media: "媒体",
-  "E-commerce": "电商",
-  Jobs: "招聘",
-  Travel: "出行",
-  Weather: "天气",
-  News: "新闻",
-  Legal: "法律",
-  Software: "软件",
-  Maps: "地图",
-  Marketing: "营销",
-  Analytics: "分析",
-  Trade: "贸易",
-  Agents: "Agent",
-  Other: "其他",
-};
-
 export async function generateMetadata(): Promise<Metadata> {
   const headersList = await headers();
   const host = headersList.get("x-host") || headersList.get("host") || "imagent.ai";
   const locale = getLocaleFromHost(host);
+  const t = getContent(locale);
 
-  const title = locale === "zh" ? "探索 MCP Server - Imagent" : "Explore MCP Servers - Imagent";
-  const description = locale === "zh"
-    ? "浏览和发现数百个 MCP Server。按类别筛选，找到适合你 AI Agent 的工具。"
-    : "Browse and discover hundreds of MCP servers. Filter by category to find the right tools for your AI agents.";
+  const title = `${t.explore.title} - Imagent`;
+  const description = t.explore.subtitle;
 
   return { title, description, robots: { index: true, follow: true } };
 }
@@ -77,12 +50,10 @@ export default async function ExplorePage({ searchParams }: PageProps) {
       <section className="pt-32 pb-16 px-4 md:px-6 border-b border-white/5">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
-            {isZh ? "探索 MCP Server" : "Explore MCP Servers"}
+            {t.explore.title}
           </h1>
           <p className="mt-3 text-gray-400 max-w-2xl">
-            {isZh
-              ? "浏览数百个为 AI Agent 构建的工具。按类别筛选，找到你需要的能力。"
-              : "Browse hundreds of tools built for AI agents. Filter by category to find the capabilities you need."}
+            {t.explore.subtitle}
           </p>
         </div>
       </section>
@@ -94,12 +65,12 @@ export default async function ExplorePage({ searchParams }: PageProps) {
             <aside className="lg:w-56 shrink-0">
               <div className="lg:sticky lg:top-24">
                 <h2 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">
-                  {isZh ? "分类" : "Categories"}
+                  {t.explore.categories}
                 </h2>
                 <nav className="flex flex-row lg:flex-col gap-1 overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0">
                   {categories.map((cat) => {
                     const isActive = activeCategory === cat;
-                    const label = isZh ? categoryLabelsZh[cat] || cat : cat;
+                    const label = t.explore.catLabels[cat] || cat;
                     return (
                       <a
                         key={cat}
@@ -120,10 +91,10 @@ export default async function ExplorePage({ searchParams }: PageProps) {
             <div className="flex-1 min-w-0">
               {/* Results count */}
               <p className="text-xs text-gray-500 mb-4">
-                {isZh ? `显示 ${total} 个工具` : `Showing ${total} tools`}
+                {t.explore.showing} {total} tools
                 {activeCategory !== "All" && (
                   <span>
-                    {" "}{isZh ? "分类：" : "in "}<span className="text-gray-300">{activeCategory}</span>
+                    {" "}{t.explore.inCategory} <span className="text-gray-300">{activeCategory}</span>
                   </span>
                 )}
               </p>
@@ -144,10 +115,10 @@ export default async function ExplorePage({ searchParams }: PageProps) {
                     </svg>
                   </div>
                   <p className="text-gray-400">
-                    {isZh ? "该分类下暂无工具" : "No tools found in this category."}
+                    {t.explore.noTools}
                   </p>
                   <a href="/explore" className="inline-block mt-4 text-sm text-white/70 hover:text-white transition">
-                    {isZh ? "查看全部工具" : "View all tools"} &rarr;
+                    {t.explore.viewAll} &rarr;
                   </a>
                 </div>
               )}

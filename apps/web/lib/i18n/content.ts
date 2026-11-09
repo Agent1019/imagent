@@ -32,6 +32,31 @@ type Content = {
   protocols: string;
   cta: { title: string; subtitle: string; primary: string; secondary: string };
   footer: { tagline: string; product: string; developers: string; company: string; copyright: string; explore: string; rankings: string; pricing: string; documentation: string; apiReference: string; blog: string; about: string; careers: string; privacy: string; terms: string };
+  explore: {
+    title: string; subtitle: string; categories: string; showing: string; inCategory: string;
+    noTools: string; viewAll: string; endpoints: string; installs: string;
+    catLabels: Record<string, string>;
+  };
+  toolDetail: {
+    trustScore: string; terminal: string; copyCmd: string; endpointsTitle: string;
+    endpointsDesc: string; pricingTitle: string; pricingDesc: string;
+    free: string; pro: string; enterprise: string; perMonth: string; custom: string;
+    mostPopular: string; getStarted: string; contactSales: string;
+    relatedTitle: string; relatedDesc: string;
+    freeFeatures: string[]; proFeatures: string[]; enterpriseFeatures: string[];
+    epList: string; epInvoke: string; epHealth: string; epAuth: string;
+  };
+  rankings: {
+    title: string; subtitle: string; mostUsed: string; fastest: string; byCategory: string;
+    tool: string; category: string; calls: string; growth: string; status: string;
+    hot: string; rising: string; stable: string;
+    hotDesc: string; risingDesc: string; stableDesc: string;
+    howWeCount: string; dataSources: string; dataSourcesDesc: string;
+    callVolume: string; callVolumeDesc: string;
+    growthRate: string; growthRateDesc: string;
+    statusBadges: string;
+    descMostUsed: string; descFastest: string; descByCategory: string;
+  };
   seo: { title: string; description: string };
 };
 
@@ -94,6 +119,42 @@ const en: Content = {
     secondary: "Read the Docs",
   },
   footer: { tagline: "The infrastructure layer for Agent economy. Discover, authenticate, and pay per call.", product: "Product", developers: "Developers", company: "Company", copyright: "© 2026 imagent. All rights reserved.", explore: "Explore", rankings: "Rankings", pricing: "Pricing", documentation: "Documentation", apiReference: "API Reference", blog: "Blog", about: "About", careers: "Careers", privacy: "Privacy", terms: "Terms" },
+  explore: {
+    title: "Explore MCP Servers", subtitle: "Browse hundreds of tools built for AI agents. Filter by category to find the capabilities you need.",
+    categories: "Categories", showing: "Showing", inCategory: "in",
+    noTools: "No tools found in this category.", viewAll: "View all tools",
+    endpoints: "endpoints", installs: "installs",
+    catLabels: { All: "All", Search: "Search", Data: "Data", Finance: "Finance", Social: "Social", Communication: "Communication", DevTools: "DevTools", "AI/ML": "AI/ML", Productivity: "Productivity", Media: "Media", "E-commerce": "E-commerce", Jobs: "Jobs", Travel: "Travel", Weather: "Weather", News: "News", Legal: "Legal", Software: "Software", Maps: "Maps", Marketing: "Marketing", Analytics: "Analytics", Trade: "Trade", Agents: "Agents", Other: "Other" },
+  },
+  toolDetail: {
+    trustScore: "Trust Score", terminal: "terminal", copyCmd: "Copy command",
+    endpointsTitle: "Endpoints", endpointsDesc: "Available API endpoints for this MCP server.",
+    pricingTitle: "Pricing", pricingDesc: "Choose the plan that fits your usage. All plans include core functionality.",
+    free: "Free", pro: "Pro", enterprise: "Enterprise", perMonth: "/month", custom: "Custom",
+    mostPopular: "Most Popular", getStarted: "Get Started", contactSales: "Contact Sales",
+    relatedTitle: "Related Tools", relatedDesc: "Other MCP servers that complement",
+    freeFeatures: ["1,000 calls/month", "Community support", "Standard latency", "Basic auth scopes"],
+    proFeatures: ["100,000 calls/month", "Priority support", "Low latency routing", "All auth scopes", "Webhook events"],
+    enterpriseFeatures: ["Unlimited calls", "Dedicated support", "SLA guarantee", "Custom scopes", "On-premise option", "Audit logs"],
+    epList: "List all capabilities and tool functions available on this server.",
+    epInvoke: "Invoke a specific tool function with structured parameters.",
+    epHealth: "Check server health status, uptime, average latency.",
+    epAuth: "Exchange an agent identity token (AIT) for a scoped access token.",
+  },
+  rankings: {
+    title: "Agent Rankings", subtitle: "Track the most popular MCP servers and their usage trends across the Imagent platform.",
+    mostUsed: "Most Used", fastest: "Fastest Growing", byCategory: "By Category",
+    tool: "Tool", category: "Category", calls: "Calls", growth: "Growth", status: "Status",
+    hot: "Hot", rising: "Rising", stable: "Stable",
+    hotDesc: "30-day growth rate exceeds 50%", risingDesc: "30-day growth rate between 20-50%", stableDesc: "30-day growth rate below 20%",
+    howWeCount: "How We Count", dataSources: "Data Sources", dataSourcesDesc: "Rankings are derived from actual API call records on the Imagent platform.",
+    callVolume: "Call Volume", callVolumeDesc: "Each successful invocation counts as one call. Failed calls and retries are excluded.",
+    growthRate: "Growth Rate", growthRateDesc: "Growth rate is the percentage change in call volume compared to the previous period of equal length.",
+    statusBadges: "Status Badges",
+    descMostUsed: "Ranked by API calls in the last 30 days",
+    descFastest: "Ranked by 30-day growth rate",
+    descByCategory: "Top tool in each category by usage",
+  },
   seo: {
     title: "Imagent — Discover, Authenticate & Use MCP Servers",
     description: "The infrastructure layer for AI agents. Discover MCP servers, authenticate tool calls, and pay per use — all in one platform.",
@@ -159,6 +220,42 @@ const zh: Content = {
     secondary: "阅读文档",
   },
   footer: { tagline: "Agent 经济的基础设施层，一站式实现 agent 发现、认证、调用付费。", product: "产品", developers: "开发者", company: "公司", copyright: "© 2026 imagent. All rights reserved.", explore: "探索", rankings: "排名", pricing: "定价", documentation: "文档", apiReference: "API 参考", blog: "博客", about: "关于", careers: "招聘", privacy: "隐私政策", terms: "服务条款" },
+  explore: {
+    title: "探索 MCP Server", subtitle: "浏览数百个为 AI Agent 构建的工具。按类别筛选，找到你需要的能力。",
+    categories: "分类", showing: "显示", inCategory: "分类：",
+    noTools: "该分类下暂无工具", viewAll: "查看全部工具",
+    endpoints: "个端点", installs: "安装",
+    catLabels: { All: "全部", Search: "搜索", Data: "数据", Finance: "金融", Social: "社交", Communication: "通讯", DevTools: "开发工具", "AI/ML": "AI/ML", Productivity: "生产力", Media: "媒体", "E-commerce": "电商", Jobs: "招聘", Travel: "出行", Weather: "天气", News: "新闻", Legal: "法律", Software: "软件", Maps: "地图", Marketing: "营销", Analytics: "分析", Trade: "贸易", Agents: "Agent", Other: "其他" },
+  },
+  toolDetail: {
+    trustScore: "信任分", terminal: "终端", copyCmd: "复制命令",
+    endpointsTitle: "端点", endpointsDesc: "该 MCP Server 可用的 API 端点。",
+    pricingTitle: "定价", pricingDesc: "选择适合你使用量的方案，所有方案均包含核心功能。",
+    free: "免费", pro: "专业版", enterprise: "企业版", perMonth: "/月", custom: "定制",
+    mostPopular: "最受欢迎", getStarted: "免费开始", contactSales: "联系销售",
+    relatedTitle: "相关工具", relatedDesc: "与之互补的其他 MCP Server",
+    freeFeatures: ["1,000 次调用/月", "社区支持", "标准延迟", "基础认证范围"],
+    proFeatures: ["100,000 次调用/月", "优先支持", "低延迟路由", "全部认证范围", "Webhook 事件"],
+    enterpriseFeatures: ["无限调用", "专属支持", "SLA 保障", "自定义范围", "私有化部署", "审计日志"],
+    epList: "列出该服务器上所有可用的能力和工具函数。",
+    epInvoke: "使用结构化参数调用特定的工具函数。",
+    epHealth: "检查服务器健康状态、正常运行时间和平均延迟。",
+    epAuth: "将 Agent 身份令牌（AIT）换取有限范围的访问令牌。",
+  },
+  rankings: {
+    title: "Agent 工具排行榜", subtitle: "追踪 Imagent 平台上最热门的 MCP Server 及其使用趋势。",
+    mostUsed: "最多使用", fastest: "增长最快", byCategory: "分类排行",
+    tool: "工具", category: "分类", calls: "调用量", growth: "增长率", status: "状态",
+    hot: "热门", rising: "上升", stable: "稳定",
+    hotDesc: "30 天增长率 > 50%", risingDesc: "30 天增长率 20%-50%", stableDesc: "30 天增长率 < 20%",
+    howWeCount: "计数方法", dataSources: "数据来源", dataSourcesDesc: "排名数据来自 Imagent 平台的实际 API 调用记录。",
+    callVolume: "调用量统计", callVolumeDesc: "每次成功调用计数为一次，失败调用和重试不计入。",
+    growthRate: "增长率计算", growthRateDesc: "增长率为当前周期调用量相对上一个同等长度周期的百分比变化。",
+    statusBadges: "状态标签",
+    descMostUsed: "按 30 天内 API 调用量排名",
+    descFastest: "按 30 天增长率排名",
+    descByCategory: "各分类下使用量最高的工具",
+  },
   seo: {
     title: "Imagent — MCP Server 发现、认证与按量付费平台",
     description: "AI Agent 的基础设施层。发现 MCP Server、认证工具调用、按用量付费 — 一个平台全覆盖。",
