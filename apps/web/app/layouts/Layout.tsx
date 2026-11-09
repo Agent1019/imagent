@@ -120,7 +120,7 @@ export default function Layout({ locale, nav, footer, searchPlaceholder, childre
               <p className="text-xs text-gray-500 leading-relaxed max-w-xs">{footer.tagline}</p>
             </div>
             {/* Link columns — right-aligned */}
-            <div className="grid grid-cols-3 gap-8 md:gap-16">
+            <div className="grid grid-cols-3 gap-12 md:gap-24">
               <div>
                 <div className="text-sm font-semibold mb-3 text-gray-300">{footer.product}</div>
                 <div className="space-y-2 text-sm text-gray-500">
