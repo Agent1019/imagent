@@ -38,24 +38,24 @@ export default function Layout({ locale, nav, footer, searchPlaceholder, childre
       {/* Navigation */}
       <nav id="main-nav" className="fixed top-0 w-full z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-4 md:gap-8">
+          <div className="flex items-center gap-4 md:gap-8 shrink-0">
             <a href="/" className="text-2xl font-bold tracking-tight text-white shrink-0">
               Imagent
             </a>
-            <div className="hidden md:flex items-center gap-6 text-sm text-gray-400">
-              <a href="/explore" className="hover:text-white transition">{nav.explore}</a>
-              <a href="/rankings" className="hover:text-white transition">{nav.rankings}</a>
-              <a href="/blog" className="hover:text-white transition">{nav.blog}</a>
-              <a href="/community" className="hover:text-white transition">{nav.community}</a>
-              <a href="/docs" className="hover:text-white transition">{nav.docs}</a>
-              <a href="/pricing" className="hover:text-white transition">{nav.pricing}</a>
+            <div className="hidden md:flex items-center gap-4 lg:gap-6 text-sm text-gray-400 overflow-hidden">
+              <a href="/explore" className="hover:text-white transition shrink-0">{nav.explore}</a>
+              <a href="/rankings" className="hover:text-white transition shrink-0">{nav.rankings}</a>
+              <a href="/blog" className="hover:text-white transition shrink-0">{nav.blog}</a>
+              <a href="/community" className="hover:text-white transition shrink-0">{nav.community}</a>
+              <a href="/docs" className="hover:text-white transition shrink-0">{nav.docs}</a>
+              <a href="/pricing" className="hover:text-white transition shrink-0">{nav.pricing}</a>
             </div>
           </div>
           <div className="flex items-center justify-end gap-1.5 md:gap-2 lg:gap-3 flex-1 min-w-0 md:ml-4 lg:ml-8">
             <NavSearch placeholder={searchPlaceholder} />
 
             {/* Language Dropdown - hidden on mobile, MobileNav handles it */}
-            <div className="hidden md:block relative group">
+            <div className="hidden md:block relative group shrink-0">
               <button className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition px-2 py-1.5 rounded-lg hover:bg-white/5">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
@@ -83,12 +83,12 @@ export default function Layout({ locale, nav, footer, searchPlaceholder, childre
               </div>
             </div>
 
-            <a href="/login" className="hidden md:inline text-sm text-gray-400 hover:text-white transition px-2 py-1.5">
+            <a href="/login" className="hidden md:inline text-sm text-gray-400 hover:text-white transition px-2 py-1.5 whitespace-nowrap shrink-0">
               {nav.signIn}
             </a>
             <a
               href="/signup"
-              className="text-sm bg-white text-black px-3 md:px-4 py-1.5 rounded-lg font-medium hover:bg-gray-200 transition"
+              className="text-sm bg-white text-black px-3 md:px-4 py-1.5 rounded-lg font-medium hover:bg-gray-200 transition whitespace-nowrap shrink-0"
             >
               {nav.getStarted}
             </a>
