@@ -32,7 +32,18 @@ type Content = {
     features: string[];
   };
   protocols: string;
-  cta: { title: string; subtitle: string; primary: string; secondary: string };
+  integration: {
+    title: string;
+    subtitle: string;
+    skill: { title: string; desc: string };
+    mcp: { title: string; desc: string };
+    cli: { title: string; desc: string };
+  };
+  faq: {
+    title: string;
+    items: { q: string; a: string }[];
+  };
+  cta: { title: string; subtitle: string; primary: string; primaryHref: string; secondary: string };
   footer: { tagline: string; product: string; developers: string; company: string; copyright: string; explore: string; rankings: string; pricing: string; documentation: string; apiReference: string; blog: string; about: string; careers: string; privacy: string; terms: string };
   explore: {
     title: string; subtitle: string; categories: string; showing: string; inCategory: string;
@@ -116,10 +127,28 @@ const en: Content = {
     ],
   },
   protocols: "Protocol-agnostic infrastructure",
+  integration: {
+    title: "Three ways to connect.",
+    subtitle: "Same registry, same balance, whichever your agent speaks.",
+    skill: { title: "Skill", desc: "One line into your agent's chat." },
+    mcp: { title: "MCP", desc: "Add the remote MCP server. No install, no key." },
+    cli: { title: "CLI", desc: "Install and run from your terminal." },
+  },
+  faq: {
+    title: "Common questions.",
+    items: [
+      { q: "Do I need API keys for each provider?", a: "No. Imagent handles authentication for you. One identity token covers every tool in the registry." },
+      { q: "How is pricing structured?", a: "Pay per call. Each tool publishes its own per-call price, and you are billed exactly that amount from a single balance." },
+      { q: "A provider failed. Do I get charged?", a: "No. Failed calls are not billed. You only pay for successful responses." },
+      { q: "Which agent frameworks are supported?", a: "Any framework that supports MCP, A2A, or function calling. Works with LangChain, CrewAI, AutoGen, and custom agents." },
+      { q: "What about rate limits?", a: "Each tool defines its own rate limits. Imagent enforces them transparently and queues overflow requests." },
+    ],
+  },
   cta: {
-    title: "Start connecting agent services today",
-    subtitle: "Join thousands of developers connecting their agents to imagent.",
-    primary: "Start Building — Free",
+    title: "Let your agent find the tools for you.",
+    subtitle: "Imagent is open source. Contribute your tool or start building with the registry today.",
+    primary: "View on GitHub",
+    primaryHref: "https://github.com/Agent1019/imagent",
     secondary: "Read the Docs",
   },
   footer: { tagline: "The infrastructure layer for Agent economy. Discover, authenticate, and pay per call.", product: "Product", developers: "Developers", company: "Company", copyright: "© 2026 imagent. All rights reserved.", explore: "Explore", rankings: "Rankings", pricing: "Pricing", documentation: "Documentation", apiReference: "API Reference", blog: "Blog", about: "About", careers: "Careers", privacy: "Privacy", terms: "Terms" },
@@ -219,10 +248,28 @@ const zh: Content = {
     ],
   },
   protocols: "协议无关的基础设施",
+  integration: {
+    title: "三种接入方式。",
+    subtitle: "同一注册表、同一余额，你的 Agent 用哪种协议都行。",
+    skill: { title: "Skill", desc: "一行命令接入 Agent 对话。" },
+    mcp: { title: "MCP", desc: "添加远程 MCP Server，无需安装和密钥。" },
+    cli: { title: "CLI", desc: "在终端中安装运行。" },
+  },
+  faq: {
+    title: "常见问题。",
+    items: [
+      { q: "每个服务商都需要单独的 API Key 吗？", a: "不需要。Imagent 统一处理认证，一个身份令牌覆盖注册表中的所有工具。" },
+      { q: "定价模式是怎样的？", a: "按调用付费。每个工具公布自己的单价，从统一余额中精确扣费。" },
+      { q: "服务商调用失败了会收费吗？", a: "不会。失败的调用不计费，只为成功的响应付费。" },
+      { q: "支持哪些 Agent 框架？", a: "任何支持 MCP、A2A 或 Function Calling 的框架。兼容 LangChain、CrewAI、AutoGen 和自定义 Agent。" },
+      { q: "速率限制怎么处理？", a: "每个工具自定义速率限制，Imagent 透明执行并自动排队溢出请求。" },
+    ],
+  },
   cta: {
-    title: "立即开始连接 Agent 服务",
-    subtitle: "加入数千名开发者，将 Agent 接入 imagent 生态。",
-    primary: "免费开始构建",
+    title: "让你的 Agent 自己找工具。",
+    subtitle: "Imagent 开源开放。贡献你的工具，或立即开始构建。",
+    primary: "查看 GitHub",
+    primaryHref: "https://github.com/Agent1019/imagent",
     secondary: "阅读文档",
   },
   footer: { tagline: "Agent 经济的基础设施层，一站式实现 agent 发现、认证、调用付费。", product: "产品", developers: "开发者", company: "公司", copyright: "© 2026 imagent. All rights reserved.", explore: "探索", rankings: "排名", pricing: "定价", documentation: "文档", apiReference: "API 参考", blog: "博客", about: "关于", careers: "招聘", privacy: "隐私政策", terms: "服务条款" },
