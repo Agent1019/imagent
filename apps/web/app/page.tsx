@@ -223,7 +223,7 @@ export default async function Home() {
       {/* Hero */}
       <section className="pt-24 md:pt-28 pb-12 md:pb-16 px-4 md:px-6">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-gray-400 mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-gray-400 mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             {badgeText}
           </div>
@@ -231,14 +231,16 @@ export default async function Home() {
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[1.1]">
             {t.hero.headline1}
           </h1>
-          <p className="mt-5 text-xl md:text-2xl font-medium bg-gradient-to-r from-orange-400 via-rose-400 to-purple-400 bg-clip-text text-transparent">
+          <p className="mt-3 text-xl md:text-2xl font-medium bg-gradient-to-r from-orange-400 via-rose-400 to-purple-400 bg-clip-text text-transparent">
             {t.hero.headline2}
           </p>
 
           {/* MCP Copy Box */}
-          <McpCopyBox text={t.hero.mcpCopy} guide={t.hero.mcpGuide} />
+          <div className="mt-8">
+            <McpCopyBox text={t.hero.mcpCopy} guide={t.hero.mcpGuide} />
+          </div>
 
-          <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+          <div className="mt-4 flex flex-col sm:flex-row gap-3 justify-center">
             <a
               href="/explore"
               className="px-5 py-3 bg-white text-black rounded-lg font-medium hover:bg-gray-200 hover:-translate-y-0.5 transition-all text-sm"
@@ -264,7 +266,7 @@ export default async function Home() {
               100% { transform: translateX(0); }
             }
           `}</style>
-          <div className="mt-5 max-w-5xl mx-auto space-y-2 overflow-hidden">
+          <div className="mt-10 max-w-5xl mx-auto space-y-2 overflow-hidden">
             {/* Row 1 — scrolls left */}
             <div className="flex overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)" }}>
               <div className="flex gap-2 shrink-0 animate-[scroll-left_30s_linear_infinite]">

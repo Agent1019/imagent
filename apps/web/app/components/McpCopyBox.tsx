@@ -12,7 +12,7 @@ export default function McpCopyBox({ text, guide }: { text: string; guide: strin
   };
 
   return (
-    <div className="mt-6 max-w-xl mx-auto">
+    <div className="max-w-xl mx-auto">
       <p className="text-sm text-gray-500 mb-2">{guide}</p>
       <div className="flex items-center rounded-xl border border-white/10 bg-neutral-800 p-2 shadow-lg shadow-black/30">
         <span className="text-emerald-400/80 text-sm font-mono px-2 select-none shrink-0">$</span>
