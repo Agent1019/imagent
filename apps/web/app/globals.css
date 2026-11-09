@@ -29,6 +29,14 @@ body {
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
+/* Hide native details/summary marker */
+summary {
+  list-style: none;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+
 /* Scroll-triggered animations */
 [data-animate] {
   opacity: 0;
