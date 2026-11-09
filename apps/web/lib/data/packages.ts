@@ -45,6 +45,7 @@ export interface PackageListItem {
   tags: string[];
   endpoints: number;
   installCmd: string | null;
+  logoUrl: string | null;
   installCount: number;
   trustScore: number;
   color: string;
@@ -82,6 +83,7 @@ function toListItem(row: typeof packages.$inferSelect): PackageListItem {
     tags,
     endpoints: row.endpoints ?? 0,
     installCmd: row.installCmd ?? `npx @imagent/cli add ${toSlug(row.name)}`,
+    logoUrl: row.logoUrl,
     installCount: row.installCount ?? 0,
     trustScore: Math.round((row.trustScore ?? 0) * 100),
     color: deriveColor(row.name),

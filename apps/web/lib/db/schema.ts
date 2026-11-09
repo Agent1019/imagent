@@ -19,6 +19,7 @@ export const packages = pgTable(
     category: text("category"),
     endpoints: integer("endpoints").default(0),
     installCmd: text("install_cmd"),
+    logoUrl: text("logo_url"),
     capabilitySpec: jsonb("capability_spec").notNull().default({}),
     version: text("version").notNull().default("0.1.0"),
     authorId: uuid("author_id"),

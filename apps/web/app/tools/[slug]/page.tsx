@@ -96,9 +96,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
               </span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
-              {toolName}
-            </h1>
+            <div className="flex items-center gap-4 mb-4">
+              <img
+                src={`https://www.google.com/s2/favicons?domain=${slug}.com&sz=128`}
+                alt={toolName}
+                className="w-12 h-12 rounded-xl bg-white/[0.05]"
+              />
+              <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white">
+                {toolName}
+              </h1>
+            </div>
             <p className="text-lg text-gray-400 max-w-2xl leading-relaxed">
               A high-performance MCP server that provides structured tool capabilities for AI agents.
               Built for reliability with built-in authentication, usage metering, and real-time health monitoring.

@@ -41,12 +41,21 @@ export function ToolCard({ tool, isZh }: ToolCardProps) {
       <a href={`/tools/${tool.slug}`} className="block">
         {/* Icon + Name */}
         <div className="flex items-start gap-3 mb-3">
-          <div
-            className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 font-bold text-sm"
-            style={{ backgroundColor: `${tool.color}20`, color: tool.color }}
-          >
-            {tool.name.charAt(0)}
-          </div>
+          {tool.logoUrl ? (
+            <img
+              src={tool.logoUrl}
+              alt={tool.name}
+              className="w-10 h-10 rounded-lg shrink-0 bg-white/[0.05]"
+              loading="lazy"
+            />
+          ) : (
+            <div
+              className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 font-bold text-sm"
+              style={{ backgroundColor: `${tool.color}20`, color: tool.color }}
+            >
+              {tool.name.charAt(0)}
+            </div>
+          )}
           <div className="min-w-0">
             <h3 className="font-semibold text-sm group-hover:text-white transition truncate">
               {tool.name}

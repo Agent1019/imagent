@@ -391,17 +391,12 @@ function RankingsTable({
                     href={`/tools/${tool.slug}`}
                     className="flex items-center gap-3 group"
                   >
-                    <div
-                      className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 font-bold text-xs ${
-                        compact ? "w-7 h-7 text-[10px]" : ""
-                      }`}
-                      style={{
-                        backgroundColor: `${tool.color}20`,
-                        color: tool.color,
-                      }}
-                    >
-                      {tool.name.charAt(0)}
-                    </div>
+                    <img
+                      src={`https://www.google.com/s2/favicons?domain=${tool.slug === "brave-search" ? "brave.com" : tool.slug === "e2b" ? "e2b.dev" : tool.slug === "resend" ? "resend.com" : tool.slug === "composio" ? "composio.dev" : tool.slug === "browserbase" ? "browserbase.com" : `${tool.slug}.com`}&sz=64`}
+                      alt={tool.name}
+                      className={`w-8 h-8 rounded-lg shrink-0 bg-white/[0.05] ${compact ? "w-7 h-7" : ""}`}
+                      loading="lazy"
+                    />
                     <span className="font-medium text-white group-hover:text-gray-200 transition truncate">
                       {tool.name}
                     </span>
