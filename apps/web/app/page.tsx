@@ -264,7 +264,7 @@ export default async function Home() {
               100% { transform: translateX(0); }
             }
           `}</style>
-          <div className="mt-3 max-w-5xl mx-auto space-y-2 overflow-hidden">
+          <div className="mt-5 max-w-5xl mx-auto space-y-2 overflow-hidden">
             {/* Row 1 — scrolls left */}
             <div className="flex overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)" }}>
               <div className="flex gap-2 shrink-0 animate-[scroll-left_30s_linear_infinite]">
