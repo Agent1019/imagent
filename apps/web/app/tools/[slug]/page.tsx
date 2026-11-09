@@ -54,23 +54,6 @@ const mockEndpoints = [
   },
 ];
 
-const pricingTierKeys = ["free", "pro", "enterprise"] as const;
-
-const mockPricingTiers = [
-  {
-    price: "$0",
-    highlighted: false,
-  },
-  {
-    price: "$29",
-    highlighted: true,
-  },
-  {
-    price: null,
-    highlighted: false,
-  },
-];
-
 const mockRelatedTools = [
   { slug: "pdf-generator", name: "PDF Generator", category: "Documents", trustScore: 96, description: "Convert markdown, HTML, or structured data to PDF with templates." },
   { slug: "image-resize", name: "Image Resize", category: "Media", trustScore: 94, description: "Resize, crop, and optimize images for web and mobile delivery." },
@@ -94,9 +77,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     PUT: "bg-blue-500/10 text-blue-400 border-blue-500/20",
     DELETE: "bg-red-500/10 text-red-400 border-red-500/20",
   };
-
-  const tierNames = [td.free, td.pro, td.enterprise];
-  const tierFeatures = [td.freeFeatures, td.proFeatures, td.enterpriseFeatures];
 
   return (
     <Layout locale={locale} nav={t.nav} footer={t.footer} searchPlaceholder={t.hero.searchPlaceholder}>
@@ -170,62 +150,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                   <p className="text-sm text-gray-500 leading-relaxed pl-0 sm:pl-[52px]">
                     {td[endpointKeys[idx]]}
                   </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Pricing */}
-        <section className="px-4 md:px-6 py-16 border-t border-white/5">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold text-white mb-2">{td.pricingTitle}</h2>
-            <p className="text-gray-400 mb-10">{td.pricingDesc}</p>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              {mockPricingTiers.map((tier, idx) => (
-                <div
-                  key={pricingTierKeys[idx]}
-                  className={`rounded-xl border p-6 flex flex-col ${
-                    tier.highlighted
-                      ? "border-white/20 bg-white/[0.04] ring-1 ring-white/10"
-                      : "border-white/5 bg-white/[0.02]"
-                  }`}
-                >
-                  {tier.highlighted && (
-                    <span className="inline-flex self-start items-center px-2 py-0.5 rounded-full text-xs font-medium bg-white/10 text-white mb-3">
-                      {td.mostPopular}
-                    </span>
-                  )}
-                  <h3 className="text-lg font-semibold text-white">{tierNames[idx]}</h3>
-                  <div className="mt-3 mb-5">
-                    <span className="text-3xl font-bold text-white">
-                      {tier.price ?? td.custom}
-                    </span>
-                    <span className="text-sm text-gray-500">
-                      {tier.price ? td.perMonth : ""}
-                    </span>
-                  </div>
-                  <ul className="space-y-2.5 flex-1">
-                    {tierFeatures[idx].map((feature) => (
-                      <li key={feature} className="flex items-start gap-2 text-sm text-gray-400">
-                        <svg className="w-4 h-4 mt-0.5 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  <a
-                    href="/signup"
-                    className={`mt-6 block text-center py-2.5 rounded-lg text-sm font-medium transition ${
-                      tier.highlighted
-                        ? "bg-white text-black hover:bg-gray-200"
-                        : "border border-white/15 text-white hover:border-white/30 hover:bg-white/5"
-                    }`}
-                  >
-                    {idx === 2 ? td.contactSales : td.getStarted}
-                  </a>
                 </div>
               ))}
             </div>
