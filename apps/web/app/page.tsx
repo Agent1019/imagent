@@ -271,32 +271,32 @@ export default async function Home() {
             <div className="flex overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)" }}>
               <div className="flex gap-2 shrink-0 animate-[scroll-left_30s_linear_infinite]">
                 {[
-                  { name: "Firecrawl", domain: "firecrawl.dev" },
-                  { name: "Brave", domain: "brave.com" },
-                  { name: "Tavily", domain: "tavily.com" },
-                  { name: "Slack", domain: "slack.com" },
-                  { name: "GitHub", domain: "github.com" },
-                  { name: "Notion", domain: "notion.so" },
-                  { name: "Stripe", domain: "stripe.com" },
-                  { name: "Resend", domain: "resend.com" },
-                  { name: "Postgres", domain: "postgresql.org" },
-                  { name: "Puppeteer", domain: "pptr.dev" },
+                  { name: "Firecrawl", domain: "firecrawl.dev", slug: "firecrawl" },
+                  { name: "Brave", domain: "brave.com", slug: "brave" },
+                  { name: "Tavily", domain: "tavily.com", slug: "tavily" },
+                  { name: "Slack", domain: "slack.com", slug: "slack" },
+                  { name: "GitHub", domain: "github.com", slug: "github" },
+                  { name: "Notion", domain: "notion.so", slug: "notion" },
+                  { name: "Stripe", domain: "stripe.com", slug: "stripe" },
+                  { name: "Resend", domain: "resend.com", slug: "resend" },
+                  { name: "Postgres", domain: "postgresql.org", slug: "postgres" },
+                  { name: "Puppeteer", domain: "pptr.dev", slug: "puppeteer" },
                 ].concat([
-                  { name: "Firecrawl", domain: "firecrawl.dev" },
-                  { name: "Brave", domain: "brave.com" },
-                  { name: "Tavily", domain: "tavily.com" },
-                  { name: "Slack", domain: "slack.com" },
-                  { name: "GitHub", domain: "github.com" },
-                  { name: "Notion", domain: "notion.so" },
-                  { name: "Stripe", domain: "stripe.com" },
-                  { name: "Resend", domain: "resend.com" },
-                  { name: "Postgres", domain: "postgresql.org" },
-                  { name: "Puppeteer", domain: "pptr.dev" },
+                  { name: "Firecrawl", domain: "firecrawl.dev", slug: "firecrawl" },
+                  { name: "Brave", domain: "brave.com", slug: "brave" },
+                  { name: "Tavily", domain: "tavily.com", slug: "tavily" },
+                  { name: "Slack", domain: "slack.com", slug: "slack" },
+                  { name: "GitHub", domain: "github.com", slug: "github" },
+                  { name: "Notion", domain: "notion.so", slug: "notion" },
+                  { name: "Stripe", domain: "stripe.com", slug: "stripe" },
+                  { name: "Resend", domain: "resend.com", slug: "resend" },
+                  { name: "Postgres", domain: "postgresql.org", slug: "postgres" },
+                  { name: "Puppeteer", domain: "pptr.dev", slug: "puppeteer" },
                 ]).map((s, i) => (
-                  <div key={`${s.name}-${i}`} className="shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/5 bg-white/[0.02]">
+                  <a key={`${s.name}-${i}`} href={`/tools/${s.slug}`} className="shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.05] transition">
                     <img src={`https://www.google.com/s2/favicons?domain=${s.domain}&sz=64`} alt={s.name} className="w-4 h-4 rounded" loading="lazy" />
                     <span className="text-xs text-gray-400 font-medium whitespace-nowrap">{s.name}</span>
-                  </div>
+                  </a>
                 ))}
               </div>
             </div>
@@ -304,32 +304,32 @@ export default async function Home() {
             <div className="flex overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)" }}>
               <div className="flex gap-2 shrink-0 animate-[scroll-right_30s_linear_infinite]">
                 {[
-                  { name: "Google Maps", domain: "google.com" },
-                  { name: "E2B", domain: "e2b.dev" },
-                  { name: "Composio", domain: "composio.dev" },
-                  { name: "Browserbase", domain: "browserbase.com" },
-                  { name: "Apollo", domain: "apollo.io" },
-                  { name: "Linear", domain: "linear.app" },
-                  { name: "Supabase", domain: "supabase.com" },
-                  { name: "Redis", domain: "redis.io" },
-                  { name: "MongoDB", domain: "mongodb.com" },
-                  { name: "Twilio", domain: "twilio.com" },
+                  { name: "Google Maps", domain: "google.com", slug: "google-maps" },
+                  { name: "E2B", domain: "e2b.dev", slug: "e2b" },
+                  { name: "Composio", domain: "composio.dev", slug: "composio" },
+                  { name: "Browserbase", domain: "browserbase.com", slug: "browserbase" },
+                  { name: "Apollo", domain: "apollo.io", slug: "apollo" },
+                  { name: "Linear", domain: "linear.app", slug: "linear" },
+                  { name: "Supabase", domain: "supabase.com", slug: "supabase" },
+                  { name: "Redis", domain: "redis.io", slug: "redis" },
+                  { name: "MongoDB", domain: "mongodb.com", slug: "mongodb" },
+                  { name: "Twilio", domain: "twilio.com", slug: "twilio" },
                 ].concat([
-                  { name: "Google Maps", domain: "google.com" },
-                  { name: "E2B", domain: "e2b.dev" },
-                  { name: "Composio", domain: "composio.dev" },
-                  { name: "Browserbase", domain: "browserbase.com" },
-                  { name: "Apollo", domain: "apollo.io" },
-                  { name: "Linear", domain: "linear.app" },
-                  { name: "Supabase", domain: "supabase.com" },
-                  { name: "Redis", domain: "redis.io" },
-                  { name: "MongoDB", domain: "mongodb.com" },
-                  { name: "Twilio", domain: "twilio.com" },
+                  { name: "Google Maps", domain: "google.com", slug: "google-maps" },
+                  { name: "E2B", domain: "e2b.dev", slug: "e2b" },
+                  { name: "Composio", domain: "composio.dev", slug: "composio" },
+                  { name: "Browserbase", domain: "browserbase.com", slug: "browserbase" },
+                  { name: "Apollo", domain: "apollo.io", slug: "apollo" },
+                  { name: "Linear", domain: "linear.app", slug: "linear" },
+                  { name: "Supabase", domain: "supabase.com", slug: "supabase" },
+                  { name: "Redis", domain: "redis.io", slug: "redis" },
+                  { name: "MongoDB", domain: "mongodb.com", slug: "mongodb" },
+                  { name: "Twilio", domain: "twilio.com", slug: "twilio" },
                 ]).map((s, i) => (
-                  <div key={`${s.name}-${i}`} className="shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/5 bg-white/[0.02]">
+                  <a key={`${s.name}-${i}`} href={`/tools/${s.slug}`} className="shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.05] transition">
                     <img src={`https://www.google.com/s2/favicons?domain=${s.domain}&sz=64`} alt={s.name} className="w-4 h-4 rounded" loading="lazy" />
                     <span className="text-xs text-gray-400 font-medium whitespace-nowrap">{s.name}</span>
-                  </div>
+                  </a>
                 ))}
               </div>
             </div>
