@@ -221,9 +221,9 @@ export default async function Home() {
       />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-4 md:px-6">
+      <section className="pt-24 md:pt-28 pb-10 px-4 md:px-6">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-gray-400 mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-gray-400 mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             {badgeText}
           </div>
@@ -231,23 +231,23 @@ export default async function Home() {
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[1.1]">
             {t.hero.headline1}
           </h1>
-          <p className="mt-4 text-xl md:text-2xl font-medium bg-gradient-to-r from-orange-400 via-rose-400 to-purple-400 bg-clip-text text-transparent">
+          <p className="mt-3 text-xl md:text-2xl font-medium bg-gradient-to-r from-orange-400 via-rose-400 to-purple-400 bg-clip-text text-transparent">
             {t.hero.headline2}
           </p>
 
           {/* MCP Copy Box */}
           <McpCopyBox text={t.hero.mcpCopy} guide={t.hero.mcpGuide} />
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+          <div className="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
             <a
               href="/explore"
-              className="px-6 py-3 bg-white text-black rounded-lg font-medium hover:bg-gray-200 hover:-translate-y-0.5 transition-all text-sm"
+              className="px-5 py-2.5 bg-white text-black rounded-lg font-medium hover:bg-gray-200 hover:-translate-y-0.5 transition-all text-sm"
             >
               {t.hero.exploreBtn}
             </a>
             <a
               href="/publish"
-              className="px-6 py-3 border border-white/15 rounded-lg font-medium hover:border-white/30 hover:bg-white/5 hover:-translate-y-0.5 transition-all text-sm"
+              className="px-5 py-2.5 border border-white/15 rounded-lg font-medium hover:border-white/30 hover:bg-white/5 hover:-translate-y-0.5 transition-all text-sm"
             >
               {t.hero.publishBtn}
             </a>
@@ -264,7 +264,7 @@ export default async function Home() {
               100% { transform: translateX(0); }
             }
           `}</style>
-          <div className="mt-12 max-w-5xl mx-auto space-y-2 overflow-hidden">
+          <div className="mt-6 max-w-5xl mx-auto space-y-2 overflow-hidden">
             {/* Row 1 — scrolls left */}
             <div className="flex overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)" }}>
               <div className="flex gap-2 shrink-0 animate-[scroll-left_30s_linear_infinite]">
