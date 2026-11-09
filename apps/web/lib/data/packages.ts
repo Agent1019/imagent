@@ -43,6 +43,8 @@ export interface PackageListItem {
   description: string | null;
   category: string;
   tags: string[];
+  endpoints: number;
+  installCmd: string | null;
   installCount: number;
   trustScore: number;
   color: string;
@@ -69,7 +71,7 @@ export interface PaginatedResult<T> {
 
 function toListItem(row: typeof packages.$inferSelect): PackageListItem {
   const spec = (row.capabilitySpec ?? {}) as Record<string, unknown>;
-  const category = (spec.category as string) || "Other";
+  const category = (row.category as string) || (spec.category as string) || "Other";
   const tags = Array.isArray(spec.tags) ? (spec.tags as string[]) : [category];
 
   return {
@@ -78,6 +80,8 @@ function toListItem(row: typeof packages.$inferSelect): PackageListItem {
     description: row.description,
     category,
     tags,
+    endpoints: row.endpoints ?? 0,
+    installCmd: row.installCmd ?? `npx @imagent/cli add ${toSlug(row.name)}`,
     installCount: row.installCount ?? 0,
     trustScore: Math.round((row.trustScore ?? 0) * 100),
     color: deriveColor(row.name),

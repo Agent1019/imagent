@@ -16,6 +16,9 @@ export const packages = pgTable(
     id: uuid("id").defaultRandom().primaryKey(),
     name: text("name").notNull().unique(),
     description: text("description"),
+    category: text("category"),
+    endpoints: integer("endpoints").default(0),
+    installCmd: text("install_cmd"),
     capabilitySpec: jsonb("capability_spec").notNull().default({}),
     version: text("version").notNull().default("0.1.0"),
     authorId: uuid("author_id"),
@@ -29,6 +32,7 @@ export const packages = pgTable(
   (table) => [
     index("idx_packages_name").on(table.name),
     index("idx_packages_status").on(table.status),
+    index("idx_packages_category").on(table.category),
   ]
 );
 
