@@ -128,14 +128,14 @@ const en: Content = {
   },
   protocols: "Protocol-agnostic infrastructure",
   integration: {
-    title: "Three ways to connect.",
+    title: "Three ways to connect",
     subtitle: "Same registry, same balance, whichever your agent speaks.",
     skill: { title: "Skill", desc: "One line into your agent's chat." },
     mcp: { title: "MCP", desc: "Add the remote MCP server. No install, no key." },
     cli: { title: "CLI", desc: "Install and run from your terminal." },
   },
   faq: {
-    title: "Common questions.",
+    title: "Common questions",
     items: [
       { q: "Do I need API keys for each provider?", a: "No. Imagent handles authentication for you. One identity token covers every tool in the registry." },
       { q: "How is pricing structured?", a: "Pay per call. Each tool publishes its own per-call price, and you are billed exactly that amount from a single balance." },
@@ -145,7 +145,7 @@ const en: Content = {
     ],
   },
   cta: {
-    title: "Publish your Agent & Tools.",
+    title: "Publish your Agent & Tools",
     subtitle: "Imagent is open source. Contribute your tool or start building — let's build the Agent economy together.",
     primary: "Join GitHub Project",
     primaryHref: "https://github.com/Agent1019/imagent",
@@ -249,14 +249,14 @@ const zh: Content = {
   },
   protocols: "协议无关的基础设施",
   integration: {
-    title: "三种接入方式。",
+    title: "三种接入方式",
     subtitle: "同一注册表、同一余额，你的 Agent 用哪种协议都行。",
     skill: { title: "Skill", desc: "一行命令接入 Agent 对话。" },
     mcp: { title: "MCP", desc: "添加远程 MCP Server，无需安装和密钥。" },
     cli: { title: "CLI", desc: "在终端中安装运行。" },
   },
   faq: {
-    title: "常见问题。",
+    title: "常见问题",
     items: [
       { q: "每个服务商都需要单独的 API Key 吗？", a: "不需要。Imagent 统一处理认证，一个身份令牌覆盖注册表中的所有工具。" },
       { q: "定价模式是怎样的？", a: "按调用付费。每个工具公布自己的单价，从统一余额中精确扣费。" },
@@ -266,7 +266,7 @@ const zh: Content = {
     ],
   },
   cta: {
-    title: "发布你的 Agent & Tools。",
+    title: "发布你的 Agent & Tools",
     subtitle: "Imagent 社区开源开放，贡献你的工具或开始构建，让我们一起构建 Agent 经济。",
     primary: "参与 GitHub 项目",
     primaryHref: "https://github.com/Agent1019/imagent",
