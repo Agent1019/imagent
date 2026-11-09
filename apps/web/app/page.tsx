@@ -451,7 +451,7 @@ export default async function Home() {
               <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
                 <span className="text-xs text-gray-500">agent.ts</span>
               </div>
-              <pre className="p-5 text-xs leading-relaxed overflow-x-auto">
+              <pre className="p-5 text-xs leading-relaxed overflow-x-auto max-h-56 overflow-y-auto">
                 <code className="text-gray-300">{`import { ImagentClient } from "@imagent/sdk";
 
 const client = new ImagentClient({

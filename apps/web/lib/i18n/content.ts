@@ -238,7 +238,7 @@ const zh: Content = {
   },
   apiSection: {
     headline1: "先为 Agent 而生，",
-    headline2: "再为人",
+    headline2: "再为人服务",
     desc: "每个端点都为机器消费而设计。结构化响应、语义化错误、内置限流。你的 Agent 读的是 Spec，不是 README。",
     features: [
       "基于向量嵌入的能力搜索",
