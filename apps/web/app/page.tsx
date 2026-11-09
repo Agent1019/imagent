@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import McpCopyBox from "./components/McpCopyBox";
 import Layout from "./layouts/Layout";
 import FeatureTabs from "./components/FeatureTabs";
+import { getPlatformStats } from "@/lib/data/packages";
 
 export async function generateMetadata(): Promise<Metadata> {
   const headersList = await headers();
@@ -104,6 +105,10 @@ export default async function Home() {
   const locale: Locale = getLocaleFromHost(host);
   const t = getContent(locale);
   const baseUrl = `https://${domainMap[locale]}`;
+  const stats = await getPlatformStats();
+  const badgeText = t.hero.badge
+    .replace("{users}", stats.userCountLabel)
+    .replace("{services}", stats.serviceCountLabel);
 
   const now = new Date().toISOString();
 
@@ -220,7 +225,7 @@ export default async function Home() {
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-gray-400 mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-            {t.hero.badge}
+            {badgeText}
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[1.1]">
@@ -247,40 +252,22 @@ export default async function Home() {
               {t.hero.publishBtn}
             </a>
           </div>
-        </div>
-      </section>
 
-      {/* Gradient transition */}
-      <div className="h-12 md:h-16 bg-gradient-to-b from-[#0a0a0a] to-[#111111]" />
-
-      {/* MCP Ecosystem + Stats */}
-      <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
-        <div className="max-w-6xl mx-auto">
-          {/* Module Title */}
-          <h2 className="text-3xl md:text-5xl font-bold text-center mb-12 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent" data-animate>
-            {locale === "zh" ? "丰富的 MCP 生态" : "A Thriving MCP Ecosystem"}
-          </h2>
-
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-14">
-            {[
-              { value: "10,000+", label: t.stats.servers },
-              { value: "50M+", label: t.stats.calls },
-              { value: "2,400+", label: t.stats.publishers },
-              { value: "99.9%", label: t.stats.uptime },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-3xl md:text-5xl font-bold">{stat.value}</div>
-                <div className="text-sm text-gray-500 mt-1">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Server logos — single scroll container, two rows */}
-          <div className="overflow-x-auto scrollbar-hide">
-            <div className="min-w-max space-y-3">
-              {/* Row 1 */}
-              <div className="flex gap-3">
+          {/* Server logos — 2 row marquee */}
+          <style>{`
+            @keyframes scroll-left {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+            }
+            @keyframes scroll-right {
+              0% { transform: translateX(-50%); }
+              100% { transform: translateX(0); }
+            }
+          `}</style>
+          <div className="mt-12 max-w-5xl mx-auto space-y-2 overflow-hidden">
+            {/* Row 1 — scrolls left */}
+            <div className="flex overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)" }}>
+              <div className="flex gap-2 shrink-0 animate-[scroll-left_30s_linear_infinite]">
                 {[
                   { name: "Firecrawl", domain: "firecrawl.dev" },
                   { name: "Brave", domain: "brave.com" },
@@ -292,15 +279,28 @@ export default async function Home() {
                   { name: "Resend", domain: "resend.com" },
                   { name: "Postgres", domain: "postgresql.org" },
                   { name: "Puppeteer", domain: "pptr.dev" },
-                ].map((s) => (
-                  <div key={s.name} className="shrink-0 flex items-center gap-2.5 px-3.5 py-2 rounded-lg border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04] transition">
-                    <img src={`https://www.google.com/s2/favicons?domain=${s.domain}&sz=64`} alt={s.name} className="w-5 h-5 rounded" loading="lazy" />
-                    <span className="text-sm text-gray-400 font-medium">{s.name}</span>
+                ].concat([
+                  { name: "Firecrawl", domain: "firecrawl.dev" },
+                  { name: "Brave", domain: "brave.com" },
+                  { name: "Tavily", domain: "tavily.com" },
+                  { name: "Slack", domain: "slack.com" },
+                  { name: "GitHub", domain: "github.com" },
+                  { name: "Notion", domain: "notion.so" },
+                  { name: "Stripe", domain: "stripe.com" },
+                  { name: "Resend", domain: "resend.com" },
+                  { name: "Postgres", domain: "postgresql.org" },
+                  { name: "Puppeteer", domain: "pptr.dev" },
+                ]).map((s, i) => (
+                  <div key={`${s.name}-${i}`} className="shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/5 bg-white/[0.02]">
+                    <img src={`https://www.google.com/s2/favicons?domain=${s.domain}&sz=64`} alt={s.name} className="w-4 h-4 rounded" loading="lazy" />
+                    <span className="text-xs text-gray-400 font-medium whitespace-nowrap">{s.name}</span>
                   </div>
                 ))}
               </div>
-              {/* Row 2 */}
-              <div className="flex gap-3">
+            </div>
+            {/* Row 2 — scrolls right */}
+            <div className="flex overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)" }}>
+              <div className="flex gap-2 shrink-0 animate-[scroll-right_30s_linear_infinite]">
                 {[
                   { name: "Google Maps", domain: "google.com" },
                   { name: "E2B", domain: "e2b.dev" },
@@ -312,10 +312,21 @@ export default async function Home() {
                   { name: "Redis", domain: "redis.io" },
                   { name: "MongoDB", domain: "mongodb.com" },
                   { name: "Twilio", domain: "twilio.com" },
-                ].map((s) => (
-                  <div key={s.name} className="shrink-0 flex items-center gap-2.5 px-3.5 py-2 rounded-lg border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04] transition">
-                    <img src={`https://www.google.com/s2/favicons?domain=${s.domain}&sz=64`} alt={s.name} className="w-5 h-5 rounded" loading="lazy" />
-                    <span className="text-sm text-gray-400 font-medium">{s.name}</span>
+                ].concat([
+                  { name: "Google Maps", domain: "google.com" },
+                  { name: "E2B", domain: "e2b.dev" },
+                  { name: "Composio", domain: "composio.dev" },
+                  { name: "Browserbase", domain: "browserbase.com" },
+                  { name: "Apollo", domain: "apollo.io" },
+                  { name: "Linear", domain: "linear.app" },
+                  { name: "Supabase", domain: "supabase.com" },
+                  { name: "Redis", domain: "redis.io" },
+                  { name: "MongoDB", domain: "mongodb.com" },
+                  { name: "Twilio", domain: "twilio.com" },
+                ]).map((s, i) => (
+                  <div key={`${s.name}-${i}`} className="shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/5 bg-white/[0.02]">
+                    <img src={`https://www.google.com/s2/favicons?domain=${s.domain}&sz=64`} alt={s.name} className="w-4 h-4 rounded" loading="lazy" />
+                    <span className="text-xs text-gray-400 font-medium whitespace-nowrap">{s.name}</span>
                   </div>
                 ))}
               </div>

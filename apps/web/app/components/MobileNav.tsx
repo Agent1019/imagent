@@ -87,6 +87,9 @@ export default function MobileNav({ nav, locale, locales, domainMap, localeNames
 
       {/* Slide-down panel */}
       {menuOpen && (
+        <>
+        {/* Backdrop blur */}
+        <div className="fixed inset-0 top-16 z-30 bg-black/50 backdrop-blur-md" onClick={() => setMenuOpen(false)} />
         <div className="fixed inset-x-0 top-16 z-40 bg-[#1a1a1a] border-b border-white/10 shadow-xl">
           <div className="px-4 py-4 space-y-1">
             {/* Nav links */}
@@ -167,6 +170,7 @@ export default function MobileNav({ nav, locale, locales, domainMap, localeNames
             </a>
           </div>
         </div>
+        </>
       )}
     </div>
   );

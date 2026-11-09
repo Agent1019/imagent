@@ -31,16 +31,16 @@ type Content = {
   };
   protocols: string;
   cta: { title: string; subtitle: string; primary: string; secondary: string };
-  footer: { tagline: string; product: string; developers: string; company: string; copyright: string };
+  footer: { tagline: string; product: string; developers: string; company: string; copyright: string; explore: string; rankings: string; pricing: string; documentation: string; apiReference: string; blog: string; about: string; careers: string; privacy: string; terms: string };
   seo: { title: string; description: string };
 };
 
 const en: Content = {
   nav: { explore: "Explore", rankings: "Rankings", blog: "Blog", community: "Community", docs: "Docs", pricing: "Pricing", signIn: "Sign in", getStarted: "Get Started" },
   hero: {
-    badge: "Free platform · Pay per call · No subscriptions",
-    headline1: "Connect to Global Agent Services in One Go",
-    headline2: "Capability auth · Zero re-auth · Free or pay-per-use",
+    badge: "{users} users, {services} services online",
+    headline1: "One Conversation, Connect to Global Agent Services",
+    headline2: "Capability verified · No re-registration · Up to 50% off",
     subtitle1: "One platform to connect agents with the tools they need.",
     subtitle2: "Supports MCP, A2A, and Function Calling protocols.",
     mcpCopy: "npx @imagent/cli add",
@@ -93,7 +93,7 @@ const en: Content = {
     primary: "Start Building — Free",
     secondary: "Read the Docs",
   },
-  footer: { tagline: "The infrastructure layer for AI agents. Discover, authenticate, and pay per use.", product: "Product", developers: "Developers", company: "Company", copyright: "© 2026 imagent. All rights reserved." },
+  footer: { tagline: "The infrastructure layer for Agent economy. Discover, authenticate, and pay per call.", product: "Product", developers: "Developers", company: "Company", copyright: "© 2026 imagent. All rights reserved.", explore: "Explore", rankings: "Rankings", pricing: "Pricing", documentation: "Documentation", apiReference: "API Reference", blog: "Blog", about: "About", careers: "Careers", privacy: "Privacy", terms: "Terms" },
   seo: {
     title: "Imagent — Discover, Authenticate & Use MCP Servers",
     description: "The infrastructure layer for AI agents. Discover MCP servers, authenticate tool calls, and pay per use — all in one platform.",
@@ -103,9 +103,9 @@ const en: Content = {
 const zh: Content = {
   nav: { explore: "探索", rankings: "排行", blog: "博客", community: "社区", docs: "文档", pricing: "定价", signIn: "登录", getStarted: "免费开始" },
   hero: {
-    badge: "平台免费 · 按次调用 · 无需订阅",
-    headline1: "一次连接全球 Agent 服务",
-    headline2: "能力认证 · 免重复认证 · 免费/按量计费",
+    badge: "{users} 用户 {services} 个 service 在线",
+    headline1: "一次对话 连接全球 Agent 服务",
+    headline2: "能力验证 · 免重复注册 · 最高优惠50%",
     subtitle1: "一个平台，连接 Agent 与海量工具生态",
     subtitle2: "支持 MCP、A2A、Function Calling 协议",
     mcpCopy: "npx @imagent/cli add",
@@ -158,7 +158,7 @@ const zh: Content = {
     primary: "免费开始构建",
     secondary: "阅读文档",
   },
-  footer: { tagline: "AI Agent 的基础设施层。发现、认证、按量付费。", product: "产品", developers: "开发者", company: "公司", copyright: "© 2026 imagent. All rights reserved." },
+  footer: { tagline: "Agent 经济的基础设施层，一站式实现 agent 发现、认证、调用付费。", product: "产品", developers: "开发者", company: "公司", copyright: "© 2026 imagent. All rights reserved.", explore: "探索", rankings: "排名", pricing: "定价", documentation: "文档", apiReference: "API 参考", blog: "博客", about: "关于", careers: "招聘", privacy: "隐私政策", terms: "服务条款" },
   seo: {
     title: "Imagent — MCP Server 发现、认证与按量付费平台",
     description: "AI Agent 的基础设施层。发现 MCP Server、认证工具调用、按用量付费 — 一个平台全覆盖。",
