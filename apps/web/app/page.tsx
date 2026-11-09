@@ -272,26 +272,26 @@ export default async function Home() {
               <div className="flex gap-2 shrink-0 animate-[scroll-left_30s_linear_infinite]">
                 {[
                   { name: "Firecrawl", domain: "firecrawl.dev", slug: "firecrawl" },
-                  { name: "Brave", domain: "brave.com", slug: "brave" },
+                  { name: "Brave Search", domain: "brave.com", slug: "brave-search" },
                   { name: "Tavily", domain: "tavily.com", slug: "tavily" },
                   { name: "Slack", domain: "slack.com", slug: "slack" },
                   { name: "GitHub", domain: "github.com", slug: "github" },
                   { name: "Notion", domain: "notion.so", slug: "notion" },
                   { name: "Stripe", domain: "stripe.com", slug: "stripe" },
                   { name: "Resend", domain: "resend.com", slug: "resend" },
-                  { name: "Postgres", domain: "postgresql.org", slug: "postgres" },
-                  { name: "Puppeteer", domain: "pptr.dev", slug: "puppeteer" },
+                  { name: "OpenAI", domain: "openai.com", slug: "openai" },
+                  { name: "YouTube", domain: "youtube.com", slug: "youtube" },
                 ].concat([
                   { name: "Firecrawl", domain: "firecrawl.dev", slug: "firecrawl" },
-                  { name: "Brave", domain: "brave.com", slug: "brave" },
+                  { name: "Brave Search", domain: "brave.com", slug: "brave-search" },
                   { name: "Tavily", domain: "tavily.com", slug: "tavily" },
                   { name: "Slack", domain: "slack.com", slug: "slack" },
                   { name: "GitHub", domain: "github.com", slug: "github" },
                   { name: "Notion", domain: "notion.so", slug: "notion" },
                   { name: "Stripe", domain: "stripe.com", slug: "stripe" },
                   { name: "Resend", domain: "resend.com", slug: "resend" },
-                  { name: "Postgres", domain: "postgresql.org", slug: "postgres" },
-                  { name: "Puppeteer", domain: "pptr.dev", slug: "puppeteer" },
+                  { name: "OpenAI", domain: "openai.com", slug: "openai" },
+                  { name: "YouTube", domain: "youtube.com", slug: "youtube" },
                 ]).map((s, i) => (
                   <a key={`${s.name}-${i}`} href={`/tools/${s.slug}`} className="shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.05] transition">
                     <img src={`https://www.google.com/s2/favicons?domain=${s.domain}&sz=64`} alt={s.name} className="w-4 h-4 rounded" loading="lazy" />
@@ -304,27 +304,27 @@ export default async function Home() {
             <div className="flex overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)" }}>
               <div className="flex gap-2 shrink-0 animate-[scroll-right_30s_linear_infinite]">
                 {[
-                  { name: "Google Maps", domain: "google.com", slug: "google-maps" },
+                  { name: "Maps & Places", domain: "google.com", slug: "maps-places" },
                   { name: "E2B", domain: "e2b.dev", slug: "e2b" },
                   { name: "Composio", domain: "composio.dev", slug: "composio" },
                   { name: "Browserbase", domain: "browserbase.com", slug: "browserbase" },
                   { name: "Apollo", domain: "apollo.io", slug: "apollo" },
-                  { name: "Linear", domain: "linear.app", slug: "linear" },
-                  { name: "Supabase", domain: "supabase.com", slug: "supabase" },
-                  { name: "Redis", domain: "redis.io", slug: "redis" },
-                  { name: "MongoDB", domain: "mongodb.com", slug: "mongodb" },
-                  { name: "Twilio", domain: "twilio.com", slug: "twilio" },
+                  { name: "LinkedIn", domain: "linkedin.com", slug: "linkedin" },
+                  { name: "Spotify", domain: "spotify.com", slug: "spotify" },
+                  { name: "Reddit", domain: "reddit.com", slug: "reddit" },
+                  { name: "Instagram", domain: "instagram.com", slug: "instagram" },
+                  { name: "Telegram", domain: "telegram.org", slug: "telegram" },
                 ].concat([
-                  { name: "Google Maps", domain: "google.com", slug: "google-maps" },
+                  { name: "Maps & Places", domain: "google.com", slug: "maps-places" },
                   { name: "E2B", domain: "e2b.dev", slug: "e2b" },
                   { name: "Composio", domain: "composio.dev", slug: "composio" },
                   { name: "Browserbase", domain: "browserbase.com", slug: "browserbase" },
                   { name: "Apollo", domain: "apollo.io", slug: "apollo" },
-                  { name: "Linear", domain: "linear.app", slug: "linear" },
-                  { name: "Supabase", domain: "supabase.com", slug: "supabase" },
-                  { name: "Redis", domain: "redis.io", slug: "redis" },
-                  { name: "MongoDB", domain: "mongodb.com", slug: "mongodb" },
-                  { name: "Twilio", domain: "twilio.com", slug: "twilio" },
+                  { name: "LinkedIn", domain: "linkedin.com", slug: "linkedin" },
+                  { name: "Spotify", domain: "spotify.com", slug: "spotify" },
+                  { name: "Reddit", domain: "reddit.com", slug: "reddit" },
+                  { name: "Instagram", domain: "instagram.com", slug: "instagram" },
+                  { name: "Telegram", domain: "telegram.org", slug: "telegram" },
                 ]).map((s, i) => (
                   <a key={`${s.name}-${i}`} href={`/tools/${s.slug}`} className="shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.05] transition">
                     <img src={`https://www.google.com/s2/favicons?domain=${s.domain}&sz=64`} alt={s.name} className="w-4 h-4 rounded" loading="lazy" />
