@@ -264,10 +264,10 @@ export default async function Home() {
               100% { transform: translateX(0); }
             }
           `}</style>
-          <div className="mt-5 max-w-5xl mx-auto space-y-1 overflow-hidden">
+          <div className="mt-5 max-w-5xl mx-auto space-y-2 overflow-hidden">
             {/* Row 1 — scrolls left */}
             <div className="flex overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)" }}>
-              <div className="flex gap-1.5 shrink-0 animate-[scroll-left_30s_linear_infinite]">
+              <div className="flex gap-2 shrink-0 animate-[scroll-left_30s_linear_infinite]">
                 {[
                   { name: "Firecrawl", domain: "firecrawl.dev" },
                   { name: "Brave", domain: "brave.com" },
@@ -291,16 +291,16 @@ export default async function Home() {
                   { name: "Postgres", domain: "postgresql.org" },
                   { name: "Puppeteer", domain: "pptr.dev" },
                 ]).map((s, i) => (
-                  <div key={`${s.name}-${i}`} className="shrink-0 flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-white/5 bg-white/[0.02]">
-                    <img src={`https://www.google.com/s2/favicons?domain=${s.domain}&sz=64`} alt={s.name} className="w-3.5 h-3.5 rounded" loading="lazy" />
-                    <span className="text-[11px] text-gray-400 font-medium whitespace-nowrap">{s.name}</span>
+                  <div key={`${s.name}-${i}`} className="shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/5 bg-white/[0.02]">
+                    <img src={`https://www.google.com/s2/favicons?domain=${s.domain}&sz=64`} alt={s.name} className="w-4 h-4 rounded" loading="lazy" />
+                    <span className="text-xs text-gray-400 font-medium whitespace-nowrap">{s.name}</span>
                   </div>
                 ))}
               </div>
             </div>
             {/* Row 2 — scrolls right */}
             <div className="flex overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)" }}>
-              <div className="flex gap-1.5 shrink-0 animate-[scroll-right_30s_linear_infinite]">
+              <div className="flex gap-2 shrink-0 animate-[scroll-right_30s_linear_infinite]">
                 {[
                   { name: "Google Maps", domain: "google.com" },
                   { name: "E2B", domain: "e2b.dev" },
@@ -324,9 +324,9 @@ export default async function Home() {
                   { name: "MongoDB", domain: "mongodb.com" },
                   { name: "Twilio", domain: "twilio.com" },
                 ]).map((s, i) => (
-                  <div key={`${s.name}-${i}`} className="shrink-0 flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-white/5 bg-white/[0.02]">
-                    <img src={`https://www.google.com/s2/favicons?domain=${s.domain}&sz=64`} alt={s.name} className="w-3.5 h-3.5 rounded" loading="lazy" />
-                    <span className="text-[11px] text-gray-400 font-medium whitespace-nowrap">{s.name}</span>
+                  <div key={`${s.name}-${i}`} className="shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/5 bg-white/[0.02]">
+                    <img src={`https://www.google.com/s2/favicons?domain=${s.domain}&sz=64`} alt={s.name} className="w-4 h-4 rounded" loading="lazy" />
+                    <span className="text-xs text-gray-400 font-medium whitespace-nowrap">{s.name}</span>
                   </div>
                 ))}
               </div>
