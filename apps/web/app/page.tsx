@@ -339,7 +339,7 @@ export default async function Home() {
 
 
       {/* Three Pillars */}
-      <section className="py-16 md:py-24 px-4 md:px-6">
+      <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16" data-animate>
             <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">{t.features.title}</h2>
@@ -425,7 +425,7 @@ export default async function Home() {
 
 
       {/* API Section */}
-      <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
+      <section className="py-16 md:py-24 px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center" data-animate>
             <div>
@@ -484,7 +484,7 @@ console.log(result.usage);
 
 
       {/* Integration Methods */}
-      <section className="py-16 md:py-24 px-4 md:px-6 bg-[#0d0d0d]">
+      <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
         <div className="max-w-5xl mx-auto text-center" data-animate>
           <h2 className="text-2xl md:text-4xl font-bold mb-3">{t.integration.title}</h2>
           <p className="text-gray-400 mb-12">{t.integration.subtitle}</p>
@@ -494,7 +494,10 @@ console.log(result.usage);
               { ...t.integration.mcp, href: "/docs/integration/mcp" },
               { ...t.integration.cli, href: "/docs/integration/cli" },
             ].map((method) => (
-              <a key={method.title} href={method.href} className="block rounded-xl border border-white/5 bg-white/[0.02] p-6 text-left hover:border-white/10 hover:bg-white/[0.04] transition group">
+              <a key={method.title} href={method.href} className="relative block rounded-xl border border-white/[0.08] bg-white/[0.03] p-6 text-left hover:border-white/15 hover:bg-white/[0.05] transition group">
+                <svg className="absolute top-5 right-5 w-4 h-4 text-gray-500 group-hover:text-white group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                </svg>
                 <h3 className="text-lg font-semibold mb-2 group-hover:text-white transition">{method.title}</h3>
                 <p className="text-sm text-gray-400">{method.desc}</p>
               </a>
@@ -526,7 +529,7 @@ console.log(result.usage);
       </section>
 
       {/* CTA + Community */}
-      <section className="py-16 md:py-24 px-4 md:px-6 bg-[#0d0d0d]">
+      <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
         <div className="max-w-5xl mx-auto text-center" data-animate>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.cta.title}</h2>
           <p className="text-gray-400 mb-8 max-w-xl mx-auto">{t.cta.subtitle}</p>
