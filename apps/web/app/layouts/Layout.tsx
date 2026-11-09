@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { type Locale, locales, domainMap, localeNames } from "@/lib/i18n/config";
 import NavSearch from "../components/NavSearch";
 import ScrollEffects from "../components/ScrollEffects";
@@ -30,7 +31,10 @@ type LayoutProps = {
   children: React.ReactNode;
 };
 
-export default function Layout({ locale, nav, footer, searchPlaceholder, children }: LayoutProps) {
+export default async function Layout({ locale, nav, footer, searchPlaceholder, children }: LayoutProps) {
+  const headersList = await headers();
+  const pathname = headersList.get("x-pathname") || "/";
+
   return (
     <>
       <ScrollEffects />
@@ -69,7 +73,7 @@ export default function Layout({ locale, nav, footer, searchPlaceholder, childre
                 {locales.map((l) => (
                   <a
                     key={l}
-                    href={`https://${domainMap[l]}`}
+                    href={`https://${domainMap[l]}${pathname}`}
                     className={`flex items-center gap-2 px-3 py-2 text-sm first:rounded-t-lg last:rounded-b-lg transition ${
                       locale === l
                         ? "text-white bg-white/10"
@@ -100,6 +104,7 @@ export default function Layout({ locale, nav, footer, searchPlaceholder, childre
               locales={locales}
               domainMap={domainMap}
               localeNames={localeNames}
+              pathname={pathname}
             />
           </div>
         </div>

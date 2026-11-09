@@ -19,9 +19,10 @@ type MobileNavProps = {
   locales: readonly string[];
   domainMap: Record<string, string>;
   localeNames: Record<string, string>;
+  pathname: string;
 };
 
-export default function MobileNav({ nav, locale, locales, domainMap, localeNames }: MobileNavProps) {
+export default function MobileNav({ nav, locale, locales, domainMap, localeNames, pathname }: MobileNavProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
@@ -132,7 +133,7 @@ export default function MobileNav({ nav, locale, locales, domainMap, localeNames
                   {locales.map((l) => (
                     <a
                       key={l}
-                      href={`https://${domainMap[l]}`}
+                      href={`https://${domainMap[l]}${pathname}`}
                       className={`flex items-center gap-2 px-4 py-3 text-sm transition ${
                         locale === l
                           ? "text-white bg-white/10"

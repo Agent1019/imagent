@@ -8,6 +8,7 @@ export function middleware(request: NextRequest) {
   const response = NextResponse.next();
   response.headers.set("x-locale", locale);
   response.headers.set("x-host", host);
+  response.headers.set("x-pathname", request.nextUrl.pathname);
 
   return response;
 }
