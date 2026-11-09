@@ -91,7 +91,7 @@ export default async function ExplorePage({ searchParams }: PageProps) {
             <div className="flex-1 min-w-0">
               {/* Results count */}
               <p className="text-xs text-gray-500 mb-4">
-                {t.explore.showing} {total} tools
+                {t.explore.showing} {total} {t.explore.toolsCount}
                 {activeCategory !== "All" && (
                   <span>
                     {" "}{t.explore.inCategory} <span className="text-gray-300">{activeCategory}</span>

@@ -13,6 +13,8 @@ type Content = {
     searchPlaceholder: string;
     exploreBtn: string;
     publishBtn: string;
+    copyLabel: string;
+    copiedLabel: string;
   };
   stats: { servers: string; calls: string; publishers: string; uptime: string };
   features: {
@@ -34,7 +36,7 @@ type Content = {
   footer: { tagline: string; product: string; developers: string; company: string; copyright: string; explore: string; rankings: string; pricing: string; documentation: string; apiReference: string; blog: string; about: string; careers: string; privacy: string; terms: string };
   explore: {
     title: string; subtitle: string; categories: string; showing: string; inCategory: string;
-    noTools: string; viewAll: string; endpoints: string; installs: string;
+    noTools: string; viewAll: string; endpoints: string; installs: string; toolsCount: string;
     catLabels: Record<string, string>;
   };
   toolDetail: {
@@ -63,7 +65,7 @@ type Content = {
 const en: Content = {
   nav: { explore: "Explore", rankings: "Rankings", blog: "Blog", community: "Community", docs: "Docs", pricing: "Pricing", signIn: "Sign in", getStarted: "Get Started" },
   hero: {
-    badge: "{users} users, {services} services online",
+    badge: "{users} users · {services} services online",
     headline1: "One Conversation, Connect to Global Agent Services",
     headline2: "Capability verified · No re-registration · Up to 50% off",
     subtitle1: "One platform to connect agents with the tools they need.",
@@ -73,6 +75,8 @@ const en: Content = {
     searchPlaceholder: "Search 10,000+ MCP servers...",
     exploreBtn: "Explore MCP Servers",
     publishBtn: "Publish Server",
+    copyLabel: "Copy",
+    copiedLabel: "Copied",
   },
   stats: { servers: "MCP Servers", calls: "API Calls / Month", publishers: "Integrations", uptime: "Uptime SLA" },
   features: {
@@ -123,7 +127,7 @@ const en: Content = {
     title: "Explore MCP Servers", subtitle: "Browse hundreds of tools built for AI agents. Filter by category to find the capabilities you need.",
     categories: "Categories", showing: "Showing", inCategory: "in",
     noTools: "No tools found in this category.", viewAll: "View all tools",
-    endpoints: "endpoints", installs: "installs",
+    endpoints: "endpoints", installs: "installs", toolsCount: "tools",
     catLabels: { All: "All", Search: "Search", Data: "Data", Finance: "Finance", Social: "Social", Communication: "Communication", DevTools: "DevTools", "AI/ML": "AI/ML", Productivity: "Productivity", Media: "Media", "E-commerce": "E-commerce", Jobs: "Jobs", Travel: "Travel", Weather: "Weather", News: "News", Legal: "Legal", Software: "Software", Maps: "Maps", Marketing: "Marketing", Analytics: "Analytics", Trade: "Trade", Agents: "Agents", Other: "Other" },
   },
   toolDetail: {
@@ -164,7 +168,7 @@ const en: Content = {
 const zh: Content = {
   nav: { explore: "探索", rankings: "排行", blog: "博客", community: "社区", docs: "文档", pricing: "定价", signIn: "登录", getStarted: "免费开始" },
   hero: {
-    badge: "{users} 用户 {services} 个 service 在线",
+    badge: "{users} 用户 · {services} 个服务在线",
     headline1: "一次对话 连接全球 Agent 服务",
     headline2: "能力验证 · 免重复注册 · 最高优惠50%",
     subtitle1: "一个平台，连接 Agent 与海量工具生态",
@@ -174,6 +178,8 @@ const zh: Content = {
     searchPlaceholder: "搜索 10,000+ MCP Server...",
     exploreBtn: "探索 MCP Server",
     publishBtn: "发布 Server",
+    copyLabel: "复制",
+    copiedLabel: "已复制",
   },
   stats: { servers: "MCP Server", calls: "月 API 调用量", publishers: "可用集成", uptime: "可用性 SLA" },
   features: {
@@ -224,7 +230,7 @@ const zh: Content = {
     title: "探索 MCP Server", subtitle: "浏览数百个为 AI Agent 构建的工具。按类别筛选，找到你需要的能力。",
     categories: "分类", showing: "显示", inCategory: "分类：",
     noTools: "该分类下暂无工具", viewAll: "查看全部工具",
-    endpoints: "个端点", installs: "安装",
+    endpoints: "个端点", installs: "安装", toolsCount: "个工具",
     catLabels: { All: "全部", Search: "搜索", Data: "数据", Finance: "金融", Social: "社交", Communication: "通讯", DevTools: "开发工具", "AI/ML": "AI/ML", Productivity: "生产力", Media: "媒体", "E-commerce": "电商", Jobs: "招聘", Travel: "出行", Weather: "天气", News: "新闻", Legal: "法律", Software: "软件", Maps: "地图", Marketing: "营销", Analytics: "分析", Trade: "贸易", Agents: "Agent", Other: "其他" },
   },
   toolDetail: {

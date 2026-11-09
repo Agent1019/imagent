@@ -237,7 +237,7 @@ export default async function Home() {
 
           {/* MCP Copy Box */}
           <div className="mt-8">
-            <McpCopyBox text={t.hero.mcpCopy} guide={t.hero.mcpGuide} />
+            <McpCopyBox text={t.hero.mcpCopy} guide={t.hero.mcpGuide} copyLabel={t.hero.copyLabel} copiedLabel={t.hero.copiedLabel} />
           </div>
 
           <div className="mt-4 flex flex-col sm:flex-row gap-3 justify-center">
