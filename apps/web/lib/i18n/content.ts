@@ -315,7 +315,7 @@ const zh: Content = {
   },
 };
 
-const contentMap: Record<Locale, Content> = { en, zh };
+const contentMap: Partial<Record<Locale, Content>> = { en, zh };
 
 export function getContent(locale: Locale): Content {
   return contentMap[locale] ?? contentMap.en;

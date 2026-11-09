@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import { type Locale, locales, domainMap, localeNames } from "@/lib/i18n/config";
+import { type Locale, locales, domainMap, localeNames, localeFlags } from "@/lib/i18n/config";
 import NavSearch from "../components/NavSearch";
 import ScrollEffects from "../components/ScrollEffects";
 import MobileNav from "../components/MobileNav";
@@ -80,7 +80,7 @@ export default async function Layout({ locale, nav, footer, searchPlaceholder, c
                         : "text-gray-400 hover:text-white hover:bg-white/5"
                     }`}
                   >
-                    <span className="text-xs">{l === "en" ? "\u{1F1FA}\u{1F1F8}" : "\u{1F1E8}\u{1F1F3}"}</span>
+                    <span className="text-xs">{localeFlags[l]}</span>
                     {localeNames[l]}
                   </a>
                 ))}
@@ -104,6 +104,7 @@ export default async function Layout({ locale, nav, footer, searchPlaceholder, c
               locales={locales}
               domainMap={domainMap}
               localeNames={localeNames}
+              localeFlags={localeFlags}
               pathname={pathname}
             />
           </div>

@@ -19,10 +19,11 @@ type MobileNavProps = {
   locales: readonly string[];
   domainMap: Record<string, string>;
   localeNames: Record<string, string>;
+  localeFlags: Record<string, string>;
   pathname: string;
 };
 
-export default function MobileNav({ nav, locale, locales, domainMap, localeNames, pathname }: MobileNavProps) {
+export default function MobileNav({ nav, locale, locales, domainMap, localeNames, localeFlags, pathname }: MobileNavProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
@@ -141,7 +142,7 @@ export default function MobileNav({ nav, locale, locales, domainMap, localeNames
                       }`}
                       onClick={() => setMenuOpen(false)}
                     >
-                      <span className="text-xs">{l === "en" ? "\u{1F1FA}\u{1F1F8}" : "\u{1F1E8}\u{1F1F3}"}</span>
+                      <span className="text-xs">{localeFlags[l]}</span>
                       {localeNames[l]}
                     </a>
                   ))}
