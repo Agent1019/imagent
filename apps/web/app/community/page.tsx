@@ -577,7 +577,7 @@ export default async function CommunityPage({
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-wrap gap-3">
               <a
-                href="https://github.com/sunyuqing1019/imagent"
+                href="https://github.com/Agent1019/imagent"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/10 bg-white/[0.03] text-sm text-gray-300 hover:border-white/20 hover:text-white transition"
