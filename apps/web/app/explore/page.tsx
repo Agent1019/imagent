@@ -47,18 +47,18 @@ export default async function ExplorePage({ searchParams }: PageProps) {
   return (
     <Layout locale={locale} nav={t.nav} footer={t.footer} searchPlaceholder={t.hero.searchPlaceholder}>
       {/* Page Header */}
-      <section className="pt-32 pb-16 px-4 md:px-6 border-b border-white/5">
+      <section className="pt-24 md:pt-28 pb-8 px-4 md:px-6 border-b border-white/5">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
             {t.explore.title}
           </h1>
-          <p className="mt-3 text-gray-400 max-w-2xl">
+          <p className="mt-2 text-sm text-gray-400 max-w-2xl">
             {t.explore.subtitle}
           </p>
         </div>
       </section>
 
-      <section className="py-16 px-4 md:px-6">
+      <section className="py-8 px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Sidebar - Category Filters */}
