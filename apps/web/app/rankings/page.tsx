@@ -128,7 +128,7 @@ export default async function RankingsPage({
     >
       {/* Hero */}
       <section className="pt-32 pb-12 px-4 md:px-6">
-        <div className="max-w-6xl mx-auto text-center">
+        <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
             {t.rankings.title}
           </h1>
@@ -140,7 +140,7 @@ export default async function RankingsPage({
 
       {/* Tab Switcher + Period Toggle Bar */}
       <section className="sticky top-0 z-20 bg-[#0a0a0a]/90 backdrop-blur-md border-b border-white/5">
-        <div className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
           {/* Tabs */}
           <div className="flex items-center gap-1 p-1 rounded-full bg-white/5 border border-white/10">
             {TAB_KEYS.map((key) => {
@@ -195,7 +195,7 @@ export default async function RankingsPage({
 
       {/* Rankings Content — single active tab */}
       <section className="py-12 px-4 md:px-6">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           {activeTab === "most-used" && (
             <div>
               <p className="text-sm text-gray-500 mb-6">
