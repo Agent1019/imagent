@@ -95,8 +95,8 @@ export default async function Page() {
     <Layout locale={locale} nav={t.nav} footer={t.footer} searchPlaceholder={t.hero.searchPlaceholder}>
       <div className="pt-24">
         {/* Header */}
-        <section className="px-4 md:px-6 pb-12">
-          <div className="max-w-7xl mx-auto">
+        <section className="pb-12">
+          <div className="max-w-7xl mx-auto px-4 md:px-6">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-3">
               Blog
             </h1>
@@ -107,8 +107,8 @@ export default async function Page() {
         </section>
 
         {/* Category Filters */}
-        <section className="px-4 md:px-6 pb-8">
-          <div className="max-w-7xl mx-auto">
+        <section className="pb-8">
+          <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="flex flex-wrap gap-2">
               {categories.map((cat, i) => (
                 <a
@@ -133,8 +133,8 @@ export default async function Page() {
         </section>
 
         {/* Blog Grid */}
-        <section className="px-4 md:px-6 pb-16">
-          <div className="max-w-7xl mx-auto">
+        <section className="pb-16">
+          <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="grid md:grid-cols-2 gap-6">
               {mockPosts.map((post) => (
                 <a
@@ -179,8 +179,8 @@ export default async function Page() {
         </section>
 
         {/* Pagination */}
-        <section className="px-4 md:px-6 pb-16">
-          <div className="max-w-7xl mx-auto">
+        <section className="pb-16">
+          <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="flex items-center justify-between border-t border-white/5 pt-8">
               <span className="text-sm text-gray-600 cursor-default">
                 Previous

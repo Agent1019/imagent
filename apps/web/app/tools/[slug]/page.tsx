@@ -100,8 +100,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
   return (
     <Layout locale={locale} nav={t.nav} footer={t.footer} searchPlaceholder={t.hero.searchPlaceholder}>
-      <div className="pt-20 px-4 md:px-6 pb-24">
-        <div className="max-w-7xl mx-auto">
+      <div className="pt-20 pb-24">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-sm text-gray-500 mb-8">
             <a href="/" className="hover:text-white transition">Imagent</a>

@@ -178,7 +178,7 @@ export default async function PricingPage() {
 
   return (
     <Layout locale={locale} nav={t.nav} footer={t.footer} searchPlaceholder={t.hero.searchPlaceholder}>
-      <div className="pt-32 pb-20 px-4 md:px-6 bg-[#0a0a0a] min-h-screen">
+      <div className="pt-32 pb-20 bg-[#0a0a0a] min-h-screen">
 
         {/* ── Hero ── */}
         <section className="max-w-7xl mx-auto text-center mb-20 px-4 md:px-6">
@@ -193,7 +193,7 @@ export default async function PricingPage() {
         </section>
 
         {/* ── How It Works ── */}
-        <section className="max-w-4xl mx-auto mb-24">
+        <section className="max-w-4xl mx-auto px-4 md:px-6 mb-24">
           <h2 className="text-2xl font-bold text-white text-center mb-12">
             {zh ? "如何使用" : "How It Works"}
           </h2>
@@ -255,7 +255,7 @@ export default async function PricingPage() {
         </section>
 
         {/* ── Recharge Packages ── */}
-        <section className="max-w-7xl mx-auto mb-24">
+        <section className="max-w-7xl mx-auto px-4 md:px-6 mb-24">
           <h2 className="text-2xl font-bold text-white text-center mb-12">
             {zh ? "充值套餐" : "Recharge Packages"}
           </h2>
@@ -321,7 +321,7 @@ export default async function PricingPage() {
         </section>
 
         {/* ── Why Is the Platform Free? ── */}
-        <section className="max-w-4xl mx-auto mb-24">
+        <section className="max-w-4xl mx-auto px-4 md:px-6 mb-24">
           <h2 className="text-2xl font-bold text-white text-center mb-4">
             {zh ? "为什么免费？" : "Why Free?"}
           </h2>
@@ -373,7 +373,7 @@ export default async function PricingPage() {
         </section>
 
         {/* ── FAQ ── */}
-        <section className="max-w-3xl mx-auto mb-24">
+        <section className="max-w-3xl mx-auto px-4 md:px-6 mb-24">
           <h2 className="text-3xl font-bold text-white text-center mb-12">
             {zh ? "常见问题" : "FAQ"}
           </h2>
@@ -395,7 +395,7 @@ export default async function PricingPage() {
         </section>
 
         {/* ── Bottom CTA ── */}
-        <section className="max-w-2xl mx-auto text-center">
+        <section className="max-w-2xl mx-auto px-4 md:px-6 text-center">
           <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-10">
             <h2 className="text-2xl font-bold text-white mb-3">
               {zh ? "赠送 $10 免费额度，立即开始" : "Start with $10 free credits"}

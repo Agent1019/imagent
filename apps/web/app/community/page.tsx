@@ -546,8 +546,8 @@ export default async function CommunityPage({
         {/* ============================================================ */}
         {/*  HEADER                                                      */}
         {/* ============================================================ */}
-        <section className="pt-28 pb-8 px-4 md:px-6">
-          <div className="max-w-7xl mx-auto">
+        <section className="pt-28 pb-8">
+          <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
               <div>
                 <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2">
@@ -573,8 +573,8 @@ export default async function CommunityPage({
         {/* ============================================================ */}
         {/*  SOCIAL CHANNELS                                              */}
         {/* ============================================================ */}
-        <section className="px-4 md:px-6 pb-6">
-          <div className="max-w-7xl mx-auto">
+        <section className="pb-6">
+          <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="flex flex-wrap gap-3">
               <a
                 href="https://github.com/Agent1019/imagent"
@@ -616,8 +616,8 @@ export default async function CommunityPage({
         {/* ============================================================ */}
         {/*  CATEGORY TABS                                               */}
         {/* ============================================================ */}
-        <section className="px-4 md:px-6 pb-6">
-          <div className="max-w-7xl mx-auto">
+        <section className="pb-6">
+          <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide">
               {categories.map((cat) => {
                 const isActive = activeCategory === cat.key;
@@ -646,8 +646,8 @@ export default async function CommunityPage({
         {/* ============================================================ */}
         {/*  MAIN CONTENT + SIDEBAR                                      */}
         {/* ============================================================ */}
-        <section className="px-4 md:px-6 pb-16">
-          <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
+        <section className="pb-16">
+          <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col lg:flex-row gap-8">
             {/* -------------------------------------------------------- */}
             {/*  POST LIST                                               */}
             {/* -------------------------------------------------------- */}

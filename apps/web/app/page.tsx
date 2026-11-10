@@ -221,8 +221,8 @@ export default async function Home() {
       />
 
       {/* Hero */}
-      <section className="pt-24 md:pt-28 pb-12 md:pb-16 px-4 md:px-6">
-        <div className="max-w-5xl mx-auto text-center">
+      <section className="pt-24 md:pt-28 pb-12 md:pb-16">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-gray-400 mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             {badgeText}
@@ -339,8 +339,8 @@ export default async function Home() {
 
 
       {/* Three Pillars */}
-      <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-16 md:py-24 bg-[#111111]">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="text-center mb-16" data-animate>
             <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">{t.features.title}</h2>
             <p className="mt-4 text-gray-400 max-w-xl mx-auto">{t.features.subtitle}</p>
@@ -425,8 +425,8 @@ export default async function Home() {
 
 
       {/* API Section */}
-      <section className="py-16 md:py-24 px-4 md:px-6">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center" data-animate>
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -484,8 +484,8 @@ console.log(result.usage);
 
 
       {/* Integration Methods */}
-      <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
-        <div className="max-w-5xl mx-auto text-center" data-animate>
+      <section className="py-16 md:py-24 bg-[#111111]">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 text-center" data-animate>
           <h2 className="text-2xl md:text-4xl font-bold mb-3">{t.integration.title}</h2>
           <p className="text-gray-400 mb-12">{t.integration.subtitle}</p>
           <div className="grid md:grid-cols-3 gap-6">
@@ -507,8 +507,8 @@ console.log(result.usage);
       </section>
 
       {/* FAQ */}
-      <section className="py-16 md:py-24 px-4 md:px-6">
-        <div className="max-w-3xl mx-auto" data-animate>
+      <section className="py-16 md:py-24">
+        <div className="max-w-3xl mx-auto px-4 md:px-6" data-animate>
           <h2 className="text-2xl md:text-4xl font-bold text-center mb-12">{t.faq.title}</h2>
           <div className="divide-y divide-white/5">
             {t.faq.items.map((item, i) => (
@@ -529,8 +529,8 @@ console.log(result.usage);
       </section>
 
       {/* CTA + Community */}
-      <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
-        <div className="max-w-5xl mx-auto text-center" data-animate>
+      <section className="py-16 md:py-24 bg-[#111111]">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 text-center" data-animate>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.cta.title}</h2>
           <p className="text-gray-400 mb-8 max-w-xl mx-auto">{t.cta.subtitle}</p>
           <a

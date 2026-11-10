@@ -127,8 +127,8 @@ export default async function RankingsPage({
       searchPlaceholder={t.hero.searchPlaceholder}
     >
       {/* Hero */}
-      <section className="pt-32 pb-12 px-4 md:px-6">
-        <div className="max-w-7xl mx-auto text-center">
+      <section className="pt-32 pb-12">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 text-center">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
             {t.rankings.title}
           </h1>
@@ -194,8 +194,8 @@ export default async function RankingsPage({
       </section>
 
       {/* Rankings Content — single active tab */}
-      <section className="py-12 px-4 md:px-6">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-12">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
           {activeTab === "most-used" && (
             <div>
               <p className="text-sm text-gray-500 mb-6">
@@ -253,8 +253,8 @@ export default async function RankingsPage({
       </section>
 
       {/* Methodology */}
-      <section className="py-24 px-4 md:px-6 border-t border-white/5">
-        <div className="max-w-3xl mx-auto">
+      <section className="py-24 border-t border-white/5">
+        <div className="max-w-3xl mx-auto px-4 md:px-6">
           <h2 className="text-2xl font-bold mb-6">
             {t.rankings.howWeCount}
           </h2>
