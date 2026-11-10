@@ -42,7 +42,7 @@ export default async function Layout({ locale, nav, footer, searchPlaceholder, c
       {/* Navigation */}
       <nav id="main-nav" className="fixed top-0 w-full z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-4 md:gap-8 shrink-0">
+          <div className="flex items-center gap-2 md:gap-8 shrink-0">
             <a href="/" className="text-2xl font-bold tracking-tight text-white shrink-0">
               Imagent
             </a>
