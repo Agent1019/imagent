@@ -58,6 +58,16 @@ type Content = {
     relatedTitle: string; relatedDesc: string;
     freeFeatures: string[]; proFeatures: string[]; enterpriseFeatures: string[];
     epList: string; epInvoke: string; epHealth: string; epAuth: string;
+    tabTools: string; tabComments: string; tabChangelog: string;
+    availableTools: string; toolsDesc: string;
+    install: string; refresh: string; share: string; copy: string; copied: string;
+    installCli: string; installMcp: string; installJson: string; installSkill: string;
+    recommended: string; httpLabel: string; manual: string; oneLiner: string;
+    remoteService: string; remoteServiceDesc: string;
+    tags: string; links: string;
+    githubRepo: string; documentation: string; homepage: string; reportIssue: string;
+    version: string; installs: string; category: string; protocol: string; license: string;
+    latest: string;
   };
   rankings: {
     title: string; subtitle: string; mostUsed: string; fastest: string; byCategory: string;
@@ -173,6 +183,16 @@ const en: Content = {
     epInvoke: "Invoke a specific tool function with structured parameters.",
     epHealth: "Check server health status, uptime, average latency.",
     epAuth: "Exchange an agent identity token (AIT) for a scoped access token.",
+    tabTools: "Tools", tabComments: "Comments", tabChangelog: "Changelog",
+    availableTools: "Available Tools", toolsDesc: "tools that your agent can invoke.",
+    install: "Install", refresh: "Refresh", share: "Share", copy: "Copy", copied: "Copied!",
+    installCli: "CLI", installMcp: "MCP Server", installJson: "JSON Config", installSkill: "Skill",
+    recommended: "Recommended", httpLabel: "HTTP", manual: "Manual", oneLiner: "One-liner",
+    remoteService: "Remote Service", remoteServiceDesc: "This tool runs remotely on the provider's infrastructure. No local installation or setup required.",
+    tags: "Tags", links: "Links",
+    githubRepo: "GitHub Repository", documentation: "Documentation", homepage: "Homepage", reportIssue: "Report Issue",
+    version: "Version", installs: "Installs", category: "Category", protocol: "Protocol", license: "License",
+    latest: "Latest",
   },
   rankings: {
     title: "Agent Rankings", subtitle: "Track the most popular MCP servers and their usage trends across the Imagent platform.",
@@ -294,6 +314,16 @@ const zh: Content = {
     epInvoke: "使用结构化参数调用特定的工具函数。",
     epHealth: "检查服务器健康状态、正常运行时间和平均延迟。",
     epAuth: "将 Agent 身份令牌（AIT）换取有限范围的访问令牌。",
+    tabTools: "工具", tabComments: "评论", tabChangelog: "更新日志",
+    availableTools: "可用工具", toolsDesc: "个工具可供你的 Agent 调用。",
+    install: "安装", refresh: "刷新", share: "分享", copy: "复制", copied: "已复制！",
+    installCli: "CLI", installMcp: "MCP Server", installJson: "JSON 配置", installSkill: "Skill",
+    recommended: "推荐", httpLabel: "HTTP", manual: "手动", oneLiner: "一行命令",
+    remoteService: "远程服务", remoteServiceDesc: "该工具在提供商的基础设施上远程运行，无需本地安装或配置。",
+    tags: "标签", links: "链接",
+    githubRepo: "GitHub 仓库", documentation: "文档", homepage: "主页", reportIssue: "报告问题",
+    version: "版本", installs: "安装量", category: "分类", protocol: "协议", license: "许可证",
+    latest: "最新",
   },
   rankings: {
     title: "Agent 工具排行榜", subtitle: "追踪 Imagent 平台上最热门的 MCP Server 及其使用趋势。",
@@ -415,6 +445,16 @@ const ko: Content = {
     epInvoke: "구조화된 파라미터로 특정 도구 함수를 호출합니다.",
     epHealth: "서버 상태, 가동 시간, 평균 지연 시간을 확인합니다.",
     epAuth: "에이전트 식별 토큰(AIT)을 범위 지정 액세스 토큰으로 교환합니다.",
+    tabTools: "도구", tabComments: "댓글", tabChangelog: "변경日志",
+    availableTools: "사용 가능한 도구", toolsDesc: "개의 도구를 Agent가 호출할 수 있습니다.",
+    install: "설치", refresh: "새로고침", share: "공유", copy: "복사", copied: "복사됨!",
+    installCli: "CLI", installMcp: "MCP Server", installJson: "JSON 설정", installSkill: "Skill",
+    recommended: "권장", httpLabel: "HTTP", manual: "수동", oneLiner: "한 줄 명령",
+    remoteService: "원격 서비스", remoteServiceDesc: "이 도구는 제공자의 인프라에서 원격으로 실행됩니다. 로컬 설치나 설정이 필요 없습니다.",
+    tags: "태그", links: "링크",
+    githubRepo: "GitHub 저장소", documentation: "문서", homepage: "홈페이지", reportIssue: "문제 신고",
+    version: "버전", installs: "설치 수", category: "카테고리", protocol: "프로토콜", license: "라이선스",
+    latest: "최신",
   },
   rankings: {
     title: "에이전트 랭킹", subtitle: "Imagent 플랫폼에서 가장 인기 있는 MCP 서버와 사용량 추이를 확인하세요.",
@@ -536,6 +576,16 @@ const pt: Content = {
     epInvoke: "Invoque uma função de ferramenta específica com parâmetros estruturados.",
     epHealth: "Verifique o status de saúde do server, disponibilidade e latência média.",
     epAuth: "Troque um token de identidade de agente (AIT) por um token de acesso com escopo.",
+    tabTools: "Tools", tabComments: "Comments", tabChangelog: "Changelog",
+    availableTools: "Available Tools", toolsDesc: "tools that your agent can invoke.",
+    install: "Install", refresh: "Refresh", share: "Share", copy: "Copy", copied: "Copied!",
+    installCli: "CLI", installMcp: "MCP Server", installJson: "JSON Config", installSkill: "Skill",
+    recommended: "Recommended", httpLabel: "HTTP", manual: "Manual", oneLiner: "One-liner",
+    remoteService: "Remote Service", remoteServiceDesc: "This tool runs remotely on the provider's infrastructure. No local installation or setup required.",
+    tags: "Tags", links: "Links",
+    githubRepo: "GitHub Repository", documentation: "Documentation", homepage: "Homepage", reportIssue: "Report Issue",
+    version: "Version", installs: "Installs", category: "Category", protocol: "Protocol", license: "License",
+    latest: "Latest",
   },
   rankings: {
     title: "Rankings de Agentes", subtitle: "Acompanhe os MCP Servers mais populares e suas tendências de uso na plataforma Imagent.",
@@ -657,6 +707,16 @@ const it: Content = {
     epInvoke: "Invoca una funzione specifica di uno strumento con parametri strutturati.",
     epHealth: "Verifica lo stato di salute del server, la disponibilità e la latenza media.",
     epAuth: "Scambia un agent identity token (AIT) con un token di accesso con scope definito.",
+    tabTools: "Tools", tabComments: "Comments", tabChangelog: "Changelog",
+    availableTools: "Available Tools", toolsDesc: "tools that your agent can invoke.",
+    install: "Install", refresh: "Refresh", share: "Share", copy: "Copy", copied: "Copied!",
+    installCli: "CLI", installMcp: "MCP Server", installJson: "JSON Config", installSkill: "Skill",
+    recommended: "Recommended", httpLabel: "HTTP", manual: "Manual", oneLiner: "One-liner",
+    remoteService: "Remote Service", remoteServiceDesc: "This tool runs remotely on the provider's infrastructure. No local installation or setup required.",
+    tags: "Tags", links: "Links",
+    githubRepo: "GitHub Repository", documentation: "Documentation", homepage: "Homepage", reportIssue: "Report Issue",
+    version: "Version", installs: "Installs", category: "Category", protocol: "Protocol", license: "License",
+    latest: "Latest",
   },
   rankings: {
     title: "Classifiche Agent", subtitle: "Monitora i server MCP più popolari e le loro tendenze di utilizzo sulla piattaforma Imagent.",
@@ -778,6 +838,16 @@ const es: Content = {
     epInvoke: "Invoca una función de herramienta específica con parámetros estructurados.",
     epHealth: "Verifica el estado de salud del servidor, tiempo de actividad y latencia promedio.",
     epAuth: "Intercambia un token de identidad de agente (AIT) por un token de acceso con alcance.",
+    tabTools: "Tools", tabComments: "Comments", tabChangelog: "Changelog",
+    availableTools: "Available Tools", toolsDesc: "tools that your agent can invoke.",
+    install: "Install", refresh: "Refresh", share: "Share", copy: "Copy", copied: "Copied!",
+    installCli: "CLI", installMcp: "MCP Server", installJson: "JSON Config", installSkill: "Skill",
+    recommended: "Recommended", httpLabel: "HTTP", manual: "Manual", oneLiner: "One-liner",
+    remoteService: "Remote Service", remoteServiceDesc: "This tool runs remotely on the provider's infrastructure. No local installation or setup required.",
+    tags: "Tags", links: "Links",
+    githubRepo: "GitHub Repository", documentation: "Documentation", homepage: "Homepage", reportIssue: "Report Issue",
+    version: "Version", installs: "Installs", category: "Category", protocol: "Protocol", license: "License",
+    latest: "Latest",
   },
   rankings: {
     title: "Rankings de Agentes", subtitle: "Sigue los MCP Servers más populares y sus tendencias de uso en la plataforma Imagent.",
@@ -899,6 +969,16 @@ const ja: Content = {
     epInvoke: "構造化パラメータで特定のツール機能を呼び出します。",
     epHealth: "サーバーの稼働状況、稼働率、平均レイテンシを確認します。",
     epAuth: "Agent IDトークン（AIT）をスコープ付きアクセストークンに交換します。",
+    tabTools: "Tools", tabComments: "Comments", tabChangelog: "Changelog",
+    availableTools: "Available Tools", toolsDesc: "tools that your agent can invoke.",
+    install: "Install", refresh: "Refresh", share: "Share", copy: "Copy", copied: "Copied!",
+    installCli: "CLI", installMcp: "MCP Server", installJson: "JSON Config", installSkill: "Skill",
+    recommended: "Recommended", httpLabel: "HTTP", manual: "Manual", oneLiner: "One-liner",
+    remoteService: "Remote Service", remoteServiceDesc: "This tool runs remotely on the provider's infrastructure. No local installation or setup required.",
+    tags: "Tags", links: "Links",
+    githubRepo: "GitHub Repository", documentation: "Documentation", homepage: "Homepage", reportIssue: "Report Issue",
+    version: "Version", installs: "Installs", category: "Category", protocol: "Protocol", license: "License",
+    latest: "Latest",
   },
   rankings: {
     title: "Agentランキング", subtitle: "Imagentプラットフォーム上で最も人気のあるMCPサーバーとその利用トレンドを追跡。",
@@ -1020,6 +1100,16 @@ const de: Content = {
     epInvoke: "Rufe eine bestimmte Tool-Funktion mit strukturierten Parametern auf.",
     epHealth: "Prüfe den Server-Status, die Uptime und die durchschnittliche Latenz.",
     epAuth: "Tausche einen Agent Identity Token (AIT) gegen einen bereichsbezogenen Access Token ein.",
+    tabTools: "Tools", tabComments: "Comments", tabChangelog: "Changelog",
+    availableTools: "Available Tools", toolsDesc: "tools that your agent can invoke.",
+    install: "Install", refresh: "Refresh", share: "Share", copy: "Copy", copied: "Copied!",
+    installCli: "CLI", installMcp: "MCP Server", installJson: "JSON Config", installSkill: "Skill",
+    recommended: "Recommended", httpLabel: "HTTP", manual: "Manual", oneLiner: "One-liner",
+    remoteService: "Remote Service", remoteServiceDesc: "This tool runs remotely on the provider's infrastructure. No local installation or setup required.",
+    tags: "Tags", links: "Links",
+    githubRepo: "GitHub Repository", documentation: "Documentation", homepage: "Homepage", reportIssue: "Report Issue",
+    version: "Version", installs: "Installs", category: "Category", protocol: "Protocol", license: "License",
+    latest: "Latest",
   },
   rankings: {
     title: "Agent-Rankings", subtitle: "Verfolge die beliebtesten MCP-Server und ihre Nutzungstrends auf der Imagent-Plattform.",
@@ -1142,6 +1232,16 @@ const fr: Content = {
     epInvoke: "Invoquer une fonction d'outil spécifique avec des paramètres structurés.",
     epHealth: "Vérifier l'état de santé du serveur, la disponibilité et la latence moyenne.",
     epAuth: "Échanger un jeton d'identité agent (AIT) contre un jeton d'accès à portée limitée.",
+    tabTools: "Tools", tabComments: "Comments", tabChangelog: "Changelog",
+    availableTools: "Available Tools", toolsDesc: "tools that your agent can invoke.",
+    install: "Install", refresh: "Refresh", share: "Share", copy: "Copy", copied: "Copied!",
+    installCli: "CLI", installMcp: "MCP Server", installJson: "JSON Config", installSkill: "Skill",
+    recommended: "Recommended", httpLabel: "HTTP", manual: "Manual", oneLiner: "One-liner",
+    remoteService: "Remote Service", remoteServiceDesc: "This tool runs remotely on the provider's infrastructure. No local installation or setup required.",
+    tags: "Tags", links: "Links",
+    githubRepo: "GitHub Repository", documentation: "Documentation", homepage: "Homepage", reportIssue: "Report Issue",
+    version: "Version", installs: "Installs", category: "Category", protocol: "Protocol", license: "License",
+    latest: "Latest",
   },
   rankings: {
     title: "Classements des agents", subtitle: "Suivez les serveurs MCP les plus populaires et leurs tendances d'utilisation sur la plateforme Imagent.",
