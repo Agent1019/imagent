@@ -43,10 +43,7 @@ export default async function Layout({ locale, nav, footer, searchPlaceholder, c
       <nav id="main-nav" className="fixed top-0 w-full z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 md:gap-8 shrink-0">
-            <a href="/" className="text-2xl font-bold tracking-tight text-white shrink-0">
-              Imagent
-            </a>
-            {/* Mobile Navigation - visible only below md, right after logo */}
+            {/* Mobile Navigation - visible only below md, left of logo */}
             <MobileNav
               nav={nav}
               locale={locale}
@@ -56,6 +53,9 @@ export default async function Layout({ locale, nav, footer, searchPlaceholder, c
               localeFlags={localeFlags}
               pathname={pathname}
             />
+            <a href="/" className="text-2xl font-bold tracking-tight text-white shrink-0">
+              Imagent
+            </a>
             <div className="hidden md:flex items-center gap-4 lg:gap-6 text-sm text-gray-400 overflow-hidden">
               <a href="/explore" className="hover:text-white transition shrink-0">{nav.explore}</a>
               <a href="/rankings" className="hover:text-white transition shrink-0">{nav.rankings}</a>
