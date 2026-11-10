@@ -228,7 +228,7 @@ export default async function Home() {
             {badgeText}
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.1]">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight leading-[1.1]">
             {t.hero.headline1}
           </h1>
           <p className="mt-3 text-lg md:text-xl font-medium bg-gradient-to-r from-orange-400 via-rose-400 to-purple-400 bg-clip-text text-transparent">
