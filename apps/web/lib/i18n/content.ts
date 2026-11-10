@@ -68,6 +68,8 @@ type Content = {
     githubRepo: string; documentation: string; homepage: string; reportIssue: string;
     version: string; installs: string; category: string; protocol: string; license: string;
     latest: string;
+    installConfig: string; viewDetails: string; tabInstall: string; tabPublish: string;
+    iamAgent: string; iamHuman: string; agentPromptHint: string; agentPromptLabel: string; copyPrompt: string;
   };
   rankings: {
     title: string; subtitle: string; mostUsed: string; fastest: string; byCategory: string;
@@ -193,6 +195,12 @@ const en: Content = {
     githubRepo: "GitHub Repository", documentation: "Documentation", homepage: "Homepage", reportIssue: "Report Issue",
     version: "Version", installs: "Installs", category: "Category", protocol: "Protocol", license: "License",
     latest: "Latest",
+    installConfig: "Installation", viewDetails: "View Details",
+    tabInstall: "Install", tabPublish: "Publish",
+    iamAgent: "I am Agent", iamHuman: "I am Human",
+    agentPromptHint: "Send this prompt to your Agent to install this MCP Server",
+    agentPromptLabel: "Agent prompt",
+    copyPrompt: "Copy Prompt",
   },
   rankings: {
     title: "Agent Rankings", subtitle: "Track the most popular MCP servers and their usage trends across the Imagent platform.",
@@ -324,6 +332,12 @@ const zh: Content = {
     githubRepo: "GitHub 仓库", documentation: "文档", homepage: "主页", reportIssue: "报告问题",
     version: "版本", installs: "安装量", category: "分类", protocol: "协议", license: "许可证",
     latest: "最新",
+    installConfig: "安装配置", viewDetails: "查看详情",
+    tabInstall: "安装", tabPublish: "发布",
+    iamAgent: "我是 Agent", iamHuman: "我是 Human",
+    agentPromptHint: "将此提示发送给您的 Agent 以安装该 MCP Server",
+    agentPromptLabel: "Agent prompt",
+    copyPrompt: "复制 Prompt",
   },
   rankings: {
     title: "Agent 工具排行榜", subtitle: "追踪 Imagent 平台上最热门的 MCP Server 及其使用趋势。",
@@ -455,6 +469,12 @@ const ko: Content = {
     githubRepo: "GitHub 저장소", documentation: "문서", homepage: "홈페이지", reportIssue: "문제 신고",
     version: "버전", installs: "설치 수", category: "카테고리", protocol: "프로토콜", license: "라이선스",
     latest: "최신",
+    installConfig: "설치 구성", viewDetails: "세부 정보",
+    tabInstall: "설치", tabPublish: "게시",
+    iamAgent: "나는 Agent", iamHuman: "나는 Human",
+    agentPromptHint: "이 프롬프트를 Agent에게 전송하여 MCP 서버를 설치하세요",
+    agentPromptLabel: "Agent prompt",
+    copyPrompt: "프롬프트 복사",
   },
   rankings: {
     title: "에이전트 랭킹", subtitle: "Imagent 플랫폼에서 가장 인기 있는 MCP 서버와 사용량 추이를 확인하세요.",
@@ -586,6 +606,12 @@ const pt: Content = {
     githubRepo: "GitHub Repository", documentation: "Documentation", homepage: "Homepage", reportIssue: "Report Issue",
     version: "Version", installs: "Installs", category: "Category", protocol: "Protocol", license: "License",
     latest: "Latest",
+    installConfig: "Instalação", viewDetails: "Ver detalhes",
+    tabInstall: "Instalar", tabPublish: "Publicar",
+    iamAgent: "Sou Agent", iamHuman: "Sou Human",
+    agentPromptHint: "Envie este prompt ao seu Agent para instalar este MCP Server",
+    agentPromptLabel: "Agent prompt",
+    copyPrompt: "Copiar Prompt",
   },
   rankings: {
     title: "Rankings de Agentes", subtitle: "Acompanhe os MCP Servers mais populares e suas tendências de uso na plataforma Imagent.",
@@ -717,6 +743,12 @@ const it: Content = {
     githubRepo: "GitHub Repository", documentation: "Documentation", homepage: "Homepage", reportIssue: "Report Issue",
     version: "Version", installs: "Installs", category: "Category", protocol: "Protocol", license: "License",
     latest: "Latest",
+    installConfig: "Installazione", viewDetails: "Vedi dettagli",
+    tabInstall: "Installa", tabPublish: "Pubblica",
+    iamAgent: "Sono Agent", iamHuman: "Sono Human",
+    agentPromptHint: "Invia questo prompt al tuo Agent per installare questo MCP Server",
+    agentPromptLabel: "Agent prompt",
+    copyPrompt: "Copia Prompt",
   },
   rankings: {
     title: "Classifiche Agent", subtitle: "Monitora i server MCP più popolari e le loro tendenze di utilizzo sulla piattaforma Imagent.",
@@ -848,6 +880,12 @@ const es: Content = {
     githubRepo: "GitHub Repository", documentation: "Documentation", homepage: "Homepage", reportIssue: "Report Issue",
     version: "Version", installs: "Installs", category: "Category", protocol: "Protocol", license: "License",
     latest: "Latest",
+    installConfig: "Instalación", viewDetails: "Ver detalles",
+    tabInstall: "Instalar", tabPublish: "Publicar",
+    iamAgent: "Soy Agent", iamHuman: "Soy Human",
+    agentPromptHint: "Envía este prompt a tu Agent para instalar este MCP Server",
+    agentPromptLabel: "Agent prompt",
+    copyPrompt: "Copiar Prompt",
   },
   rankings: {
     title: "Rankings de Agentes", subtitle: "Sigue los MCP Servers más populares y sus tendencias de uso en la plataforma Imagent.",
@@ -979,6 +1017,12 @@ const ja: Content = {
     githubRepo: "GitHub Repository", documentation: "Documentation", homepage: "Homepage", reportIssue: "Report Issue",
     version: "Version", installs: "Installs", category: "Category", protocol: "Protocol", license: "License",
     latest: "Latest",
+    installConfig: "インストール設定", viewDetails: "詳細を見る",
+    tabInstall: "インストール", tabPublish: "公開",
+    iamAgent: "私は Agent", iamHuman: "私は Human",
+    agentPromptHint: "このプロンプトをAgentに送信してMCPサーバーをインストール",
+    agentPromptLabel: "Agent prompt",
+    copyPrompt: "プロンプトをコピー",
   },
   rankings: {
     title: "Agentランキング", subtitle: "Imagentプラットフォーム上で最も人気のあるMCPサーバーとその利用トレンドを追跡。",
@@ -1110,6 +1154,12 @@ const de: Content = {
     githubRepo: "GitHub Repository", documentation: "Documentation", homepage: "Homepage", reportIssue: "Report Issue",
     version: "Version", installs: "Installs", category: "Category", protocol: "Protocol", license: "License",
     latest: "Latest",
+    installConfig: "Installation", viewDetails: "Details anzeigen",
+    tabInstall: "Installieren", tabPublish: "Veröffentlichen",
+    iamAgent: "Ich bin Agent", iamHuman: "Ich bin Human",
+    agentPromptHint: "Senden Sie diesen Prompt an Ihren Agent, um diesen MCP-Server zu installieren",
+    agentPromptLabel: "Agent prompt",
+    copyPrompt: "Prompt kopieren",
   },
   rankings: {
     title: "Agent-Rankings", subtitle: "Verfolge die beliebtesten MCP-Server und ihre Nutzungstrends auf der Imagent-Plattform.",
@@ -1242,6 +1292,12 @@ const fr: Content = {
     githubRepo: "GitHub Repository", documentation: "Documentation", homepage: "Homepage", reportIssue: "Report Issue",
     version: "Version", installs: "Installs", category: "Category", protocol: "Protocol", license: "License",
     latest: "Latest",
+    installConfig: "Installation", viewDetails: "Voir les détails",
+    tabInstall: "Installer", tabPublish: "Publier",
+    iamAgent: "Je suis Agent", iamHuman: "Je suis Human",
+    agentPromptHint: "Envoyez ce prompt à votre Agent pour installer ce serveur MCP",
+    agentPromptLabel: "Agent prompt",
+    copyPrompt: "Copier le Prompt",
   },
   rankings: {
     title: "Classements des agents", subtitle: "Suivez les serveurs MCP les plus populaires et leurs tendances d'utilisation sur la plateforme Imagent.",

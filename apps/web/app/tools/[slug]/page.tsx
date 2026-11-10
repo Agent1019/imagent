@@ -3,6 +3,7 @@ import { getLocaleFromHost, type Locale } from "@/lib/i18n/config";
 import { getContent } from "@/lib/i18n/content";
 import Layout from "@/app/layouts/Layout";
 import CopyButton from "@/app/components/CopyButton";
+import InstallConfig from "@/app/components/InstallConfig";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -183,14 +184,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             </span>
           </div>
 
-          {/* Mobile-only install button */}
-          <div className="sm:hidden mb-6">
-            <a href="#setup-mobile" className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-white text-black rounded-xl font-medium hover:bg-gray-200 transition text-sm">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-              {td.install}
-            </a>
-          </div>
-
           {/* Tab bar — full width divider */}
           <div className="flex items-center gap-1 border-b border-white/10 overflow-x-auto scrollbar-hide">
             {tabs.map((tab, i) => (
@@ -344,69 +337,35 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
               {/* Mobile-only install section */}
               <section id="setup-mobile" className="lg:hidden mb-14 scroll-mt-24">
-                <h2 className="text-lg font-semibold text-white mb-4">{td.install}</h2>
-                <div className="space-y-4">
-                  <div className="code-block rounded-xl border border-white/10 bg-[#111] overflow-hidden">
-                    <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/5">
-                      <div className="flex items-center gap-2"><span className="text-xs font-medium text-white">{td.installCli}</span><span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400">{td.recommended}</span></div>
-                      <CopyButton />
-                    </div>
-                    <div className="px-5 py-4 flex items-center gap-3"><span className="text-emerald-400 font-mono text-sm select-none">$</span><code className="text-sm font-mono text-gray-200 select-all">npx @imagent/cli add {slug}</code></div>
-                  </div>
-                  <div className="code-block rounded-xl border border-white/10 bg-[#111] overflow-hidden">
-                    <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/5">
-                      <div className="flex items-center gap-2"><span className="text-xs font-medium text-white">{td.installMcp}</span><span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400">{td.httpLabel}</span></div>
-                      <CopyButton />
-                    </div>
-                    <div className="px-5 py-4"><code className="text-sm font-mono text-gray-200 select-all">https://mcp.imagent.ai/{slug}</code></div>
-                  </div>
-                </div>
+                <InstallConfig slug={slug} t={{
+                  installConfig: td.installConfig, viewDetails: td.viewDetails,
+                  tabInstall: td.tabInstall, tabPublish: td.tabPublish,
+                  iamAgent: td.iamAgent, iamHuman: td.iamHuman,
+                  agentPromptHint: td.agentPromptHint, agentPromptLabel: td.agentPromptLabel,
+                  copyPrompt: td.copyPrompt,
+                  installCli: td.installCli, installMcp: td.installMcp,
+                  installJson: td.installJson, installSkill: td.installSkill,
+                  recommended: td.recommended, httpLabel: td.httpLabel,
+                  manual: td.manual, oneLiner: td.oneLiner,
+                }} />
               </section>
             </div>
 
             {/* Right sidebar */}
             <div className="lg:w-80 shrink-0 space-y-5">
               {/* Install section — desktop only */}
-              <div className="hidden lg:block space-y-4">
-                <a href="#" className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-white text-black rounded-xl font-medium hover:bg-gray-200 transition text-sm">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                  {td.install}
-                </a>
-                <div className="code-block rounded-xl border border-white/10 bg-[#111] overflow-hidden">
-                  <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/5">
-                    <div className="flex items-center gap-2"><span className="text-xs font-medium text-white">{td.installCli}</span><span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400">{td.recommended}</span></div>
-                    <CopyButton />
-                  </div>
-                  <div className="px-5 py-3 flex items-center gap-3"><span className="text-emerald-400 font-mono text-sm select-none">$</span><code className="text-xs font-mono text-gray-200 select-all">npx @imagent/cli add {slug}</code></div>
-                </div>
-                <div className="code-block rounded-xl border border-white/10 bg-[#111] overflow-hidden">
-                  <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/5">
-                    <div className="flex items-center gap-2"><span className="text-xs font-medium text-white">{td.installMcp}</span><span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400">{td.httpLabel}</span></div>
-                    <CopyButton />
-                  </div>
-                  <div className="px-5 py-3"><code className="text-xs font-mono text-gray-200 select-all">https://mcp.imagent.ai/{slug}</code></div>
-                </div>
-                <div className="code-block rounded-xl border border-white/10 bg-[#111] overflow-hidden">
-                  <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/5">
-                    <div className="flex items-center gap-2"><span className="text-xs font-medium text-white">{td.installJson}</span><span className="text-[10px] px-1.5 py-0.5 rounded bg-orange-500/10 text-orange-400">{td.manual}</span></div>
-                    <CopyButton />
-                  </div>
-                  <pre className="px-5 py-3 text-xs text-gray-300 font-mono overflow-x-auto leading-relaxed">{`{
-  "mcpServers": {
-    "${slug}": {
-      "type": "http",
-      "url": "https://mcp.imagent.ai/${slug}"
-    }
-  }
-}`}</pre>
-                </div>
-                <div className="code-block rounded-xl border border-white/10 bg-[#111] overflow-hidden">
-                  <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/5">
-                    <div className="flex items-center gap-2"><span className="text-xs font-medium text-white">{td.installSkill}</span><span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-400">{td.oneLiner}</span></div>
-                    <CopyButton />
-                  </div>
-                  <div className="px-5 py-3 flex items-center gap-3"><span className="text-emerald-400 font-mono text-sm select-none">$</span><code className="text-xs font-mono text-gray-200 select-all">npx @imagent/cli skill add {slug}</code></div>
-                </div>
+              <div className="hidden lg:block">
+                <InstallConfig slug={slug} t={{
+                  installConfig: td.installConfig, viewDetails: td.viewDetails,
+                  tabInstall: td.tabInstall, tabPublish: td.tabPublish,
+                  iamAgent: td.iamAgent, iamHuman: td.iamHuman,
+                  agentPromptHint: td.agentPromptHint, agentPromptLabel: td.agentPromptLabel,
+                  copyPrompt: td.copyPrompt,
+                  installCli: td.installCli, installMcp: td.installMcp,
+                  installJson: td.installJson, installSkill: td.installSkill,
+                  recommended: td.recommended, httpLabel: td.httpLabel,
+                  manual: td.manual, oneLiner: td.oneLiner,
+                }} />
               </div>
 
               {/* Rating */}
