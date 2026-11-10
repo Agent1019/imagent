@@ -94,7 +94,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     { label: td.endpointsTitle, href: "#endpoints" },
     { label: td.tabTools, href: "#tools", badge: 5 },
     { label: "Use Cases", href: "#usecases", badge: 3 },
-    { label: td.tabComments, href: "#comments", badge: 3 },
     { label: td.tabChangelog, href: "#changelog", badge: 4 },
     { label: "FAQ", href: "#faq", badge: 4 },
   ];
@@ -153,12 +152,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             {/* Action buttons */}
             <div className="flex items-center gap-2 shrink-0 sm:ml-auto">
               <a href="#" className="flex items-center gap-1.5 px-3.5 py-2 border border-white/10 rounded-lg text-sm text-gray-300 hover:border-white/25 hover:bg-white/5 transition">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182" /></svg>
-                <span className="hidden sm:inline">{td.refresh}</span>
-              </a>
-              <a href="#" className="flex items-center gap-1.5 px-3.5 py-2 border border-white/10 rounded-lg text-sm text-gray-300 hover:border-white/25 hover:bg-white/5 transition">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" /></svg>
                 <span className="hidden sm:inline">{td.share}</span>
+              </a>
+              <a href={`https://${slug}.com`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-3.5 py-2 border border-white/10 rounded-lg text-sm text-gray-300 hover:border-white/25 hover:bg-white/5 transition">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
+                <span className="hidden sm:inline">{td.homepage}</span>
               </a>
               <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-3.5 py-2 border border-white/10 rounded-lg text-sm text-gray-300 hover:border-white/25 hover:bg-white/5 transition">
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
@@ -255,36 +254,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                         </div>
                         <pre className="px-4 py-3 text-xs text-gray-300 font-mono overflow-x-auto whitespace-pre-wrap leading-relaxed">{uc.code}</pre>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
-
-              {/* Comments */}
-              <section id="comments" className="mb-14 scroll-mt-24">
-                <h2 className="text-lg font-semibold text-white mb-4">{td.tabComments}</h2>
-                <div className="space-y-4">
-                  {mockComments.map((comment) => (
-                    <div key={comment.user} className="rounded-xl border border-white/5 bg-white/[0.02] p-4">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-xs font-bold text-white">
-                          {comment.avatar}
-                        </div>
-                        <div>
-                          <span className="text-sm font-medium text-white">{comment.user}</span>
-                          <div className="flex items-center gap-2">
-                            <div className="flex">
-                              {Array.from({ length: 5 }).map((_, i) => (
-                                <svg key={i} className={`w-3 h-3 ${i < comment.rating ? "text-yellow-400" : "text-gray-600"}`} fill="currentColor" viewBox="0 0 20 20">
-                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-                              ))}
-                            </div>
-                            <span className="text-xs text-gray-500">{comment.date}</span>
-                          </div>
-                        </div>
-                      </div>
-                      <p className="text-sm text-gray-400 leading-relaxed">{comment.text}</p>
                     </div>
                   ))}
                 </div>
@@ -461,7 +430,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           </div>
 
           {/* Related Tools */}
-          <section className="mt-16 pt-12 border-t border-white/5">
+          <section className="mt-10 pt-8 border-t border-white/5">
             <h2 className="text-2xl font-bold text-white mb-2">{td.relatedTitle}</h2>
             <p className="text-gray-400 mb-8">{td.relatedDesc} {toolName}.</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
