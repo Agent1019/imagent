@@ -340,7 +340,7 @@ export default async function Home() {
 
       {/* Three Pillars */}
       <section className="py-16 md:py-24 px-4 md:px-6 bg-[#111111]">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16" data-animate>
             <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">{t.features.title}</h2>
             <p className="mt-4 text-gray-400 max-w-xl mx-auto">{t.features.subtitle}</p>
@@ -426,7 +426,7 @@ export default async function Home() {
 
       {/* API Section */}
       <section className="py-16 md:py-24 px-4 md:px-6">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center" data-animate>
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">

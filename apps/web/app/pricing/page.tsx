@@ -181,7 +181,7 @@ export default async function PricingPage() {
       <div className="pt-32 pb-20 px-4 md:px-6 bg-[#0a0a0a] min-h-screen">
 
         {/* ── Hero ── */}
-        <section className="max-w-5xl mx-auto text-center mb-20">
+        <section className="max-w-7xl mx-auto text-center mb-20 px-4 md:px-6">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
             {zh ? "平台免费，按次扣费" : "Platform Free, Pay Per Call"}
           </h1>
@@ -255,7 +255,7 @@ export default async function PricingPage() {
         </section>
 
         {/* ── Recharge Packages ── */}
-        <section className="max-w-6xl mx-auto mb-24">
+        <section className="max-w-7xl mx-auto mb-24">
           <h2 className="text-2xl font-bold text-white text-center mb-12">
             {zh ? "充值套餐" : "Recharge Packages"}
           </h2>

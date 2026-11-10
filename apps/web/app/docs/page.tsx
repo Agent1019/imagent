@@ -80,7 +80,7 @@ export default async function DocsPage() {
   return (
     <Layout locale={locale} nav={t.nav} footer={t.footer} searchPlaceholder={t.hero.searchPlaceholder}>
       <div className="pt-32 pb-20 px-4 md:px-6 bg-[#0a0a0a] min-h-screen">
-        <div className="max-w-6xl mx-auto flex gap-10">
+        <div className="max-w-7xl mx-auto flex gap-10">
           {/* Sidebar */}
           <aside className="hidden lg:block w-64 shrink-0">
             <div className="sticky top-24 space-y-6 max-h-[calc(100vh-8rem)] overflow-y-auto pr-2">
