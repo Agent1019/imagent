@@ -46,6 +46,16 @@ export default async function Layout({ locale, nav, footer, searchPlaceholder, c
             <a href="/" className="text-2xl font-bold tracking-tight text-white shrink-0">
               Imagent
             </a>
+            {/* Mobile Navigation - visible only below md, right after logo */}
+            <MobileNav
+              nav={nav}
+              locale={locale}
+              locales={locales}
+              domainMap={domainMap}
+              localeNames={localeNames}
+              localeFlags={localeFlags}
+              pathname={pathname}
+            />
             <div className="hidden md:flex items-center gap-4 lg:gap-6 text-sm text-gray-400 overflow-hidden">
               <a href="/explore" className="hover:text-white transition shrink-0">{nav.explore}</a>
               <a href="/rankings" className="hover:text-white transition shrink-0">{nav.rankings}</a>
@@ -96,17 +106,6 @@ export default async function Layout({ locale, nav, footer, searchPlaceholder, c
             >
               {nav.getStarted}
             </a>
-
-            {/* Mobile Navigation - visible only below md */}
-            <MobileNav
-              nav={nav}
-              locale={locale}
-              locales={locales}
-              domainMap={domainMap}
-              localeNames={localeNames}
-              localeFlags={localeFlags}
-              pathname={pathname}
-            />
           </div>
         </div>
       </nav>

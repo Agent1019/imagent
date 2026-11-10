@@ -108,11 +108,11 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           </nav>
 
           {/* Tool Header — full width with action buttons */}
-          <div className="flex flex-wrap items-center gap-5 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-5 mb-6">
             <img
               src={`https://www.google.com/s2/favicons?domain=${slug}.com&sz=128`}
               alt={toolName}
-              className="w-16 h-16 rounded-2xl bg-white/[0.05] border border-white/10 shrink-0"
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.05] border border-white/10 shrink-0"
             />
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-3 mb-1">
@@ -127,7 +127,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
               </p>
             </div>
             {/* Action buttons in header */}
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="flex items-center gap-2 shrink-0 sm:ml-auto">
               <a href="#" className="flex items-center gap-1.5 px-3.5 py-2 border border-white/10 rounded-lg text-sm text-gray-300 hover:border-white/25 hover:bg-white/5 transition">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182" /></svg>
                 <span className="hidden sm:inline">Refresh</span>
@@ -151,6 +151,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             <span className="text-xs text-gray-500">15.2K installs</span>
           </div>
 
+          {/* Mobile-only install button — visible below sm */}
+          <div className="sm:hidden mb-6">
+            <a href="#setup" className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-white text-black rounded-xl font-medium hover:bg-gray-200 transition text-sm">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Install
+            </a>
+          </div>
+
           {/* Tab bar — full width divider */}
           <div className="flex items-center gap-1 border-b border-white/10 overflow-x-auto scrollbar-hide">
             {tabs.map((tab, i) => (
@@ -172,9 +182,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           </div>
 
           {/* Content: two-column below tabs */}
-          <div className="flex flex-col lg:flex-row gap-8 pt-8">
+          <div className="flex flex-col lg:flex-row gap-8 pt-6">
             {/* Left: Tab content */}
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 space-y-0">
               {/* Endpoints */}
               <section id="endpoints" className="mb-14 scroll-mt-24">
                 <h2 className="text-lg font-semibold text-white mb-4">{td.endpointsTitle}</h2>
@@ -413,7 +423,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             <h2 className="text-2xl font-bold text-white mb-2">{td.relatedTitle}</h2>
             <p className="text-gray-400 mb-8">{td.relatedDesc} {toolName}.</p>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {mockRelatedTools.map((tool) => (
                 <a
                   key={tool.slug}
