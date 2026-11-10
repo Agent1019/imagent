@@ -57,7 +57,7 @@ export default function NavSearch({ placeholder }: { placeholder: string }) {
       {/* Mobile/pad: click icon to open full-width overlay */}
       <div className="md:hidden relative flex items-center">
         {mobileOpen ? (
-          <div className="fixed inset-x-0 top-0 z-[61] h-16 flex items-center gap-3 px-4 bg-[#0a0a0a]">
+          <div className="fixed inset-x-0 top-0 z-[61] h-16 flex items-center gap-2 px-2 bg-[#0a0a0a]">
             <button
               onClick={() => setMobileOpen(false)}
               className="p-2 text-gray-400 hover:text-white transition shrink-0"

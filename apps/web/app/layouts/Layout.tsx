@@ -102,7 +102,7 @@ export default async function Layout({ locale, nav, footer, searchPlaceholder, c
             </a>
             <a
               href="/signup"
-              className="hidden sm:inline-flex text-sm bg-white text-black px-3 md:px-4 py-1.5 rounded-lg font-medium hover:bg-gray-200 transition whitespace-nowrap shrink-0"
+              className="text-sm bg-white text-black px-3 md:px-4 py-1.5 rounded-lg font-medium hover:bg-gray-200 transition whitespace-nowrap shrink-0"
             >
               {nav.getStarted}
             </a>
