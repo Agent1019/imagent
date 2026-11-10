@@ -201,21 +201,19 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
               {/* Endpoints */}
               <section id="endpoints" className="mb-14 scroll-mt-24">
                 <h2 className="text-lg font-semibold text-white mb-4">{td.endpointsTitle}</h2>
-                <div className="space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
                   {mockEndpoints.map((endpoint, idx) => (
                     <div key={endpoint.path} className="rounded-xl border border-white/5 bg-white/[0.02] p-4 hover:border-white/10 transition">
-                      <div className="flex items-center justify-between gap-3 mb-1.5">
-                        <div className="flex items-center gap-3 min-w-0">
-                          <span className={`shrink-0 inline-flex items-center px-2 py-0.5 rounded text-xs font-bold ${methodColor[endpoint.method] || "bg-gray-500/10 text-gray-400"}`}>
-                            {endpoint.method}
-                          </span>
-                          <code className="text-sm font-mono text-gray-300 break-all truncate">
-                            {endpoint.path.replace("{slug}", slug)}
-                          </code>
-                        </div>
-                        <span className="shrink-0 text-xs font-medium text-gray-400">{endpoint.price}</span>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className={`shrink-0 inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold ${methodColor[endpoint.method] || "bg-gray-500/10 text-gray-400"}`}>
+                          {endpoint.method}
+                        </span>
+                        <span className="text-[10px] font-medium text-gray-400">{endpoint.price}</span>
                       </div>
-                      <p className="text-sm text-gray-500 pl-[60px]">{epDescs[idx]}</p>
+                      <code className="text-xs font-mono text-gray-300 break-all block mb-2 leading-relaxed">
+                        {endpoint.path.replace("{slug}", slug)}
+                      </code>
+                      <p className="text-[11px] text-gray-500 leading-relaxed line-clamp-2">{epDescs[idx]}</p>
                     </div>
                   ))}
                 </div>
@@ -225,20 +223,18 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
               <section id="tools" className="mb-14 scroll-mt-24">
                 <h2 className="text-lg font-semibold text-white mb-2">{td.availableTools}</h2>
                 <p className="text-sm text-gray-400 mb-4">{mockTools.length} {td.toolsDesc}</p>
-                <div className="space-y-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
                   {mockTools.map((tool) => (
                     <div key={tool.name} className="rounded-xl border border-white/5 bg-white/[0.02] p-4 hover:border-white/10 transition">
-                      <div className="flex items-center justify-between mb-1.5">
-                        <div className="flex items-center gap-2">
-                          <span className="text-emerald-400 font-mono text-sm font-semibold">{tool.name}</span>
-                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400">tool</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-xs text-gray-500">
-                          <span>{tool.rateLimit}</span>
-                          <span className="text-white font-medium">{tool.price}</span>
-                        </div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-emerald-400 font-mono text-sm font-semibold">{tool.name}</span>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400">tool</span>
                       </div>
-                      <p className="text-sm text-gray-500">{tool.desc}</p>
+                      <p className="text-[11px] text-gray-500 leading-relaxed line-clamp-2 mb-3">{tool.desc}</p>
+                      <div className="flex items-center justify-between text-[10px] text-gray-500 border-t border-white/5 pt-2">
+                        <span>{tool.rateLimit}</span>
+                        <span className="text-white font-medium">{tool.price}</span>
+                      </div>
                     </div>
                   ))}
                 </div>
