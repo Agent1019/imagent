@@ -21,6 +21,22 @@ type FooterContent = {
   developers: string;
   company: string;
   copyright: string;
+  explore: string;
+  rankings: string;
+  pricing: string;
+  documentation: string;
+  apiReference: string;
+  blog: string;
+  about: string;
+  careers: string;
+  privacy: string;
+  terms: string;
+};
+
+const partnerLabels: Record<Locale, string> = {
+  en: "Ecosystem partners", zh: "生态合作伙伴", ko: "생태계 파트너",
+  pt: "Parceiros do ecossistema", it: "Partner dell’ecosistema", es: "Socios del ecosistema",
+  ja: "エコシステムパートナー", de: "Ökosystem-Partner", fr: "Partenaires de l’écosystème",
 };
 
 type LayoutProps = {
@@ -116,16 +132,24 @@ export default async function Layout({ locale, nav, footer, searchPlaceholder, c
       </main>
 
       {/* Footer */}
-      <footer className="py-12 px-4 md:px-6 border-t border-white/5">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:justify-between gap-10 mb-12">
-            {/* Brand */}
-            <div className="shrink-0">
+      <footer className="py-12 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="flex flex-col md:flex-row md:justify-between gap-10 md:gap-8 mb-12">
+            {/* Brand and understated ecosystem names, below the product description. */}
+            <div className="min-w-0 md:flex-1 md:max-w-[440px]">
               <div className="text-lg font-bold mb-4">Imagent</div>
-              <p className="text-xs text-gray-500 leading-relaxed max-w-xs">{footer.tagline}</p>
+              <p className="text-xs text-gray-400 leading-relaxed max-w-xs" data-footer-tagline>{footer.tagline}</p>
+              <div className="footer-partners" data-footer-partners>
+                <p>{partnerLabels[locale]}{locale === "zh" || locale === "ja" ? "：" : ":"}</p>
+                <ul aria-label={partnerLabels[locale]}>
+                  <li>KAIYUAN Foundation</li>
+                  <li>{locale === "zh" ? "易宝支付" : "Yeepay"}</li>
+                  <li>{locale === "zh" ? "博联" : "BroadLink"}</li>
+                </ul>
+              </div>
             </div>
-            {/* Link columns — right-aligned */}
-            <div className="grid grid-cols-3 gap-12 md:gap-24">
+            {/* Link columns — right-aligned, with bounded gaps on narrow desktops. */}
+            <div className="grid grid-cols-3 gap-4 sm:gap-8 md:gap-6 lg:gap-16 min-w-0 [overflow-wrap:anywhere]">
               <div>
                 <div className="text-sm font-semibold mb-3 text-gray-300">{footer.product}</div>
                 <div className="space-y-2 text-sm text-gray-500">

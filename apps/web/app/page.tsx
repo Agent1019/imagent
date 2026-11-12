@@ -3,8 +3,13 @@ import { getLocaleFromHost, type Locale, locales, domainMap } from "@/lib/i18n/c
 import { getContent } from "@/lib/i18n/content";
 import type { Metadata } from "next";
 import McpCopyBox from "./components/McpCopyBox";
+import ServerMarquee from "./components/ServerMarquee";
+import HeroGlobeBackground from "./components/HeroGlobeBackground";
+import ToolIcon from "./components/ToolIcon";
+import HeadingText from "./components/HeadingText";
 import Layout from "./layouts/Layout";
-import FeatureTabs from "./components/FeatureTabs";
+import FeatureTabs, { FeatureCard, type Feature } from "./components/FeatureTabs";
+import IntegrationShowcase from "./components/IntegrationShowcase";
 import { getPlatformStats } from "@/lib/data/packages";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -104,6 +109,7 @@ export default async function Home() {
   const host = headersList.get("x-host") || headersList.get("host") || "imagent.ai";
   const locale: Locale = getLocaleFromHost(host);
   const t = getContent(locale);
+  const headlineRemainder = t.hero.headline1.slice(t.hero.headlineBreakAfter.length);
   const baseUrl = `https://${domainMap[locale]}`;
   const stats = await getPlatformStats();
   const badgeText = t.hero.badge
@@ -111,6 +117,28 @@ export default async function Home() {
     .replace("{services}", stats.serviceCountLabel);
 
   const now = new Date().toISOString();
+
+  // Shared data keeps the desktop cards and mobile tab panels visually identical.
+  const featureCards: Feature[] = [
+    {
+      id: "discover", title: t.features.discover.title, desc: t.features.discover.desc,
+      filename: "search.http",
+      code: <><span className="feature-code-keyword">GET</span> /api/v1/search{"\n"}<span className="feature-code-muted">?q=pdf+generation&amp;protocol=mcp</span></>,
+      icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>,
+    },
+    {
+      id: "auth", title: t.features.auth.title, desc: t.features.auth.desc,
+      filename: "auth.http",
+      code: <><span className="feature-code-keyword">Authorization</span>: Bearer{"\n"}<span className="feature-code-muted">imt_a1b2c3d4...x9y0z</span></>,
+      icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>,
+    },
+    {
+      id: "monetize", title: t.features.monetize.title, desc: t.features.monetize.desc,
+      filename: "usage.http",
+      code: <><span className="feature-code-keyword">GET</span> /api/v1/usage{"\n"}<span className="feature-code-muted">{'{ "calls": 142, "cost": "$0.14" }'}</span></>,
+      icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" /></svg>,
+    },
+  ];
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -221,18 +249,25 @@ export default async function Home() {
       />
 
       {/* Hero */}
-      <section className="pt-24 md:pt-28 pb-12 md:pb-16">
-        <div className="max-w-5xl mx-auto px-4 md:px-6 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-gray-400 mb-8">
+      <section className="relative select-none pt-24 md:pt-28 pb-12 md:pb-16">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+          <HeroGlobeBackground />
+        </div>
+        <div className="relative max-w-5xl mx-auto px-4 md:px-6 text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#2B7FFF]/20 bg-[#2B7FFF]/5 backdrop-blur-md text-xs text-gray-300 mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             {badgeText}
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight leading-[1.1]">
-            {t.hero.headline1}
+          <h1 lang={locale} className={`text-4xl md:text-6xl font-bold ${["zh", "ja", "ko"].includes(locale) ? "tracking-normal" : "tracking-tight"} leading-[1.15] md:leading-[1.1] ${locale === "ko" ? "break-keep" : ""}`}>
+            <span className="inline-block w-full max-w-full align-top text-balance text-white" data-headline-lead>{t.hero.headlineBreakAfter}</span>
+            {headlineRemainder.startsWith(" ") ? " " : null}
+            <span className="inline-block w-full max-w-full align-top text-balance text-[#2B7FFF]" data-headline-continuation>{headlineRemainder.trimStart()}</span>
           </h1>
-          <p className="mt-3 text-lg md:text-xl font-medium bg-gradient-to-r from-orange-400 via-rose-400 to-purple-400 bg-clip-text text-transparent">
-            {t.hero.headline2}
+          <p className="mt-4 text-base text-white/75 mx-auto">
+            {t.hero.headline2BreakAfter}
+            <br className="hidden md:inline" />
+            {t.hero.headline2.slice(t.hero.headline2BreakAfter.length).replace(/^[\s—\-]+/, "")}
           </p>
 
           {/* MCP Copy Box */}
@@ -240,185 +275,41 @@ export default async function Home() {
             <McpCopyBox text={t.hero.mcpCopy} guide={t.hero.mcpGuide} copyLabel={t.hero.copyLabel} copiedLabel={t.hero.copiedLabel} />
           </div>
 
-          <div className="mt-4 flex flex-col sm:flex-row gap-3 justify-center">
+          <div className="mt-4 grid grid-cols-2 sm:flex gap-3 justify-center" data-hero-actions>
             <a
               href="/explore"
-              className="px-5 py-3 bg-white text-black rounded-lg font-medium hover:bg-gray-200 hover:-translate-y-0.5 transition-all text-sm"
+              className="flex items-center justify-center min-w-0 px-2 sm:px-5 py-3 bg-[#2B7FFF] text-white rounded-lg font-semibold hover:bg-[#5A9FFF] hover:-translate-y-0.5 transition-all text-sm shadow-lg shadow-[#2B7FFF]/20"
             >
               {t.hero.exploreBtn}
             </a>
             <a
               href="/publish"
-              className="px-5 py-3 border border-white/15 rounded-lg font-medium hover:border-white/30 hover:bg-white/5 hover:-translate-y-0.5 transition-all text-sm"
+              className="flex items-center justify-center min-w-0 px-2 sm:px-5 py-3 border border-[#2B7FFF]/40 text-[#2B7FFF] rounded-lg font-medium hover:border-[#2B7FFF]/70 hover:bg-[#2B7FFF]/5 hover:-translate-y-0.5 transition-all text-sm"
             >
               {t.hero.publishBtn}
             </a>
           </div>
 
           {/* Server logos — 2 row marquee */}
-          <style>{`
-            @keyframes scroll-left {
-              0% { transform: translateX(0); }
-              100% { transform: translateX(-50%); }
-            }
-            @keyframes scroll-right {
-              0% { transform: translateX(-50%); }
-              100% { transform: translateX(0); }
-            }
-          `}</style>
-          <div className="mt-10 max-w-5xl mx-auto space-y-2 overflow-hidden">
-            {/* Row 1 — scrolls left */}
-            <div className="flex overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)" }}>
-              <div className="flex gap-2 shrink-0 animate-[scroll-left_30s_linear_infinite]">
-                {[
-                  { name: "Firecrawl", domain: "firecrawl.dev", slug: "firecrawl" },
-                  { name: "Brave Search", domain: "brave.com", slug: "brave-search" },
-                  { name: "Tavily", domain: "tavily.com", slug: "tavily" },
-                  { name: "Slack", domain: "slack.com", slug: "slack" },
-                  { name: "GitHub", domain: "github.com", slug: "github" },
-                  { name: "Notion", domain: "notion.so", slug: "notion" },
-                  { name: "Stripe", domain: "stripe.com", slug: "stripe" },
-                  { name: "Resend", domain: "resend.com", slug: "resend" },
-                  { name: "OpenAI", domain: "openai.com", slug: "openai" },
-                  { name: "YouTube", domain: "youtube.com", slug: "youtube" },
-                ].concat([
-                  { name: "Firecrawl", domain: "firecrawl.dev", slug: "firecrawl" },
-                  { name: "Brave Search", domain: "brave.com", slug: "brave-search" },
-                  { name: "Tavily", domain: "tavily.com", slug: "tavily" },
-                  { name: "Slack", domain: "slack.com", slug: "slack" },
-                  { name: "GitHub", domain: "github.com", slug: "github" },
-                  { name: "Notion", domain: "notion.so", slug: "notion" },
-                  { name: "Stripe", domain: "stripe.com", slug: "stripe" },
-                  { name: "Resend", domain: "resend.com", slug: "resend" },
-                  { name: "OpenAI", domain: "openai.com", slug: "openai" },
-                  { name: "YouTube", domain: "youtube.com", slug: "youtube" },
-                ]).map((s, i) => (
-                  <a key={`${s.name}-${i}`} href={`/tools/${s.slug}`} className="shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.05] transition">
-                    <img src={`https://www.google.com/s2/favicons?domain=${s.domain}&sz=64`} alt={s.name} className="w-4 h-4 rounded" loading="lazy" />
-                    <span className="text-xs text-gray-400 font-medium whitespace-nowrap">{s.name}</span>
-                  </a>
-                ))}
-              </div>
-            </div>
-            {/* Row 2 — scrolls right */}
-            <div className="flex overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)" }}>
-              <div className="flex gap-2 shrink-0 animate-[scroll-right_30s_linear_infinite]">
-                {[
-                  { name: "Maps & Places", domain: "google.com", slug: "maps-places" },
-                  { name: "E2B", domain: "e2b.dev", slug: "e2b" },
-                  { name: "Composio", domain: "composio.dev", slug: "composio" },
-                  { name: "Browserbase", domain: "browserbase.com", slug: "browserbase" },
-                  { name: "Apollo", domain: "apollo.io", slug: "apollo" },
-                  { name: "LinkedIn", domain: "linkedin.com", slug: "linkedin" },
-                  { name: "Spotify", domain: "spotify.com", slug: "spotify" },
-                  { name: "Reddit", domain: "reddit.com", slug: "reddit" },
-                  { name: "Instagram", domain: "instagram.com", slug: "instagram" },
-                  { name: "Telegram", domain: "telegram.org", slug: "telegram" },
-                ].concat([
-                  { name: "Maps & Places", domain: "google.com", slug: "maps-places" },
-                  { name: "E2B", domain: "e2b.dev", slug: "e2b" },
-                  { name: "Composio", domain: "composio.dev", slug: "composio" },
-                  { name: "Browserbase", domain: "browserbase.com", slug: "browserbase" },
-                  { name: "Apollo", domain: "apollo.io", slug: "apollo" },
-                  { name: "LinkedIn", domain: "linkedin.com", slug: "linkedin" },
-                  { name: "Spotify", domain: "spotify.com", slug: "spotify" },
-                  { name: "Reddit", domain: "reddit.com", slug: "reddit" },
-                  { name: "Instagram", domain: "instagram.com", slug: "instagram" },
-                  { name: "Telegram", domain: "telegram.org", slug: "telegram" },
-                ]).map((s, i) => (
-                  <a key={`${s.name}-${i}`} href={`/tools/${s.slug}`} className="shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/5 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.05] transition">
-                    <img src={`https://www.google.com/s2/favicons?domain=${s.domain}&sz=64`} alt={s.name} className="w-4 h-4 rounded" loading="lazy" />
-                    <span className="text-xs text-gray-400 font-medium whitespace-nowrap">{s.name}</span>
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
+          <ServerMarquee />
         </div>
       </section>
 
 
       {/* Three Pillars */}
-      <section className="py-16 md:py-24 bg-[#111111]">
+      <section className="home-section py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="text-center mb-16" data-animate>
-            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">{t.features.title}</h2>
+            <h2 className="text-[28px] sm:text-3xl md:text-4xl leading-tight text-balance font-bold text-white" lang={locale} data-home-heading="features">
+              <HeadingText text={t.features.title} breakAfter={t.features.titleBreakAfter} />
+            </h2>
             <p className="mt-4 text-gray-400 max-w-xl mx-auto">{t.features.subtitle}</p>
           </div>
 
-          {/* Mobile: tabbed card */}
-          <FeatureTabs features={[
-            {
-              title: t.features.discover.title,
-              desc: t.features.discover.desc,
-              code: <><span className="text-purple-400">GET</span> /api/v1/search<br /><span className="text-gray-500">?q=pdf+generation&protocol=mcp</span></>,
-              icon: <svg className="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>,
-              bg: "bg-orange-500/10",
-            },
-            {
-              title: t.features.auth.title,
-              desc: t.features.auth.desc,
-              code: <><span className="text-emerald-400">Authorization</span>: Bearer<br /><span className="text-gray-500">imt_a1b2c3d4...x9y0z</span></>,
-              icon: <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>,
-              bg: "bg-emerald-500/10",
-            },
-            {
-              title: t.features.monetize.title,
-              desc: t.features.monetize.desc,
-              code: <><span className="text-amber-400">GET</span> /api/v1/usage<br /><span className="text-gray-500">{"{ \"calls\": 142, \"cost\": \"$0.14\" }"}</span></>,
-              icon: <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" /></svg>,
-              bg: "bg-purple-500/10",
-            },
-          ]} />
-
-          {/* Desktop: 3-column grid */}
-          <div className="hidden md:grid md:grid-cols-3 gap-6">
-            {[
-              {
-                icon: (
-                  <svg className="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                  </svg>
-                ),
-                title: t.features.discover.title,
-                desc: t.features.discover.desc,
-                code: <><span className="text-purple-400">GET</span> /api/v1/search<br /><span className="text-gray-500">?q=pdf+generation&protocol=mcp</span></>,
-                bg: "bg-orange-500/10",
-              },
-              {
-                icon: (
-                  <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                  </svg>
-                ),
-                title: t.features.auth.title,
-                desc: t.features.auth.desc,
-                code: <><span className="text-emerald-400">Authorization</span>: Bearer<br /><span className="text-gray-500">imt_a1b2c3d4...x9y0z</span></>,
-                bg: "bg-emerald-500/10",
-              },
-              {
-                icon: (
-                  <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
-                  </svg>
-                ),
-                title: t.features.monetize.title,
-                desc: t.features.monetize.desc,
-                code: <><span className="text-amber-400">GET</span> /api/v1/usage<br /><span className="text-gray-500">{"{ \"calls\": 142, \"cost\": \"$0.14\" }"}</span></>,
-                bg: "bg-purple-500/10",
-              },
-            ].map((card) => (
-              <div key={card.title} className="group relative rounded-2xl border border-white/5 bg-white/[0.02] p-8 hover:border-white/10 hover:bg-white/[0.04] transition">
-                <div className={`w-12 h-12 rounded-xl ${card.bg} flex items-center justify-center mb-5`}>
-                  {card.icon}
-                </div>
-                <h3 className="text-lg font-semibold mb-2">{card.title}</h3>
-                <p className="text-sm text-gray-400 leading-relaxed">{card.desc}</p>
-                <div className="mt-6 p-4 rounded-lg bg-black/40 border border-white/5">
-                  <code className="text-xs text-gray-300">{card.code}</code>
-                </div>
-              </div>
-            ))}
+          {/* Mobile: tabbed cards; desktop: equal-height cards with aligned code panels. */}
+          <FeatureTabs features={featureCards} />
+          <div className="hidden md:grid md:grid-cols-3 gap-5 lg:gap-6" data-feature-grid>
+            {featureCards.map(feature => <FeatureCard key={feature.id} feature={feature} />)}
           </div>
         </div>
       </section>
@@ -429,16 +320,15 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center" data-animate>
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                {t.apiSection.headline1}
-                <br />
-                <span className="text-gray-500">{t.apiSection.headline2}</span>
+              <h2 className="text-[28px] sm:text-3xl md:text-4xl leading-tight text-balance font-bold mb-4" lang={locale} data-home-heading="api">
+                <span className="block max-w-full text-balance text-white">{t.apiSection.headline1}</span>
+                <span className="block max-w-full text-balance text-[#2B7FFF]">{t.apiSection.headline2}</span>
               </h2>
               <p className="text-gray-400 leading-relaxed mb-6">{t.apiSection.desc}</p>
               <div className="space-y-3">
                 {t.apiSection.features.map((feature) => (
                   <div key={feature} className="flex items-start gap-3 text-sm text-gray-300">
-                    <svg className="w-4 h-4 mt-0.5 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 mt-0.5 text-[#5A9FFF] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     {feature}
@@ -447,12 +337,10 @@ export default async function Home() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden">
-              <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
-                <span className="text-xs text-gray-500">agent.ts</span>
-              </div>
-              <pre className="p-5 text-xs leading-relaxed overflow-x-auto max-h-80 overflow-y-auto">
-                <code className="text-gray-300">{`import { ImagentClient } from "@imagent/sdk";
+            <div className="home-code-editor" data-home-code-editor>
+              <div className="home-code-editor-header">agent.ts</div>
+              <pre tabIndex={0} aria-label="agent.ts">
+                <code>{`import { ImagentClient } from "@imagent/sdk";
 
 const client = new ImagentClient({
   apiKey: process.env.IMAGENT_KEY,
@@ -483,33 +371,17 @@ console.log(result.usage);
       </section>
 
 
-      {/* Integration Methods */}
-      <section className="py-16 md:py-24 bg-[#111111]">
-        <div className="max-w-5xl mx-auto px-4 md:px-6 text-center" data-animate>
-          <h2 className="text-2xl md:text-4xl font-bold mb-3">{t.integration.title}</h2>
-          <p className="text-gray-400 mb-12">{t.integration.subtitle}</p>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { ...t.integration.skill, href: "/docs/integration/skill" },
-              { ...t.integration.mcp, href: "/docs/integration/mcp" },
-              { ...t.integration.cli, href: "/docs/integration/cli" },
-            ].map((method) => (
-              <a key={method.title} href={method.href} className="relative block rounded-xl border border-white/[0.08] bg-white/[0.03] p-6 text-left hover:border-white/15 hover:bg-white/[0.05] transition group">
-                <svg className="absolute top-5 right-5 w-4 h-4 text-gray-500 group-hover:text-white group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
-                </svg>
-                <h3 className="text-lg font-semibold mb-2 group-hover:text-white transition">{method.title}</h3>
-                <p className="text-sm text-gray-400">{method.desc}</p>
-              </a>
-            ))}
-          </div>
+      {/* Integration Methods — master/detail selection, not navigation-only cards. */}
+      <section className="home-section py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <IntegrationShowcase content={t.integration} locale={locale} />
         </div>
       </section>
 
       {/* FAQ */}
       <section className="py-16 md:py-24">
         <div className="max-w-3xl mx-auto px-4 md:px-6" data-animate>
-          <h2 className="text-2xl md:text-4xl font-bold text-center mb-12">{t.faq.title}</h2>
+          <h2 className="text-[28px] sm:text-3xl md:text-4xl leading-tight text-balance font-bold text-center mb-12" lang={locale} data-home-heading="faq">{t.faq.title}</h2>
           <div className="divide-y divide-white/5">
             {t.faq.items.map((item, i) => (
               <details key={i} className="group">
@@ -529,15 +401,17 @@ console.log(result.usage);
       </section>
 
       {/* CTA + Community */}
-      <section className="py-16 md:py-24 bg-[#111111]">
+      <section className="home-section py-16 md:py-24">
         <div className="max-w-5xl mx-auto px-4 md:px-6 text-center" data-animate>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.cta.title}</h2>
+          <h2 className="text-[28px] sm:text-3xl md:text-4xl leading-tight text-balance font-bold mb-4" lang={locale} data-home-heading="cta">
+            <HeadingText text={t.cta.title} breakAfter={t.cta.titleBreakAfter} />
+          </h2>
           <p className="text-gray-400 mb-8 max-w-xl mx-auto">{t.cta.subtitle}</p>
           <a
             href={t.cta.primaryHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white text-black rounded-lg font-medium hover:bg-gray-200 hover:-translate-y-0.5 transition-all text-sm"
+            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#2B7FFF] text-white rounded-lg font-medium hover:bg-[#5A9FFF] hover:-translate-y-0.5 transition-all text-sm shadow-lg shadow-[#2B7FFF]/20"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>

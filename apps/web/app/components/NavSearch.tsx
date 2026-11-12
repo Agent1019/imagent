@@ -6,10 +6,11 @@ export default function NavSearch({ placeholder }: { placeholder: string }) {
   const [value, setValue] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const desktopInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (mobileOpen && inputRef.current) {
-      inputRef.current.focus();
+      inputRef.current.focus({ preventScroll: true });
     }
   }, [mobileOpen]);
 
@@ -17,8 +18,12 @@ export default function NavSearch({ placeholder }: { placeholder: string }) {
     const handleKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
-        setMobileOpen(true);
-        setTimeout(() => inputRef.current?.focus(), 50);
+        if (window.matchMedia("(min-width: 768px)").matches) {
+          desktopInputRef.current?.focus({ preventScroll: true });
+        } else {
+          setMobileOpen(true);
+          inputRef.current?.focus({ preventScroll: true });
+        }
       }
     };
     window.addEventListener("keydown", handleKey);
@@ -26,8 +31,8 @@ export default function NavSearch({ placeholder }: { placeholder: string }) {
   }, []);
 
   const mobileSearchInput = (
-    <div className="flex items-center w-full bg-white/5 border border-white/10 rounded-lg overflow-hidden focus-within:border-white/25 transition">
-      <svg className="w-4 h-4 ml-2.5 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div className="flex items-center w-full border border-white/40 rounded-lg overflow-hidden">
+      <svg className="w-4 h-4 ml-3 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
       </svg>
       <input
@@ -36,11 +41,11 @@ export default function NavSearch({ placeholder }: { placeholder: string }) {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder={placeholder}
-        className="flex-1 min-w-0 px-2 py-1.5 bg-transparent text-white placeholder-gray-500 outline-none text-sm"
+        className="flex-1 min-w-0 px-2.5 py-2.5 bg-transparent text-white placeholder-gray-500 outline-none text-base leading-5"
       />
       {value && (
         <button
-          onClick={() => { setValue(""); inputRef.current?.focus(); }}
+          onClick={() => { setValue(""); inputRef.current?.focus({ preventScroll: true }); }}
           className="px-2 py-1.5 text-gray-500 hover:text-white transition shrink-0 flex items-center"
           title="Clear"
         >
@@ -84,11 +89,12 @@ export default function NavSearch({ placeholder }: { placeholder: string }) {
 
       {/* Desktop: always visible */}
       <div className="hidden md:block flex-1 min-w-0 max-w-72">
-        <div className="flex items-center w-full bg-white/5 border border-white/10 rounded-lg overflow-hidden focus-within:border-white/25 transition">
+        <div className="flex items-center w-full border border-white/20 focus-within:border-white/40 transition-colors rounded-lg overflow-hidden">
           <svg className="w-4 h-4 ml-2.5 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input
+            ref={desktopInputRef}
             type="text"
             value={value}
             onChange={(e) => setValue(e.target.value)}
@@ -97,7 +103,7 @@ export default function NavSearch({ placeholder }: { placeholder: string }) {
           />
           {value && (
             <button
-              onClick={() => { setValue(""); inputRef.current?.focus(); }}
+              onClick={() => { setValue(""); desktopInputRef.current?.focus({ preventScroll: true }); }}
               className="px-2 py-1.5 text-gray-500 hover:text-white transition shrink-0 flex items-center"
               title="Clear"
             >

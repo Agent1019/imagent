@@ -7,6 +7,7 @@ type Role = "agent" | "human";
 
 interface Props {
   slug: string;
+  showDetails?: boolean;
   t: {
     installConfig: string;
     viewDetails: string;
@@ -28,7 +29,7 @@ interface Props {
   };
 }
 
-export default function InstallConfig({ slug, t }: Props) {
+export default function InstallConfig({ slug, t, showDetails = true }: Props) {
   const [tab, setTab] = useState<InstallTab>("install");
   const [role, setRole] = useState<Role>("agent");
   const [copied, setCopied] = useState(false);
@@ -41,13 +42,15 @@ export default function InstallConfig({ slug, t }: Props) {
   }
 
   return (
-    <div className="rounded-xl border border-white/5 bg-white/[0.02] overflow-hidden">
+    <div className="rounded-xl border border-white/5 bg-white/[0.02] overflow-hidden" data-install-config>
       {/* Header */}
       <div className="flex items-center justify-between px-5 pt-4 pb-3">
         <h3 className="text-sm font-semibold text-white">{t.installConfig}</h3>
-        <a href={`/tools/${slug}`} className="text-xs text-gray-500 hover:text-gray-300 transition">
-          {t.viewDetails} &gt;
-        </a>
+        {showDetails && (
+          <a href={`/tools/${slug}`} className="text-xs text-gray-500 hover:text-gray-300 transition" data-install-details>
+            {t.viewDetails} &gt;
+          </a>
+        )}
       </div>
 
       {/* Install / Publish tabs */}
@@ -117,18 +120,18 @@ export default function InstallConfig({ slug, t }: Props) {
             {role === "agent" ? (
               <>
                 {/* Agent prompt */}
-                <p className="text-xs text-gray-400 text-center mb-4">{t.agentPromptHint}</p>
-                <div className="code-block rounded-lg border border-white/10 bg-[#111] overflow-hidden mb-4">
-                  <div className="flex items-center justify-between px-3 py-2 border-b border-white/5">
+                <p className="text-[11px] text-gray-400 text-center mb-2">{t.agentPromptHint}</p>
+                <div className="code-block rounded-lg border border-white/10 bg-[#111] overflow-hidden mb-3">
+                  <div className="flex items-center justify-between px-3 py-1.5 border-b border-white/5">
                     <div className="flex items-center gap-1.5">
-                      <svg className="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-3 h-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                       </svg>
                       <span className="text-[10px] text-gray-500">{t.agentPromptLabel}</span>
                     </div>
                   </div>
-                  <div className="px-4 py-3">
-                    <code className="text-xs text-gray-300 font-mono leading-relaxed">
+                  <div className="px-3 py-2">
+                    <code className="text-[11px] text-gray-300 font-mono leading-relaxed line-clamp-3">
                       <span className="text-blue-400">Read</span>{" "}
                       https://imagent.ai/tools/{slug}/skill.md and follow the instructions to set up the Imagent MCP Marketplace and install the MCP server.
                     </code>
@@ -136,7 +139,7 @@ export default function InstallConfig({ slug, t }: Props) {
                 </div>
                 <button
                   onClick={handleCopyPrompt}
-                  className="flex items-center justify-center gap-2 w-full py-2.5 bg-white text-black rounded-lg text-sm font-medium hover:bg-gray-200 transition"
+                  className="flex items-center justify-center gap-2 w-full py-2 bg-white text-black rounded-lg text-sm font-medium hover:bg-gray-200 transition"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9.75a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />

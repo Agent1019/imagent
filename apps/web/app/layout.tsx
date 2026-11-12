@@ -1,6 +1,13 @@
 import { headers } from "next/headers";
+import type { Viewport } from "next";
 import { getLocaleFromHost } from "@/lib/i18n/config";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
 
 export default async function RootLayout({
   children,

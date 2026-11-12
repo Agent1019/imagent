@@ -4,6 +4,9 @@ import { getContent } from "@/lib/i18n/content";
 import Layout from "@/app/layouts/Layout";
 import CopyButton from "@/app/components/CopyButton";
 import InstallConfig from "@/app/components/InstallConfig";
+import ToolIcon from "@/app/components/ToolIcon";
+import StickyTabs from "@/app/components/StickyTabs";
+import { getPackageBySlug } from "@/lib/data/packages";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -79,7 +82,11 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const locale: Locale = getLocaleFromHost(host);
   const t = getContent(locale);
   const td = t.toolDetail;
-  const toolName = slug.charAt(0).toUpperCase() + slug.slice(1);
+  const tool = await getPackageBySlug(slug).catch((error: unknown) => {
+    console.error("Unable to load tool icon metadata:", error);
+    return null;
+  });
+  const toolName = tool?.name || slug.charAt(0).toUpperCase() + slug.slice(1);
 
   const methodColor: Record<string, string> = {
     GET: "bg-emerald-500/10 text-emerald-400",
@@ -92,16 +99,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
   const tabs = [
     { label: td.endpointsTitle, href: "#endpoints" },
-    { label: td.tabTools, href: "#tools", badge: 5 },
-    { label: "Use Cases", href: "#usecases", badge: 3 },
-    { label: td.tabChangelog, href: "#changelog", badge: 4 },
-    { label: "FAQ", href: "#faq", badge: 4 },
+    { label: td.tabTools, href: "#tools" },
+    { label: "Use Cases", href: "#usecases" },
+    { label: td.tabChangelog, href: "#changelog" },
+    { label: "FAQ", href: "#faq" },
   ];
 
   return (
     <Layout locale={locale} nav={t.nav} footer={t.footer} searchPlaceholder={t.hero.searchPlaceholder}>
       <div className="pt-20 pb-24">
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="tool-detail-layout max-w-7xl mx-auto px-4 md:px-6" data-tool-detail-layout>
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-sm text-gray-500 mb-8">
             <a href="/" className="hover:text-white transition">Imagent</a>
@@ -111,94 +118,115 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             <span className="text-gray-300">{toolName}</span>
           </nav>
 
-          {/* Tool Header — full width with action buttons */}
-          <div className="flex flex-col sm:flex-row sm:items-start gap-5 mb-6">
-            <img
-              src={`https://www.google.com/s2/favicons?domain=${slug}.com&sz=128`}
-              alt={toolName}
-              className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white/[0.05] border border-white/10 shrink-0"
-            />
-            <div className="flex-1 min-w-0">
-              <div className="flex flex-wrap items-center gap-3 mb-1">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">{toolName}</h1>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                  96
-                </span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                  Active
-                </span>
+          {/* Tool Header */}
+          <div className="mb-6" data-tool-header>
+            <div className="flex flex-wrap items-start gap-x-3 sm:gap-x-4 gap-y-3">
+              <ToolIcon
+                slug={slug}
+                name={toolName}
+                src={tool?.logoUrl}
+                color={tool?.color}
+                className="w-14 h-14 rounded-xl"
+                loading="eager"
+              />
+              <div className="flex-1 min-w-0" data-tool-summary>
+                {/* Title + mobile action icons (share & github) */}
+                <div className="flex items-center justify-between gap-2 min-w-0 mb-1.5">
+                  <h1 className="min-w-0 truncate text-xl sm:text-2xl font-bold text-white">{toolName}</h1>
+                  {/* Mobile-only: share & github beside the title */}
+                  <div className="flex items-center gap-1 sm:hidden shrink-0">
+                    <a href="#" className="flex items-center justify-center w-8 h-8 rounded-lg text-gray-300 hover:bg-white/5 transition" aria-label={td.share}>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" /></svg>
+                    </a>
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-8 h-8 rounded-lg text-gray-300 hover:bg-white/5 transition" aria-label="GitHub">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                  </div>
+                </div>
+                {/* Badges + capability tags — single line, scrollable */}
+                <div className="flex items-center gap-1.5 mb-2 overflow-x-auto scrollbar-hide whitespace-nowrap">
+                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0">
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                    96
+                  </span>
+                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[11px] font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20 shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    Active
+                  </span>
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20 shrink-0">Search</span>
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0">
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                    Tools
+                  </span>
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-gray-500/10 text-gray-500 border border-gray-500/20 shrink-0">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                    Resources
+                  </span>
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-gray-500/10 text-gray-500 border border-gray-500/20 shrink-0">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                    Prompts
+                  </span>
+                </div>
               </div>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                A high-performance MCP server providing web search, content extraction, website crawling, and site mapping capabilities for AI agents.
-              </p>
-              {/* Author + stats row */}
-              <div className="flex flex-wrap items-center gap-4 mt-3 text-xs text-gray-500">
-                <span>by <span className="text-gray-300">tavily-ai</span></span>
-                <span>v1.4.0</span>
-                <span>MIT License</span>
-                <span className="flex items-center gap-1">
-                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                  4.8 (126)
-                </span>
-                <span className="flex items-center gap-1">
-                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                  2.0K
-                </span>
-                <span>15.2K {td.installs.toLowerCase()}</span>
+              {/* Action buttons — desktop only (mobile icons sit next to title) */}
+              <div className="hidden sm:flex items-center gap-2 shrink-0 sm:ml-auto" data-tool-actions>
+                <a href="#" className="flex items-center gap-1.5 px-3 py-1.5 border border-white/10 rounded-lg text-sm text-gray-300 hover:border-white/25 hover:bg-white/5 transition">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" /></svg>
+                  <span>{td.share}</span>
+                </a>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-3 py-1.5 border border-white/10 rounded-lg text-sm text-gray-300 hover:border-white/25 hover:bg-white/5 transition">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                  <span>GitHub</span>
+                </a>
               </div>
             </div>
-            {/* Action buttons */}
-            <div className="flex items-center gap-2 shrink-0 sm:ml-auto">
-              <a href="#" className="flex items-center gap-1.5 px-3.5 py-2 border border-white/10 rounded-lg text-sm text-gray-300 hover:border-white/25 hover:bg-white/5 transition">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" /></svg>
-                <span className="hidden sm:inline">{td.share}</span>
-              </a>
-              <a href={`https://${slug}.com`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-3.5 py-2 border border-white/10 rounded-lg text-sm text-gray-300 hover:border-white/25 hover:bg-white/5 transition">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
-                <span className="hidden sm:inline">{td.homepage}</span>
-              </a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-3.5 py-2 border border-white/10 rounded-lg text-sm text-gray-300 hover:border-white/25 hover:bg-white/5 transition">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                <span className="hidden sm:inline">GitHub</span>
-              </a>
+
+            {/* Description — below icon row, left-aligned */}
+            <p className="text-gray-400 text-sm leading-relaxed mt-3">
+              A high-performance MCP server providing web search, content extraction, website crawling, and site mapping capabilities for AI agents.
+            </p>
+
+            {/* Author + stats — single line, horizontal scroll on overflow */}
+            <div className="flex items-center gap-4 mt-2 text-xs text-gray-500 overflow-x-auto scrollbar-hide whitespace-nowrap">
+              <span className="shrink-0">by <a href={`https://${slug}.com`} target="_blank" rel="noopener noreferrer" className="text-gray-300 underline decoration-gray-600 underline-offset-2 hover:text-white hover:decoration-gray-400 transition">tavily-ai</a></span>
+              <span>v1.4.0</span>
+              <span>MIT License</span>
+              <span className="flex items-center gap-1 shrink-0">
+                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                4.8 (126)
+              </span>
+              <span className="flex items-center gap-1 shrink-0">
+                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                2.0K
+              </span>
+              <span className="shrink-0">15.2K {td.installs.toLowerCase()}</span>
             </div>
           </div>
 
-          {/* Capabilities badges */}
-          <div className="flex flex-wrap items-center gap-2 mb-6">
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">Search</span>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-              Tools
-            </span>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-500/10 text-gray-500 border border-gray-500/20">
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-              Resources
-            </span>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-500/10 text-gray-500 border border-gray-500/20">
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-              Prompts
-            </span>
-          </div>
+          {/* Mobile-only install section — above tabs */}
+          <section id="setup-mobile" className="lg:hidden pt-2 pb-4">
+            <InstallConfig slug={slug} t={{
+              installConfig: td.installConfig, viewDetails: td.viewDetails,
+              tabInstall: td.tabInstall, tabPublish: td.tabPublish,
+              iamAgent: td.iamAgent, iamHuman: td.iamHuman,
+              agentPromptHint: td.agentPromptHint, agentPromptLabel: td.agentPromptLabel,
+              copyPrompt: td.copyPrompt,
+              installCli: td.installCli, installMcp: td.installMcp,
+              installJson: td.installJson, installSkill: td.installSkill,
+              recommended: td.recommended, httpLabel: td.httpLabel,
+              manual: td.manual, oneLiner: td.oneLiner,
+            }} />
+          </section>
 
-          {/* Tab bar — full width divider */}
-          <div className="flex items-center gap-1 border-b border-white/10 overflow-x-auto scrollbar-hide">
-            {tabs.map((tab, i) => (
-              <a key={tab.label} href={tab.href} className={`flex items-center gap-1.5 px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 transition ${i === 0 ? "border-white text-white" : "border-transparent text-gray-500 hover:text-gray-300 hover:border-white/20"}`}>
-                {tab.label}
-                {tab.badge && <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-white/5 text-gray-500">{tab.badge}</span>}
-              </a>
-            ))}
-          </div>
+          {/* Tab bar — sticky with scroll spy */}
+          <StickyTabs tabs={tabs} />
 
           {/* Content: two-column below tabs */}
           <div className="flex flex-col lg:flex-row gap-8 pt-6">
             {/* Left: Tab content */}
             <div className="flex-1 min-w-0">
               {/* Endpoints */}
-              <section id="endpoints" className="mb-14 scroll-mt-24">
+              <section id="endpoints" className="mb-8 scroll-mt-24">
                 <h2 className="text-lg font-semibold text-white mb-4">{td.endpointsTitle}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {mockEndpoints.map((endpoint, idx) => (
@@ -219,7 +247,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
               </section>
 
               {/* Tools with pricing + rate limits */}
-              <section id="tools" className="mb-14 scroll-mt-24">
+              <section id="tools" className="mb-8 scroll-mt-24">
                 <h2 className="text-lg font-semibold text-white mb-2">{td.availableTools}</h2>
                 <p className="text-sm text-gray-400 mb-4">{mockTools.length} {td.toolsDesc}</p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -240,7 +268,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
               </section>
 
               {/* Use Cases */}
-              <section id="usecases" className="mb-14 scroll-mt-24">
+              <section id="usecases" className="mb-8 scroll-mt-24">
                 <h2 className="text-lg font-semibold text-white mb-4">Use Cases</h2>
                 <div className="space-y-4">
                   {mockUseCases.map((uc) => (
@@ -260,7 +288,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
               </section>
 
               {/* Changelog */}
-              <section id="changelog" className="mb-14 scroll-mt-24">
+              <section id="changelog" className="mb-8 scroll-mt-24">
                 <h2 className="text-lg font-semibold text-white mb-4">{td.tabChangelog}</h2>
                 <div className="space-y-0">
                   {mockChangelog.map((entry, i) => (
@@ -283,7 +311,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
               </section>
 
               {/* FAQ */}
-              <section id="faq" className="mb-14 scroll-mt-24">
+              <section id="faq" className="mb-8 scroll-mt-24">
                 <h2 className="text-lg font-semibold text-white mb-4">FAQ</h2>
                 <div className="divide-y divide-white/5">
                   {mockGuides.map((item, i) => (
@@ -299,28 +327,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                   ))}
                 </div>
               </section>
-
-              {/* Mobile-only install section */}
-              <section id="setup-mobile" className="lg:hidden mb-14 scroll-mt-24">
-                <InstallConfig slug={slug} t={{
-                  installConfig: td.installConfig, viewDetails: td.viewDetails,
-                  tabInstall: td.tabInstall, tabPublish: td.tabPublish,
-                  iamAgent: td.iamAgent, iamHuman: td.iamHuman,
-                  agentPromptHint: td.agentPromptHint, agentPromptLabel: td.agentPromptLabel,
-                  copyPrompt: td.copyPrompt,
-                  installCli: td.installCli, installMcp: td.installMcp,
-                  installJson: td.installJson, installSkill: td.installSkill,
-                  recommended: td.recommended, httpLabel: td.httpLabel,
-                  manual: td.manual, oneLiner: td.oneLiner,
-                }} />
-              </section>
             </div>
 
-            {/* Right sidebar */}
-            <div className="lg:w-80 shrink-0 space-y-5">
+            {/* Right sidebar — desktop install and trust summary; other cards remain mobile-only. */}
+            <aside className="tool-detail-sidebar lg:w-80 shrink-0" data-tool-sidebar>
               {/* Install section — desktop only */}
-              <div className="hidden lg:block">
-                <InstallConfig slug={slug} t={{
+              <div className="hidden lg:block" data-tool-install-desktop>
+                <InstallConfig slug={slug} showDetails={false} t={{
                   installConfig: td.installConfig, viewDetails: td.viewDetails,
                   tabInstall: td.tabInstall, tabPublish: td.tabPublish,
                   iamAgent: td.iamAgent, iamHuman: td.iamHuman,
@@ -333,8 +346,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                 }} />
               </div>
 
-              {/* Rating */}
-              <div className="rounded-xl border border-white/5 bg-white/[0.02] p-5">
+              {/* Rating — mobile only */}
+              <div className="lg:hidden rounded-xl border border-white/5 bg-white/[0.02] p-5" data-tool-sidebar-extra="rating">
                 <div className="flex items-center gap-3 mb-3">
                   <span className="text-3xl font-bold text-white">4.8</span>
                   <div>
@@ -364,8 +377,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                 </div>
               </div>
 
-              {/* Stats */}
-              <div className="rounded-xl border border-white/5 bg-white/[0.02] p-5 space-y-4">
+              {/* Trust score and metadata */}
+              <div className="rounded-xl border border-white/5 bg-white/[0.02] p-5 space-y-4" data-tool-trust>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-400">{td.trustScore}</span>
                   <div className="flex items-center gap-1.5">
@@ -377,21 +390,21 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                 </div>
                 <div className="h-px bg-white/5" />
                 {[
-                  { label: td.version, value: "1.4.0" },
+                  { label: td.version, value: "1.4.0", mobileOnly: true },
                   { label: td.installs, value: "15,234" },
-                  { label: td.category, value: "Search" },
+                  { label: td.category, value: "Search", mobileOnly: true },
                   { label: td.protocol, value: "MCP" },
                   { label: td.license, value: "MIT" },
                 ].map((stat) => (
-                  <div key={stat.label} className="flex items-center justify-between">
+                  <div key={stat.label} className={`${stat.mobileOnly ? "lg:hidden " : ""}flex items-center justify-between`} data-tool-stat={stat.mobileOnly ? "mobile-only" : undefined}>
                     <span className="text-sm text-gray-500">{stat.label}</span>
                     <span className="text-sm text-white">{stat.value}</span>
                   </div>
                 ))}
               </div>
 
-              {/* Service Type */}
-              <div className="rounded-xl border border-white/5 bg-white/[0.02] p-5">
+              {/* Service Type — mobile only */}
+              <div className="lg:hidden rounded-xl border border-white/5 bg-white/[0.02] p-5" data-tool-sidebar-extra="service">
                 <div className="flex items-center gap-2 mb-2">
                   <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
@@ -401,8 +414,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                 <p className="text-xs text-gray-500 leading-relaxed">{td.remoteServiceDesc}</p>
               </div>
 
-              {/* Tags */}
-              <div className="rounded-xl border border-white/5 bg-white/[0.02] p-5">
+              {/* Tags — mobile only */}
+              <div className="lg:hidden rounded-xl border border-white/5 bg-white/[0.02] p-5" data-tool-sidebar-extra="tags">
                 <span className="text-sm font-medium text-white mb-3 block">{td.tags}</span>
                 <div className="flex flex-wrap gap-2">
                   {["web-search", "extraction", "crawling", "mapping", "research", "real-time"].map((tag) => (
@@ -411,8 +424,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                 </div>
               </div>
 
-              {/* Links */}
-              <div className="rounded-xl border border-white/5 bg-white/[0.02] p-5 space-y-3">
+              {/* Links — mobile only */}
+              <div className="lg:hidden rounded-xl border border-white/5 bg-white/[0.02] p-5 space-y-3" data-tool-sidebar-extra="links">
                 <span className="text-sm font-medium text-white block">{td.links}</span>
                 {[
                   { label: td.githubRepo, href: "https://github.com" },
@@ -426,7 +439,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                   </a>
                 ))}
               </div>
-            </div>
+            </aside>
           </div>
 
           {/* Related Tools */}
@@ -437,7 +450,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
               {mockRelatedTools.map((tool) => (
                 <a key={tool.slug} href={`/tools/${tool.slug}`} className="group rounded-xl border border-white/5 bg-white/[0.02] p-4 hover:border-white/10 hover:bg-white/[0.04] transition">
                   <div className="flex items-center gap-3 mb-3">
-                    <img src={`https://www.google.com/s2/favicons?domain=${tool.slug}.com&sz=64`} alt={tool.name} className="w-8 h-8 rounded-lg" />
+                    <ToolIcon slug={tool.slug} name={tool.name} className="w-8 h-8 rounded-lg" />
                     <div className="min-w-0">
                       <h3 className="text-sm font-semibold text-white group-hover:text-white truncate">{tool.name}</h3>
                       <span className="text-xs text-gray-500">{tool.category}</span>

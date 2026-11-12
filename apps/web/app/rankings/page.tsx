@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { getLocaleFromHost, type Locale } from "@/lib/i18n/config";
 import { getContent } from "@/lib/i18n/content";
 import Layout from "@/app/layouts/Layout";
+import ToolIcon from "@/app/components/ToolIcon";
 import type { Metadata } from "next";
 
 type RankingTool = {
@@ -391,11 +392,11 @@ function RankingsTable({
                     href={`/tools/${tool.slug}`}
                     className="flex items-center gap-3 group"
                   >
-                    <img
-                      src={`https://www.google.com/s2/favicons?domain=${tool.slug === "brave-search" ? "brave.com" : tool.slug === "e2b" ? "e2b.dev" : tool.slug === "resend" ? "resend.com" : tool.slug === "composio" ? "composio.dev" : tool.slug === "browserbase" ? "browserbase.com" : `${tool.slug}.com`}&sz=64`}
-                      alt={tool.name}
-                      className={`w-8 h-8 rounded-lg shrink-0 bg-white/[0.05] ${compact ? "w-7 h-7" : ""}`}
-                      loading="lazy"
+                    <ToolIcon
+                      slug={tool.slug}
+                      name={tool.name}
+                      color={tool.color}
+                      className={`${compact ? "w-7 h-7" : "w-8 h-8"} rounded-lg`}
                     />
                     <span className="font-medium text-white group-hover:text-gray-200 transition truncate">
                       {tool.name}
