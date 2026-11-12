@@ -487,7 +487,7 @@ console.log(result.usage);
       <section className="py-16 md:py-24 bg-[#111111]">
         <div className="max-w-5xl mx-auto px-4 md:px-6 text-center" data-animate>
           <h2 className="text-2xl md:text-4xl font-bold mb-3">{t.integration.title}</h2>
-          <p className="text-gray-400 mb-12">{t.integration.subtitle}</p>
+          <p className="text-gray-400 mb-12 md:mb-8">{t.integration.subtitle}</p>
           <div className="grid md:grid-cols-3 gap-6">
             {[
               { ...t.integration.skill, href: "/docs/integration/skill" },
