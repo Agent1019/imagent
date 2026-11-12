@@ -6,9 +6,8 @@ export type Feature = {
   id: "discover" | "auth" | "monetize";
   title: string;
   desc: string;
-  code: React.ReactNode;
+  preview: React.ReactNode;
   icon: React.ReactNode;
-  filename: string;
 };
 
 function FeatureArtwork({ variant }: { variant: Feature["id"] }) {
@@ -53,17 +52,8 @@ export function FeatureCard({ feature }: { feature: Feature }) {
           <h3>{feature.title}</h3>
         </div>
         <p className="feature-card-description">{feature.desc}</p>
-        <div className="feature-code-spacer" />
-        <div className="feature-code" data-feature-code>
-          <div className="feature-code-header">
-            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M4 1.5H9L12 4.5V14.5H4V1.5Z" stroke="currentColor" strokeLinejoin="round" />
-              <path d="M9 1.5V4.5H12" stroke="currentColor" strokeLinejoin="round" />
-            </svg>
-            <span>{feature.filename}</span>
-          </div>
-          <pre tabIndex={0} aria-label={feature.filename}><code>{feature.code}</code></pre>
-        </div>
+        <div className="feature-preview-spacer" />
+        {feature.preview}
       </div>
     </article>
   );

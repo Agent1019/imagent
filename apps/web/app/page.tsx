@@ -10,6 +10,8 @@ import HeadingText from "./components/HeadingText";
 import Layout from "./layouts/Layout";
 import FeatureTabs, { FeatureCard, type Feature } from "./components/FeatureTabs";
 import IntegrationShowcase from "./components/IntegrationShowcase";
+import FeaturePreview from "./components/FeaturePreview";
+import HomeRoadmap from "./components/HomeRoadmap";
 import { getPlatformStats } from "@/lib/data/packages";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -119,23 +121,51 @@ export default async function Home() {
   const now = new Date().toISOString();
 
   // Shared data keeps the desktop cards and mobile tab panels visually identical.
+  // Previews name real tools; the ranks and badges mirror the first rows of /rankings.
   const featureCards: Feature[] = [
     {
       id: "discover", title: t.features.discover.title, desc: t.features.discover.desc,
-      filename: "search.http",
-      code: <><span className="feature-code-keyword">GET</span> /api/v1/search{"\n"}<span className="feature-code-muted">?q=pdf+generation&amp;protocol=mcp</span></>,
+      preview: (
+        <FeaturePreview
+          kind="discover"
+          label={t.features.preview.query}
+          href="/explore"
+          rows={[
+            { slug: "tavily", name: "Tavily", meta: t.explore.catLabels.Search },
+            { slug: "brave-search", name: "Brave Search", meta: t.explore.catLabels.Search },
+          ]}
+        />
+      ),
       icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>,
     },
     {
       id: "auth", title: t.features.auth.title, desc: t.features.auth.desc,
-      filename: "auth.http",
-      code: <><span className="feature-code-keyword">Authorization</span>: Bearer{"\n"}<span className="feature-code-muted">imt_a1b2c3d4...x9y0z</span></>,
+      preview: (
+        <FeaturePreview
+          kind="auth"
+          label={t.features.preview.account}
+          rows={[
+            { slug: "github", name: "GitHub", meta: t.features.preview.connected, tone: "ok" },
+            { slug: "notion", name: "Notion", meta: t.features.preview.connected, tone: "ok" },
+          ]}
+        />
+      ),
       icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>,
     },
     {
       id: "monetize", title: t.features.monetize.title, desc: t.features.monetize.desc,
-      filename: "usage.http",
-      code: <><span className="feature-code-keyword">GET</span> /api/v1/usage{"\n"}<span className="feature-code-muted">{'{ "calls": 142, "cost": "$0.14" }'}</span></>,
+      preview: (
+        <FeaturePreview
+          kind="monetize"
+          label={t.rankings.mostUsed}
+          aside="30d"
+          href="/rankings"
+          rows={[
+            { slug: "tavily", name: "Tavily", meta: t.rankings.hot, rank: 1, tone: "hot" },
+            { slug: "github", name: "GitHub", meta: t.rankings.stable, rank: 2, tone: "steady" },
+          ]}
+        />
+      ),
       icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" /></svg>,
     },
   ];
@@ -303,10 +333,10 @@ export default async function Home() {
             <h2 className="text-[28px] sm:text-3xl md:text-4xl leading-tight text-balance font-bold text-white" lang={locale} data-home-heading="features">
               <HeadingText text={t.features.title} breakAfter={t.features.titleBreakAfter} />
             </h2>
-            <p className="mt-4 text-gray-400 max-w-xl mx-auto">{t.features.subtitle}</p>
+            <p lang={locale} className="home-lede mt-4 text-gray-400 leading-relaxed max-w-2xl mx-auto text-balance">{t.features.subtitle}</p>
           </div>
 
-          {/* Mobile: tabbed cards; desktop: equal-height cards with aligned code panels. */}
+          {/* Mobile: tabbed cards; desktop: equal-height cards with aligned previews. */}
           <FeatureTabs features={featureCards} />
           <div className="hidden md:grid md:grid-cols-3 gap-5 lg:gap-6" data-feature-grid>
             {featureCards.map(feature => <FeatureCard key={feature.id} feature={feature} />)}
@@ -315,57 +345,25 @@ export default async function Home() {
       </section>
 
 
-      {/* API Section */}
+      {/* Roadmap: what is live now and what the marketplace opens up next. */}
       <section className="py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="grid md:grid-cols-2 gap-12 items-center" data-animate>
+          <div className="grid md:grid-cols-2 gap-10 md:gap-12 items-center" data-animate>
             <div>
-              <h2 className="text-[28px] sm:text-3xl md:text-4xl leading-tight text-balance font-bold mb-4" lang={locale} data-home-heading="api">
-                <span className="block max-w-full text-balance text-white">{t.apiSection.headline1}</span>
-                <span className="block max-w-full text-balance text-[#2B7FFF]">{t.apiSection.headline2}</span>
+              <h2 className="text-[28px] sm:text-3xl md:text-4xl leading-tight text-balance font-bold mb-4" lang={locale} data-home-heading="roadmap">
+                <span className="block max-w-full text-balance text-white">{t.roadmap.headline1}</span>
+                <span className="block max-w-full text-balance text-[#2B7FFF]">{t.roadmap.headline2}</span>
               </h2>
-              <p className="text-gray-400 leading-relaxed mb-6">{t.apiSection.desc}</p>
-              <div className="space-y-3">
-                {t.apiSection.features.map((feature) => (
-                  <div key={feature} className="flex items-start gap-3 text-sm text-gray-300">
-                    <svg className="w-4 h-4 mt-0.5 text-[#5A9FFF] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    {feature}
-                  </div>
-                ))}
-              </div>
+              <p className="text-gray-400 leading-relaxed text-pretty">{t.roadmap.desc}</p>
             </div>
 
-            <div className="home-code-editor" data-home-code-editor>
-              <div className="home-code-editor-header">agent.ts</div>
-              <pre tabIndex={0} aria-label="agent.ts">
-                <code>{`import { ImagentClient } from "@imagent/sdk";
-
-const client = new ImagentClient({
-  apiKey: process.env.IMAGENT_KEY,
-});
-
-// 1. Discover tools by capability
-const tools = await client.search({
-  capability: "generate PDF from markdown",
-  protocol: "mcp",
-  minTrustScore: 0.8,
-});
-
-// 2. Authenticate and invoke
-const result = await client.invoke({
-  server: tools[0].id,
-  method: "generate_pdf",
-  params: { content: markdownBody },
-  auth: { scope: "read:templates" },
-});
-
-// 3. Usage is metered automatically
-console.log(result.usage);
-// { calls: 1, cost: "$0.002", latency: "142ms" }`}</code>
-              </pre>
-            </div>
+            <HomeRoadmap
+              stages={t.roadmap.stages}
+              current={t.roadmap.current}
+              planned={t.roadmap.planned}
+              currentHref="/explore"
+              currentLabel={t.hero.exploreBtn}
+            />
           </div>
         </div>
       </section>
@@ -406,7 +404,7 @@ console.log(result.usage);
           <h2 className="text-[28px] sm:text-3xl md:text-4xl leading-tight text-balance font-bold mb-4" lang={locale} data-home-heading="cta">
             <HeadingText text={t.cta.title} breakAfter={t.cta.titleBreakAfter} />
           </h2>
-          <p className="text-gray-400 mb-8 max-w-xl mx-auto">{t.cta.subtitle}</p>
+          <p lang={locale} className="home-lede text-gray-400 leading-relaxed mb-8 max-w-xl mx-auto text-balance">{t.cta.subtitle}</p>
           <a
             href={t.cta.primaryHref}
             target="_blank"
@@ -425,7 +423,7 @@ console.log(result.usage);
             {[
               {
                 name: "Discord",
-                desc: locale === "zh" ? "实时交流" : "Live Chat",
+                desc: t.cta.channels.discord,
                 icon: (
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z"/>
@@ -436,7 +434,7 @@ console.log(result.usage);
               },
               {
                 name: "Twitter / X",
-                desc: locale === "zh" ? "最新动态" : "Updates",
+                desc: t.cta.channels.twitter,
                 icon: (
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -447,7 +445,7 @@ console.log(result.usage);
               },
               {
                 name: "Forum",
-                desc: locale === "zh" ? "深度讨论" : "Discussions",
+                desc: t.cta.channels.forum,
                 icon: (
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
