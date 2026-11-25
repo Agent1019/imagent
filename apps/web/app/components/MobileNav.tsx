@@ -14,6 +14,8 @@ type NavContent = {
   getStarted: string;
 };
 
+type NavUser = { email: string; name: string; avatar: string | null };
+
 type MobileNavProps = {
   nav: NavContent;
   locale: string;
@@ -22,9 +24,11 @@ type MobileNavProps = {
   localeNames: Record<string, string>;
   localeFlags: Record<string, string>;
   pathname: string;
+  user: NavUser | null;
+  signOutLabel: string;
 };
 
-export default function MobileNav({ nav, locale, locales, domainMap, localeNames, localeFlags, pathname }: MobileNavProps) {
+export default function MobileNav({ nav, locale, locales, domainMap, localeNames, localeFlags, pathname, user, signOutLabel }: MobileNavProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showLang, setShowLang] = useState(false);
 
@@ -168,21 +172,46 @@ export default function MobileNav({ nav, locale, locales, domainMap, localeNames
 
                   <div className="border-t border-white/10 my-3" />
 
-                  <a
-                    href="/login"
-                    className="block px-3 py-3 text-base text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition"
-                    onClick={() => { setMenuOpen(false); setShowLang(false); }}
-                  >
-                    {nav.signIn}
-                  </a>
+                  {user ? (
+                    <div className="px-3">
+                      <div className="flex items-center gap-3 py-3">
+                        {user.avatar ? (
+                          <img src={user.avatar} alt="" className="h-9 w-9 shrink-0 rounded-full object-cover" />
+                        ) : (
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#2B7FFF]/20 text-sm font-semibold text-[#8fbcff]">
+                            {(user.name || user.email || "?").trim().charAt(0).toUpperCase()}
+                          </span>
+                        )}
+                        <span className="min-w-0">
+                          <span className="block truncate text-sm text-white">{user.name || user.email}</span>
+                          {user.email && user.email !== user.name && <span className="block truncate text-xs text-gray-500">{user.email}</span>}
+                        </span>
+                      </div>
+                      <form action="/auth/signout" method="post">
+                        <button type="submit" className="mb-2 w-full rounded-lg border border-white/10 py-3 text-base text-gray-300 transition hover:bg-white/5 hover:text-white">
+                          {signOutLabel}
+                        </button>
+                      </form>
+                    </div>
+                  ) : (
+                    <>
+                      <a
+                        href="/login"
+                        className="block px-3 py-3 text-base text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition"
+                        onClick={() => { setMenuOpen(false); setShowLang(false); }}
+                      >
+                        {nav.signIn}
+                      </a>
 
-                  <a
-                    href="/signup"
-                    className="block mx-3 mt-1 mb-2 text-center bg-white text-black py-3 rounded-lg font-medium text-base hover:bg-gray-200 transition"
-                    onClick={() => { setMenuOpen(false); setShowLang(false); }}
-                  >
-                    {nav.getStarted}
-                  </a>
+                      <a
+                        href="/signup"
+                        className="block mx-3 mt-1 mb-2 text-center bg-white text-black py-3 rounded-lg font-medium text-base hover:bg-gray-200 transition"
+                        onClick={() => { setMenuOpen(false); setShowLang(false); }}
+                      >
+                        {nav.getStarted}
+                      </a>
+                    </>
+                  )}
                 </div>
               </div>
 

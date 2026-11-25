@@ -1,8 +1,11 @@
 import { headers } from "next/headers";
 import { type Locale, locales, domainMap, localeNames, localeFlags } from "@/lib/i18n/config";
+import { getAuthCopy } from "@/lib/auth-copy";
+import { getAuthUser } from "@/lib/auth";
 import NavSearch from "../components/NavSearch";
 import ScrollEffects from "../components/ScrollEffects";
 import MobileNav from "../components/MobileNav";
+import UserMenu from "../components/UserMenu";
 
 type NavContent = {
   explore: string;
@@ -50,6 +53,8 @@ type LayoutProps = {
 export default async function Layout({ locale, nav, footer, searchPlaceholder, children }: LayoutProps) {
   const headersList = await headers();
   const pathname = headersList.get("x-pathname") || "/";
+  const user = await getAuthUser();
+  const account = getAuthCopy(locale);
 
   return (
     <>
@@ -68,6 +73,8 @@ export default async function Layout({ locale, nav, footer, searchPlaceholder, c
               localeNames={localeNames}
               localeFlags={localeFlags}
               pathname={pathname}
+              user={user}
+              signOutLabel={account.signOut}
             />
             <a href="/" className="text-2xl font-bold tracking-tight text-white shrink-0">
               Imagent
@@ -113,15 +120,21 @@ export default async function Layout({ locale, nav, footer, searchPlaceholder, c
               </div>
             </div>
 
-            <a href="/login" className="hidden md:inline text-sm text-gray-400 hover:text-white transition px-2 py-1.5 whitespace-nowrap shrink-0">
-              {nav.signIn}
-            </a>
-            <a
-              href="/signup"
-              className="text-sm bg-white text-black px-3 md:px-4 py-1.5 rounded-lg font-medium hover:bg-gray-200 transition whitespace-nowrap shrink-0"
-            >
-              {nav.getStarted}
-            </a>
+            {user ? (
+              <UserMenu user={user} signOutLabel={account.signOut} />
+            ) : (
+              <>
+                <a href="/login" className="hidden md:inline text-sm text-gray-400 hover:text-white transition px-2 py-1.5 whitespace-nowrap shrink-0">
+                  {nav.signIn}
+                </a>
+                <a
+                  href="/signup"
+                  className="text-sm bg-white text-black px-3 md:px-4 py-1.5 rounded-lg font-medium hover:bg-gray-200 transition whitespace-nowrap shrink-0"
+                >
+                  {nav.getStarted}
+                </a>
+              </>
+            )}
           </div>
         </div>
       </nav>
