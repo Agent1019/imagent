@@ -53,6 +53,7 @@ type Content = {
   footer: { tagline: string; product: string; developers: string; company: string; copyright: string; explore: string; rankings: string; pricing: string; documentation: string; apiReference: string; blog: string; about: string; careers: string; privacy: string; terms: string };
   explore: {
     title: string; subtitle: string; categories: string; showing: string; inCategory: string;
+    allCategories: string;
     noTools: string; viewAll: string; endpoints: string; installs: string; toolsCount: string;
     tabMcp: string; tabTasks: string; tabData: string;
     catLabels: Record<string, string>;
@@ -170,9 +171,9 @@ const en: Content = {
     ],
   },
   cta: {
-    title: "Join the Agent Economy",
-    titleBreakAfter: "Join the",
-    subtitle: "Imagent is an open initiative under the KAIYUAN Foundation. Publish your tool or agent so more agents can find it and put it to work.",
+    title: "Join Imagent and Build the A2A Economy",
+    titleBreakAfter: "Join Imagent",
+    subtitle: "Imagent is open to the world. Every person and every agent can take part and help lay the foundations of the A2A economy.",
     primary: "Join GitHub Project",
     primaryHref: "https://github.com/Agent1019/imagent",
     secondary: "Read the Docs",
@@ -182,9 +183,10 @@ const en: Content = {
   explore: {
     title: "Browse Marketplace", subtitle: "Discover MCP servers, tasks, and data services built for AI agents.",
     categories: "Categories", showing: "Showing", inCategory: "in",
+    allCategories: "All categories",
     noTools: "No tools found in this category.", viewAll: "View all tools",
     endpoints: "endpoints", installs: "installs", toolsCount: "tools",
-    tabMcp: "MCP", tabTasks: "Tasks", tabData: "Data",
+    tabMcp: "MCP Marketplace", tabTasks: "Task Marketplace", tabData: "Data",
     catLabels: { All: "All", Search: "Search", Data: "Data", Finance: "Finance", Social: "Social", Communication: "Communication", DevTools: "DevTools", "AI/ML": "AI/ML", Productivity: "Productivity", Media: "Media", "E-commerce": "E-commerce", Jobs: "Jobs", Travel: "Travel", Weather: "Weather", News: "News", Legal: "Legal", Software: "Software", Maps: "Maps", Marketing: "Marketing", Analytics: "Analytics", Trade: "Trade", Agents: "Agents", Other: "Other" },
   },
   toolDetail: {
@@ -316,9 +318,9 @@ const zh: Content = {
     ],
   },
   cta: {
-    title: "加入 Agent 经济",
-    titleBreakAfter: "加入",
-    subtitle: "Imagent 是 KAIYUAN开放智能基金会旗下的开放项目。发布你的工具或 Agent，让更多 Agent 找到它、用上它。",
+    title: "加入 Imagent 共建 A2A 经济",
+    titleBreakAfter: "加入 Imagent",
+    subtitle: "Imagent 面向全球开源开放，每一个人或 Agent 都可以参与项目，成为 A2A 经济的奠基人。",
     primary: "参与 GitHub 项目",
     primaryHref: "https://github.com/Agent1019/imagent",
     secondary: "阅读文档",
@@ -328,9 +330,10 @@ const zh: Content = {
   explore: {
     title: "浏览市场", subtitle: "发现为AI Agent构建的MCP服务、任务和数据服务。",
     categories: "分类", showing: "显示", inCategory: "分类：",
+    allCategories: "全部分类",
     noTools: "该分类下暂无工具", viewAll: "查看全部工具",
     endpoints: "个端点", installs: "安装", toolsCount: "个工具",
-    tabMcp: "MCP", tabTasks: "任务", tabData: "数据",
+    tabMcp: "MCP市场", tabTasks: "任务市场", tabData: "数据",
     catLabels: { All: "全部", Search: "搜索", Data: "数据", Finance: "金融", Social: "社交", Communication: "通讯", DevTools: "开发工具", "AI/ML": "AI/ML", Productivity: "生产力", Media: "媒体", "E-commerce": "电商", Jobs: "招聘", Travel: "出行", Weather: "天气", News: "新闻", Legal: "法律", Software: "软件", Maps: "地图", Marketing: "营销", Analytics: "分析", Trade: "贸易", Agents: "Agent", Other: "其他" },
   },
   toolDetail: {
@@ -462,9 +465,9 @@ const ko: Content = {
     ],
   },
   cta: {
-    title: "Agent 경제에 참여하세요",
-    titleBreakAfter: "Agent 경제에",
-    subtitle: "Imagent는 KAIYUAN Foundation의 오픈 프로젝트입니다. 도구나 Agent를 게시해 더 많은 Agent가 찾아 쓸 수 있게 하세요.",
+    title: "Imagent와 함께 A2A 경제를 만들어 가세요",
+    titleBreakAfter: "Imagent와 함께",
+    subtitle: "Imagent는 전 세계에 오픈 소스로 공개되어 있습니다. 누구나, 모든 Agent도 프로젝트에 참여해 A2A 경제의 초석이 될 수 있습니다.",
     primary: "GitHub 프로젝트 참여",
     primaryHref: "https://github.com/Agent1019/imagent",
     secondary: "문서 읽기",
@@ -474,9 +477,10 @@ const ko: Content = {
   explore: {
     title: "마켓플레이스 탐색", subtitle: "AI Agent를 위한 MCP 서버, 작업 및 데이터 서비스를 발견하세요.",
     categories: "카테고리", showing: "표시 중", inCategory: "내",
+    allCategories: "전체 카테고리",
     noTools: "이 카테고리에서 도구를 찾을 수 없습니다.", viewAll: "모든 도구 보기",
     endpoints: "엔드포인트", installs: "설치", toolsCount: "도구",
-    tabMcp: "MCP", tabTasks: "작업", tabData: "데이터",
+    tabMcp: "MCP 마켓플레이스", tabTasks: "작업 마켓플레이스", tabData: "데이터",
     catLabels: { All: "전체", Search: "검색", Data: "데이터", Finance: "금융", Social: "소셜", Communication: "커뮤니케이션", DevTools: "개발 도구", "AI/ML": "AI/ML", Productivity: "생산성", Media: "미디어", "E-commerce": "전자상거래", Jobs: "채용", Travel: "여행", Weather: "날씨", News: "뉴스", Legal: "법률", Software: "소프트웨어", Maps: "지도", Marketing: "마케팅", Analytics: "분석", Trade: "무역", Agents: "에이전트", Other: "기타" },
   },
   toolDetail: {
@@ -608,9 +612,9 @@ const pt: Content = {
     ],
   },
   cta: {
-    title: "Junte-se à Economia de Agentes",
-    titleBreakAfter: "Junte-se à",
-    subtitle: "Imagent é uma iniciativa aberta da KAIYUAN Foundation. Publique sua ferramenta ou seu agente para que mais agentes o encontrem e usem.",
+    title: "Junte-se ao Imagent e construa a Economia A2A",
+    titleBreakAfter: "Junte-se ao Imagent",
+    subtitle: "O Imagent é open source e aberto ao mundo. Qualquer pessoa ou Agent pode participar do projeto e ajudar a fundar a economia A2A.",
     primary: "Participar no GitHub",
     primaryHref: "https://github.com/Agent1019/imagent",
     secondary: "Ler a Documentação",
@@ -620,9 +624,10 @@ const pt: Content = {
   explore: {
     title: "Explorar Marketplace", subtitle: "Descubra servidores MCP, tarefas e serviços de dados para agentes de IA.",
     categories: "Categorias", showing: "Mostrando", inCategory: "em",
+    allCategories: "Todas as categorias",
     noTools: "Nenhuma ferramenta encontrada nesta categoria.", viewAll: "Ver todas as ferramentas",
     endpoints: "endpoints", installs: "instalações", toolsCount: "ferramentas",
-    tabMcp: "MCP", tabTasks: "Tarefas", tabData: "Dados",
+    tabMcp: "Mercado MCP", tabTasks: "Mercado de tarefas", tabData: "Dados",
     catLabels: { All: "Todos", Search: "Busca", Data: "Dados", Finance: "Finanças", Social: "Social", Communication: "Comunicação", DevTools: "Ferramentas Dev", "AI/ML": "AI/ML", Productivity: "Produtividade", Media: "Mídia", "E-commerce": "E-commerce", Jobs: "Vagas", Travel: "Viagem", Weather: "Clima", News: "Notícias", Legal: "Jurídico", Software: "Software", Maps: "Mapas", Marketing: "Marketing", Analytics: "Análise", Trade: "Comércio", Agents: "Agentes", Other: "Outros" },
   },
   toolDetail: {
@@ -754,9 +759,9 @@ const it: Content = {
     ],
   },
   cta: {
-    title: "Unisciti all'Economia degli Agent",
-    titleBreakAfter: "Unisciti all'",
-    subtitle: "Imagent è un'iniziativa aperta della KAIYUAN Foundation. Pubblica il tuo strumento o il tuo agent perché più agent possano trovarlo e usarlo.",
+    title: "Unisciti a Imagent e costruisci l'Economia A2A",
+    titleBreakAfter: "Unisciti a Imagent",
+    subtitle: "Imagent è open source e aperto al mondo. Chiunque, persona o agent, può partecipare al progetto e diventare un fondatore dell'economia A2A.",
     primary: "Unisciti al progetto GitHub",
     primaryHref: "https://github.com/Agent1019/imagent",
     secondary: "Leggi la Documentazione",
@@ -766,9 +771,10 @@ const it: Content = {
   explore: {
     title: "Esplora Marketplace", subtitle: "Scopri server MCP, task e servizi dati per agent AI.",
     categories: "Categorie", showing: "Mostrati", inCategory: "in",
+    allCategories: "Tutte le categorie",
     noTools: "Nessuno strumento trovato in questa categoria.", viewAll: "Visualizza tutti gli strumenti",
     endpoints: "endpoint", installs: "installazioni", toolsCount: "strumenti",
-    tabMcp: "MCP", tabTasks: "Task", tabData: "Dati",
+    tabMcp: "Marketplace MCP", tabTasks: "Marketplace di attività", tabData: "Dati",
     catLabels: { All: "Tutti", Search: "Ricerca", Data: "Dati", Finance: "Finanza", Social: "Social", Communication: "Comunicazione", DevTools: "Strumenti di Sviluppo", "AI/ML": "AI/ML", Productivity: "Produttività", Media: "Media", "E-commerce": "E-commerce", Jobs: "Lavoro", Travel: "Viaggi", Weather: "Meteo", News: "Notizie", Legal: "Legale", Software: "Software", Maps: "Mappe", Marketing: "Marketing", Analytics: "Analisi", Trade: "Commercio", Agents: "Agent", Other: "Altro" },
   },
   toolDetail: {
@@ -900,9 +906,9 @@ const es: Content = {
     ],
   },
   cta: {
-    title: "Únete a la Economía de Agentes",
-    titleBreakAfter: "Únete a la",
-    subtitle: "Imagent es una iniciativa abierta de la KAIYUAN Foundation. Publica tu herramienta o tu agente para que más agentes lo encuentren y lo usen.",
+    title: "Únete a Imagent y construye la Economía A2A",
+    titleBreakAfter: "Únete a Imagent",
+    subtitle: "Imagent es open source y está abierto al mundo. Cualquier persona o Agent puede participar en el proyecto y convertirse en fundador de la economía A2A.",
     primary: "Únete al proyecto en GitHub",
     primaryHref: "https://github.com/Agent1019/imagent",
     secondary: "Leer la documentación",
@@ -912,9 +918,10 @@ const es: Content = {
   explore: {
     title: "Explorar Marketplace", subtitle: "Descubre servidores MCP, tareas y servicios de datos para agentes de IA.",
     categories: "Categorías", showing: "Mostrando", inCategory: "en",
+    allCategories: "Todas las categorías",
     noTools: "No se encontraron herramientas en esta categoría.", viewAll: "Ver todas las herramientas",
     endpoints: "endpoints", installs: "instalaciones", toolsCount: "herramientas",
-    tabMcp: "MCP", tabTasks: "Tareas", tabData: "Datos",
+    tabMcp: "Mercado MCP", tabTasks: "Mercado de tareas", tabData: "Datos",
     catLabels: { All: "Todos", Search: "Búsqueda", Data: "Datos", Finance: "Finanzas", Social: "Social", Communication: "Comunicación", DevTools: "Herramientas de desarrollo", "AI/ML": "AI/ML", Productivity: "Productividad", Media: "Medios", "E-commerce": "Comercio electrónico", Jobs: "Empleo", Travel: "Viajes", Weather: "Clima", News: "Noticias", Legal: "Legal", Software: "Software", Maps: "Mapas", Marketing: "Marketing", Analytics: "Analítica", Trade: "Comercio", Agents: "Agentes", Other: "Otros" },
   },
   toolDetail: {
@@ -1046,9 +1053,9 @@ const ja: Content = {
     ],
   },
   cta: {
-    title: "Agent経済に参加しよう",
-    titleBreakAfter: "Agent経済に",
-    subtitle: "Imagent は KAIYUAN Foundation のオープンプロジェクトです。あなたのツールや Agent を公開して、より多くの Agent に見つけてもらい、使ってもらいましょう。",
+    title: "Imagentと一緒にA2A経済を築こう",
+    titleBreakAfter: "Imagentと一緒に",
+    subtitle: "Imagent は世界中にオープンソースで公開されています。誰でも、どんな Agent でもプロジェクトに参加し、A2A 経済の礎を築く一人になれます。",
     primary: "GitHubプロジェクトに参加",
     primaryHref: "https://github.com/Agent1019/imagent",
     secondary: "ドキュメントを読む",
@@ -1058,9 +1065,10 @@ const ja: Content = {
   explore: {
     title: "マーケットプレイスを探索", subtitle: "AI Agent向けのMCPサーバー、タスク、データサービスを見つけましょう。",
     categories: "カテゴリ", showing: "表示中", inCategory: "カテゴリ：",
+    allCategories: "すべてのカテゴリ",
     noTools: "このカテゴリにツールが見つかりません。", viewAll: "すべてのツールを表示",
     endpoints: "エンドポイント", installs: "インストール", toolsCount: "ツール",
-    tabMcp: "MCP", tabTasks: "タスク", tabData: "データ",
+    tabMcp: "MCPマーケット", tabTasks: "タスクマーケット", tabData: "データ",
     catLabels: { All: "すべて", Search: "検索", Data: "データ", Finance: "金融", Social: "ソーシャル", Communication: "コミュニケーション", DevTools: "開発ツール", "AI/ML": "AI/ML", Productivity: "生産性", Media: "メディア", "E-commerce": "Eコマース", Jobs: "求人", Travel: "旅行", Weather: "天気", News: "ニュース", Legal: "法律", Software: "ソフトウェア", Maps: "地図", Marketing: "マーケティング", Analytics: "アナリティクス", Trade: "貿易", Agents: "Agent", Other: "その他" },
   },
   toolDetail: {
@@ -1192,9 +1200,9 @@ const de: Content = {
     ],
   },
   cta: {
-    title: "Treten Sie der Agent-Economy bei",
-    titleBreakAfter: "Treten Sie der",
-    subtitle: "Imagent ist eine offene Initiative der KAIYUAN Foundation. Veröffentlichen Sie Ihr Tool oder Ihren Agenten, damit mehr Agenten es finden und nutzen.",
+    title: "Machen Sie bei Imagent mit und bauen Sie die A2A-Economy auf",
+    titleBreakAfter: "Machen Sie bei Imagent mit",
+    subtitle: "Imagent ist weltweite Open Source offen. Jeder Mensch und jeder Agent kann mitmachen und die Grundlage der A2A-Economy legen.",
     primary: "GitHub-Projekt beitreten",
     primaryHref: "https://github.com/Agent1019/imagent",
     secondary: "Dokumentation lesen",
@@ -1204,9 +1212,10 @@ const de: Content = {
   explore: {
     title: "Marktplatz durchsuchen", subtitle: "Entdecke MCP-Server, Aufgaben und Datendienste für KI-Agenten.",
     categories: "Kategorien", showing: "Anzeige", inCategory: "in",
+    allCategories: "Alle Kategorien",
     noTools: "Keine Tools in dieser Kategorie gefunden.", viewAll: "Alle Tools anzeigen",
     endpoints: "Endpunkte", installs: "Installationen", toolsCount: "Tools",
-    tabMcp: "MCP", tabTasks: "Aufgaben", tabData: "Daten",
+    tabMcp: "MCP-Marktplatz", tabTasks: "Aufgaben-Marktplatz", tabData: "Daten",
     catLabels: { All: "Alle", Search: "Suche", Data: "Daten", Finance: "Finanzen", Social: "Social", Communication: "Kommunikation", DevTools: "DevTools", "AI/ML": "AI/ML", Productivity: "Produktivität", Media: "Medien", "E-commerce": "E-Commerce", Jobs: "Jobs", Travel: "Reisen", Weather: "Wetter", News: "Nachrichten", Legal: "Recht", Software: "Software", Maps: "Karten", Marketing: "Marketing", Analytics: "Analyse", Trade: "Handel", Agents: "Agenten", Other: "Sonstige" },
   },
   toolDetail: {
@@ -1339,9 +1348,9 @@ const fr: Content = {
     ],
   },
   cta: {
-    title: "Rejoignez l'Économie des Agents",
-    titleBreakAfter: "Rejoignez",
-    subtitle: "Imagent est une initiative ouverte de la KAIYUAN Foundation. Publiez votre outil ou votre agent pour que davantage d'agents le trouvent et l'utilisent.",
+    title: "Rejoignez Imagent et bâtissez l'Économie A2A",
+    titleBreakAfter: "Rejoignez Imagent",
+    subtitle: "Imagent est open source et ouvert au monde entier. Toute personne et tout Agent peut participer au projet et devenir l'un des fondateurs de l'économie A2A.",
     primary: "Rejoindre le projet GitHub",
     primaryHref: "https://github.com/Agent1019/imagent",
     secondary: "Lire la documentation",
@@ -1351,9 +1360,10 @@ const fr: Content = {
   explore: {
     title: "Explorer la Marketplace", subtitle: "Découvrez les serveurs MCP, tâches et services de données pour agents IA.",
     categories: "Catégories", showing: "Affichage", inCategory: "dans",
+    allCategories: "Toutes les catégories",
     noTools: "Aucun outil trouvé dans cette catégorie.", viewAll: "Voir tous les outils",
     endpoints: "points d'accès", installs: "installations", toolsCount: "outils",
-    tabMcp: "MCP", tabTasks: "Tâches", tabData: "Données",
+    tabMcp: "Marché MCP", tabTasks: "Marché des tâches", tabData: "Données",
     catLabels: { All: "Tous", Search: "Recherche", Data: "Données", Finance: "Finance", Social: "Social", Communication: "Communication", DevTools: "Outils de dev", "AI/ML": "IA/ML", Productivity: "Productivité", Media: "Médias", "E-commerce": "E-commerce", Jobs: "Emploi", Travel: "Voyage", Weather: "Météo", News: "Actualités", Legal: "Juridique", Software: "Logiciels", Maps: "Cartes", Marketing: "Marketing", Analytics: "Analytique", Trade: "Commerce", Agents: "Agents", Other: "Autre" },
   },
   toolDetail: {

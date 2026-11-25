@@ -13,8 +13,22 @@ const prefixLocaleMap: Record<string, string> = {
   "korean.": "ko",
 };
 
+const hostRedirects: Record<string, string> = {
+  "zh.imagent.ai": "chinese.imagent.ai",
+};
+
 export async function middleware(request: NextRequest) {
   const host = request.headers.get("host") || "";
+
+  const redirectTarget = hostRedirects[host];
+  if (redirectTarget) {
+    const url = request.nextUrl.clone();
+    url.protocol = "https:";
+    url.host = redirectTarget;
+    url.port = "";
+    return NextResponse.redirect(url, 301);
+  }
+
   let locale = "en";
   for (const [prefix, loc] of Object.entries(prefixLocaleMap)) {
     if (host.startsWith(prefix)) {
@@ -46,7 +60,6 @@ export async function middleware(request: NextRequest) {
         },
       },
     });
-    // Refreshes the session cookie when it is close to expiring.
     await supabase.auth.getUser();
   } catch {
     return response;
