@@ -349,7 +349,45 @@ export default async function Home() {
       <section className="py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-2 gap-10 md:gap-12 items-center" data-animate>
-            <div>
+            <div className="roadmap-copy">
+              <div className="roadmap-decoration" aria-hidden="true">
+                <svg viewBox="0 0 520 480" preserveAspectRatio="xMidYMid slice" className="roadmap-decoration-svg" focusable="false">
+                  {/* shared-tool hub: one center radiating to many (MCP stage) */}
+                  <g stroke="currentColor" className="roadmap-decoration-lines" fill="none">
+                    <path d="M84 240 L150 240" />
+                    <path d="M84 240 L140 156" />
+                    <path d="M84 240 L140 324" />
+                    <path d="M84 240 L96 150" />
+                    <path d="M84 240 L96 330" />
+                    <circle cx="84" cy="240" r="46" />
+                  </g>
+                  {/* agent-to-agent mesh: peer nodes exchanging directly (A2A stage) */}
+                  <g stroke="currentColor" className="roadmap-decoration-lines" fill="none">
+                    <circle cx="384" cy="132" r="16" />
+                    <circle cx="452" cy="212" r="16" />
+                    <circle cx="404" cy="306" r="16" />
+                    <circle cx="300" cy="356" r="16" />
+                    <path d="M398 143 L440 202" />
+                    <path d="M443 226 L413 291" />
+                    <path d="M392 315 L316 349" />
+                    <path d="M396 145 L340 180" />
+                    <path d="M296 340 L252 260" />
+                    <path d="M258 250 L372 128" />
+                  </g>
+                  {/* flow arrow linking the two graphs */}
+                  <g stroke="currentColor" className="roadmap-decoration-arrow" fill="none">
+                    <path d="M176 240 C232 240 236 220 252 212" />
+                    <path d="M245 204 L258 211 L248 222" />
+                  </g>
+                  <g className="roadmap-decoration-nodes">
+                    <circle cx="84" cy="240" r="7" />
+                    <circle cx="384" cy="132" r="5" />
+                    <circle cx="452" cy="212" r="5" />
+                    <circle cx="404" cy="306" r="5" />
+                    <circle cx="300" cy="356" r="5" />
+                  </g>
+                </svg>
+              </div>
               <h2 className="text-[28px] sm:text-3xl md:text-4xl leading-tight text-balance font-bold mb-4" lang={locale} data-home-heading="roadmap">
                 <span className="block max-w-full text-balance text-white">{t.roadmap.headline1}</span>
                 <span className="block max-w-full text-balance text-[#2B7FFF]">{t.roadmap.headline2}</span>
@@ -419,57 +457,6 @@ export default async function Home() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </a>
-          <div className="flex justify-center gap-8 md:gap-12 mt-10">
-            {[
-              {
-                name: "Discord",
-                desc: t.cta.channels.discord,
-                icon: (
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z"/>
-                  </svg>
-                ),
-                href: "#",
-                color: "text-[#5865F2]",
-              },
-              {
-                name: "Twitter / X",
-                desc: t.cta.channels.twitter,
-                icon: (
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                  </svg>
-                ),
-                href: "#",
-                color: "text-white",
-              },
-              {
-                name: "Forum",
-                desc: t.cta.channels.forum,
-                icon: (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
-                  </svg>
-                ),
-                href: "/community",
-                color: "text-orange-400",
-              },
-            ].map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="group flex flex-col items-center gap-2 hover:opacity-80 transition text-center"
-              >
-                <div className={`${item.color} opacity-70 group-hover:opacity-100 transition`}>
-                  {item.icon}
-                </div>
-                <div>
-                  <div className="font-semibold text-sm">{item.name}</div>
-                  <div className="text-xs text-gray-500 mt-0.5">{item.desc}</div>
-                </div>
-              </a>
-            ))}
-          </div>
         </div>
       </section>
     </Layout>

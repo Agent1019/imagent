@@ -3,7 +3,7 @@ import { getLocaleFromHost, type Locale } from "@/lib/i18n/config";
 import { getContent } from "@/lib/i18n/content";
 import Layout from "@/app/layouts/Layout";
 import type { Metadata } from "next";
-import { getPackages, type PackageListItem } from "@/lib/data/packages";
+import { getPackages } from "@/lib/data/packages";
 import { ToolCard } from "./ToolCard";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -28,7 +28,8 @@ export default async function ExplorePage({ searchParams }: PageProps) {
   const isZh = locale === "zh";
 
   const params = await searchParams;
-  const activeTab = params.tab || "mcp";
+  // Retired Data links and unknown tab values fall back to the MCP catalog.
+  const activeTab = params.tab === "tasks" ? "tasks" : "mcp";
   const activeCategory = params.category || "All";
 
   // Fetch MCP data (always, for MCP tab)
@@ -46,67 +47,53 @@ export default async function ExplorePage({ searchParams }: PageProps) {
   const tabs = [
     { key: "mcp", label: t.explore.tabMcp },
     { key: "tasks", label: t.explore.tabTasks },
-    { key: "data", label: t.explore.tabData },
   ];
 
   return (
     <Layout locale={locale} nav={t.nav} footer={t.footer} searchPlaceholder={t.hero.searchPlaceholder}>
-      {/* Page Header */}
-      <section className="pt-24 md:pt-28 pb-5 border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-          <div>
-            <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
-              {t.explore.title}
-            </h1>
-            <p className="mt-1.5 text-sm text-gray-400 max-w-xl">
-              {t.explore.subtitle}
-            </p>
-          </div>
-
-          {/* Tab Navigation — right-aligned */}
-          <nav className="flex gap-1 shrink-0">
+      {/* The marketplace sections are the primary page titles. */}
+      <section className="explore-header border-b border-white/5" data-explore-header>
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <h1 className="sr-only">{activeTab === "mcp" ? t.explore.tabMcp : t.explore.tabTasks}</h1>
+          <nav className="explore-tabs" aria-label={t.explore.title} data-explore-tabs>
             {tabs.map((tab) => {
               const isActive = activeTab === tab.key;
               return (
                 <a
                   key={tab.key}
                   href={`/explore${tab.key === "mcp" ? "" : `?tab=${tab.key}`}`}
-                  className={`px-4 py-1.5 rounded-lg text-sm font-medium transition ${
-                    isActive
-                      ? "bg-white/10 text-white"
-                      : "text-gray-400 hover:text-white hover:bg-white/5"
-                  }`}
+                  aria-current={isActive ? "page" : undefined}
+                  className="explore-tab"
+                  data-explore-tab={tab.key}
                 >
                   {tab.label}
                 </a>
               );
             })}
           </nav>
+          <p className="explore-subtitle" data-explore-subtitle>{t.explore.subtitle}</p>
         </div>
       </section>
 
       {/* MCP Tab */}
       {activeTab === "mcp" && (
-        <section className="py-8">
+        <section className="explore-content" data-explore-panel="mcp">
           <div className="max-w-7xl mx-auto px-4 md:px-6">
-            <div className="flex flex-col lg:flex-row gap-8">
+            <div className="explore-catalog-layout">
               {/* Sidebar - Category Filters */}
-              <aside className="lg:w-56 shrink-0">
+              <aside className="explore-categories">
                 <div className="lg:sticky lg:top-24">
-                  <h2 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">
-                    {t.explore.categories}
-                  </h2>
-                  <nav className="flex flex-row lg:flex-col gap-1 overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0">
+                  <nav className="explore-category-list scrollbar-hide" aria-label={t.explore.categories} data-explore-categories>
                     {categories.map((cat) => {
                       const isActive = activeCategory === cat;
-                      const label = t.explore.catLabels[cat] || cat;
+                      const label = cat === "All" ? t.explore.allCategories : t.explore.catLabels[cat] || cat;
                       return (
                         <a
                           key={cat}
-                          href={cat === "All" ? "/explore" : `/explore?category=${cat}`}
-                          className={`whitespace-nowrap px-3 py-2 rounded-lg text-sm transition ${
-                            isActive ? "bg-white/10 text-white font-medium" : "text-gray-400 hover:text-white hover:bg-white/5"
-                          }`}
+                          href={cat === "All" ? "/explore" : `/explore?category=${encodeURIComponent(cat)}`}
+                          aria-current={isActive ? "page" : undefined}
+                          className="explore-category"
+                          data-explore-category={cat}
                         >
                           {label}
                         </a>
@@ -119,17 +106,17 @@ export default async function ExplorePage({ searchParams }: PageProps) {
               {/* Main Content */}
               <div className="flex-1 min-w-0">
                 {/* Results count */}
-                <p className="text-xs text-gray-500 mb-4">
+                <p className="explore-results-count" data-explore-results>
                   {t.explore.showing} {total} {t.explore.toolsCount}
                   {activeCategory !== "All" && (
                     <span>
-                      {" "}{t.explore.inCategory} <span className="text-gray-300">{activeCategory}</span>
+                      {" "}{t.explore.inCategory} <span className="text-gray-300">{t.explore.catLabels[activeCategory] || activeCategory}</span>
                     </span>
                   )}
                 </p>
 
                 {/* Tool Grid */}
-                <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4" data-explore-grid>
                   {tools.map((tool) => (
                     <ToolCard key={tool.slug} tool={tool} isZh={isZh} />
                   ))}
@@ -159,7 +146,7 @@ export default async function ExplorePage({ searchParams }: PageProps) {
 
       {/* Tasks Tab - Coming Soon */}
       {activeTab === "tasks" && (
-        <section className="py-8">
+        <section className="explore-content" data-explore-panel="tasks">
           <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="text-center py-20">
               <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
@@ -169,23 +156,6 @@ export default async function ExplorePage({ searchParams }: PageProps) {
               </div>
               <p className="text-gray-400 text-lg">Coming soon</p>
               <p className="text-gray-500 text-sm mt-2">Agent-to-Agent task marketplace</p>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Data Tab - Coming Soon */}
-      {activeTab === "data" && (
-        <section className="py-8">
-          <div className="max-w-7xl mx-auto px-4 md:px-6">
-            <div className="text-center py-20">
-              <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125v-3.75" />
-                </svg>
-              </div>
-              <p className="text-gray-400 text-lg">Coming soon</p>
-              <p className="text-gray-500 text-sm mt-2">Agent data exchange marketplace</p>
             </div>
           </div>
         </section>

@@ -696,11 +696,11 @@ export default async function PostDetailPage({
                 <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center text-gray-500 text-xs font-bold">
                   ?
                 </div>
-                <span className="text-sm text-gray-500">
+                <a href={`/login?next=${encodeURIComponent(`/community/${id}`)}`} className="text-sm text-gray-500 transition hover:text-white">
                   {zh
                     ? "登录后参与讨论..."
                     : "Sign in to join the discussion..."}
-                </span>
+                </a>
               </div>
               <div className="rounded-lg border border-white/5 bg-white/[0.02] p-3 min-h-[60px]">
                 <span className="text-sm text-gray-600">

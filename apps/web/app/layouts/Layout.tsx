@@ -1,8 +1,11 @@
 import { headers } from "next/headers";
 import { type Locale, locales, domainMap, localeNames, localeFlags } from "@/lib/i18n/config";
+import { getAuthCopy } from "@/lib/auth-copy";
+import { getAuthUser } from "@/lib/auth";
 import NavSearch from "../components/NavSearch";
 import ScrollEffects from "../components/ScrollEffects";
 import MobileNav from "../components/MobileNav";
+import UserMenu from "../components/UserMenu";
 
 type NavContent = {
   explore: string;
@@ -50,6 +53,18 @@ type LayoutProps = {
 export default async function Layout({ locale, nav, footer, searchPlaceholder, children }: LayoutProps) {
   const headersList = await headers();
   const pathname = headersList.get("x-pathname") || "/";
+  const user = await getAuthUser();
+  const account = getAuthCopy(locale);
+  const footerPartners = (
+    <div className="footer-partners" data-footer-partners>
+      <p>{partnerLabels[locale]}{locale === "zh" || locale === "ja" ? "：" : ":"}</p>
+      <ul aria-label={partnerLabels[locale]}>
+        <li>KAIYUAN Foundation</li>
+        <li>{locale === "zh" ? "易宝支付" : "Yeepay"}</li>
+        <li>{locale === "zh" ? "博联" : "BroadLink"}</li>
+      </ul>
+    </div>
+  );
 
   return (
     <>
@@ -68,6 +83,8 @@ export default async function Layout({ locale, nav, footer, searchPlaceholder, c
               localeNames={localeNames}
               localeFlags={localeFlags}
               pathname={pathname}
+              user={user}
+              signOutLabel={account.signOut}
             />
             <a href="/" className="text-2xl font-bold tracking-tight text-white shrink-0">
               Imagent
@@ -113,15 +130,21 @@ export default async function Layout({ locale, nav, footer, searchPlaceholder, c
               </div>
             </div>
 
-            <a href="/login" className="hidden md:inline text-sm text-gray-400 hover:text-white transition px-2 py-1.5 whitespace-nowrap shrink-0">
-              {nav.signIn}
-            </a>
-            <a
-              href="/signup"
-              className="text-sm bg-white text-black px-3 md:px-4 py-1.5 rounded-lg font-medium hover:bg-gray-200 transition whitespace-nowrap shrink-0"
-            >
-              {nav.getStarted}
-            </a>
+            {user ? (
+              <UserMenu user={user} signOutLabel={account.signOut} />
+            ) : (
+              <>
+                <a href="/login" className="hidden md:inline text-sm text-gray-400 hover:text-white transition px-2 py-1.5 whitespace-nowrap shrink-0">
+                  {nav.signIn}
+                </a>
+                <a
+                  href="/signup"
+                  className="text-sm bg-white text-black px-3 md:px-4 py-1.5 rounded-lg font-medium hover:bg-gray-200 transition whitespace-nowrap shrink-0"
+                >
+                  {nav.getStarted}
+                </a>
+              </>
+            )}
           </div>
         </div>
       </nav>
@@ -139,14 +162,27 @@ export default async function Layout({ locale, nav, footer, searchPlaceholder, c
             <div className="min-w-0 md:flex-1 md:max-w-[440px]">
               <div className="text-lg font-bold mb-4">Imagent</div>
               <p className="text-xs text-gray-400 leading-relaxed max-w-xs" data-footer-tagline>{footer.tagline}</p>
-              <div className="footer-partners" data-footer-partners>
-                <p>{partnerLabels[locale]}{locale === "zh" || locale === "ja" ? "：" : ":"}</p>
-                <ul aria-label={partnerLabels[locale]}>
-                  <li>KAIYUAN Foundation</li>
-                  <li>{locale === "zh" ? "易宝支付" : "Yeepay"}</li>
-                  <li>{locale === "zh" ? "博联" : "BroadLink"}</li>
-                </ul>
-              </div>
+                <div className="site-footer-social-icons text-gray-400">
+                  <span role="img" aria-label="Discord">
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z" />
+                    </svg>
+                  </span>
+                  <span role="img" aria-label="Twitter / X">
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                  </span>
+                  <a
+                    href="/community"
+                    aria-label="Forum"
+                    className="inline-flex text-gray-400 hover:text-gray-300 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gray-400"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+                    </svg>
+                  </a>
+                </div>
             </div>
             {/* Link columns — right-aligned, with bounded gaps on narrow desktops. */}
             <div className="grid grid-cols-3 gap-4 sm:gap-8 md:gap-6 lg:gap-16 min-w-0 [overflow-wrap:anywhere]">
@@ -176,9 +212,10 @@ export default async function Layout({ locale, nav, footer, searchPlaceholder, c
               </div>
             </div>
           </div>
-          <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600">
-            <span>{footer.copyright}</span>
-            <div className="flex gap-6">
+          <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600 site-footer-bottom">
+            <span className="site-footer-copyright">{footer.copyright}</span>
+            {footerPartners}
+            <div className="flex gap-6 site-footer-legal">
               <a href="/privacy" className="hover:text-white transition">{footer.privacy}</a>
               <a href="/terms" className="hover:text-white transition">{footer.terms}</a>
             </div>
